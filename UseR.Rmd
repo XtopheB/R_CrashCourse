@@ -25,10 +25,16 @@ library(stringr)
 ## For SDG computation 
 household_survey <- read.csv2("https://raw.githubusercontent.com/XtopheB/JICA23/main/Exercises/Household_Survey.csv") %>% select(-"X") %>%
   select(c("household_id", "income", "location"), everything()) %>%
-  rename(Id = household_id)
-  
+  rename(Id = household_id)%>%
+  mutate(income = income /1000)
+
+## Some objects that will be computed:
 household_rural <- household_survey %>%
   filter(location == "Rural")
+
+Nb_rural <- household_rural %>%
+  count()
+
 
 ```
 
@@ -67,8 +73,9 @@ question("Have you completed the R- Tutorial?  (*Check all that is TRUE*):",
   
 ```
 
-## Compute the average income by category from survey data
+## A first simple computation
 
+### Compute the average income by category from survey data
 We have a data set from a survey that reports information on `r nrow(household_survey)` households, including their location (urban or rural), their income and other information.
 
 Let's have a look at the 5 first rows of this data set called *household_survey*:
@@ -77,63 +84,31 @@ Let's have a look at the 5 first rows of this data set called *household_survey*
 head(household_survey)
 ```
 
-> We want to compute  the average income for `rural` population.  How would you do? 
+> We want to compute  the average income for *rural*` population.  How would you do? 
 
+There are 3 basic steps: 
 
-```{r quiz1, echo = FALSE}
+- Select only rural population 
+- Compute the total income of rural population 
+- Count the number of rural households
 
+Then the result will simply be 
+$$
+Avg\_Income_{rural} = \frac{Total\_Income_{rural}}{Nb\_Households_{rural}}
+$$
 
-# Create an interactive learning quiz
-quiz(
-  "Rural Household Income Analysis",
-  list(
-    question("What is the average income of rural households?"),
-    code({
-      household_rural <- household_survey %>%
-        filter(location == "Rural")
+### Step-by-step
 
-      # Calculate average income using the mean function
-      avg_income <- mean(household_rural$income, na.rm = TRUE)
-      avg_income
-    }),
-    answer(12500),
-    hint("First, filter the data to include only rural households. Then, calculate the average income using the mean function.")
-  ),
-  list(
-    question("How would you handle missing income data when calculating the average?"),
-    code({
-      # User's code goes here
-    }),
-    answer(contains("na.rm = TRUE") | contains("is.na")),
-    hint("Use the `na.rm` argument in the `mean()` function or check for missing values with `is.na()` before calculating the average.")
-  ),
-  list(
-    question("What is the average income of rural households using a different approach?"),
-    code({
-      # User's code goes here
-    }),
-    answer(contains("group_by") & contains("summarise")),
-    hint("Try using `group_by()` and `summarise()` to calculate the average income.")
-  )
-)
-```
+Filter only rural households
 
-
-
-
-
-
-### Filter only rural households
-
+**Step 1**: Selecting only rurla households
 ```{r}
 household_rural <- household_survey %>%
   filter(location == "Rural")
 
-names(household_rural)
-
 ```
 
-###  Calculating Total Income
+**Step 2**: Calculating the total income for rural households
 ```{r}
 total_rural <- household_rural %>%
   summarize(total = sum(income))
@@ -141,22 +116,25 @@ total_rural <- household_rural %>%
 total_rural
 ```
 
-# Step 3: Counting Households
-```{r}
+**Step 3**: Counting rural households
+```{r count}
 Nb_rural <- household_rural %>%
   count()
 
 Nb_rural
 ```
 
-# Step 4: Computing Average Income
-```{r}
+**Finally**: Computing the average income for rural households 
+
+```{r final}
 avg_income <- household_survey %>%
   filter(location == "Rural") %>%
-  summarize(avg_income = sum(income) / n())
+  summarize(avg_income = sum(income) / Nb_rural)
 
-avg_income
+pull(avg_income)
 ```
+
+
 
 # Quiz
 
@@ -168,7 +146,7 @@ quiz(
     answer("filter()", correct = TRUE)
   ),
   
-  question("Which function helps to compute the total number of households?",
+  question("Which function helps to count the number of households?",
     answer("count()", correct = TRUE),
     answer("sum()", correct = FALSE),
     answer("group_by()", correct = FALSE)
