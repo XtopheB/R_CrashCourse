@@ -30,6 +30,9 @@
 # knitr and R markdown default cache directories
 *_cache/
 /cache/
+/www/
+/useR_data/
+/learnR_data/
 # Temporary files created by R markdown
 *.utf8.md
 *.knit.md
