@@ -1,7 +1,7 @@
 ---
 title: "Learn R: \n A tutorial"
 author: " ---- \n *Christophe Bontemps*  \n ![](www/SIAP_logo_2020_1800.png){width=30%}  "
-date: '2024-08-21'
+date: 'Version: 1.02 \n (March 2025)'
 output:
   learnr::tutorial: 
     progressive: true
@@ -75,9 +75,9 @@ R is a statistical programming language and environment for statistical computin
 > If your computer was a plane, we may think of R as the engine and propeller
 
 ### How to install R
-The best way is to follow the instructions in this video (*1 min 30s*)
+The best way is to follow the instructions in this video (*2 min 45s*)
 
-![](https://vimeo.com/203516510)
+![](https://youtu.be/5W8w9F1dsRA?si=ox-_JmUHV-3X9lUt)
 
 Link to install R: [https://cran.r-project.org/](https://cran.r-project.org/)
 
@@ -168,9 +168,9 @@ R has several functions that are loaded and available in the basic installation 
 
 
 ### How to install R packages
-The best way is to follow the instructions in this video (*1 min 32s*)
+The best way is to follow the instructions in this video (*1 min 02s*)
 
-![](https://vimeo.com/203516241)
+![](https://youtu.be/u1r5XTqrCTQ?si=JxTF-VWz14EqY44t)
 
 
 ### The “tidyverse” package
