@@ -43,8 +43,8 @@ Nb_rural <- household_rural %>%
 Welcome to the course.^[This document uses materials developed by *Garrick Aden-Buie, Barret Schloerke, JJ Allaire & Alexander Rossell Hayes* , the creators of the [learner](https://rstudio.github.io/learnr/) package. *This version is 2.4 (October 2023)*.]  
 
 
-### Learning Objectives TBD
-At the end of this tutorial you should be able to:   
+### Learning Objectives **TBD**
+At the end of this module you should be able to:   
 
 * Run a few lines of R code
 * Compute a few simple SDG indicators
@@ -57,26 +57,24 @@ At the end of this tutorial you should be able to:
 #  The construction will be based on the same structure
 ```
 
+
 ### Have you successfully completed the R-Tutorial?
 
 ```{r quiz0, echo = FALSE}
 question("Have you completed the R- Tutorial?  (*Check all that is TRUE*):",
-         
   answer("Yes, and R is installed on my computer", correct = TRUE, message = "Perfect"),
-  
   answer("Yes, but R is not installed on my computer", 
         message = "*No worries*, you can run R directly here, but **please install R** later at [cran.r-project.org](http://cran.r-project.org)"),
-  
   answer("No, I'm just starting here", message = "Please start at the beginning with the R Tutorial"), 
   allow_retry = TRUE
   )
   
 ```
 
-## A first simple computation
+## Let's start simple
 
 ### Compute the average income by category from survey data
-We have a data set from a survey that reports information on `r nrow(household_survey)` households, including their location (urban or rural), their income and other information.
+We have a data set from a survey that reports information on `r nrow(household_survey)` households, including their *location* (urban or rural), their *income* and other information.
 
 Let's have a look at the 5 first rows of this data set called *household_survey*:
 
@@ -86,29 +84,73 @@ head(household_survey)
 
 > We want to compute  the average income for *rural*` population.  How would you do? 
 
-There are 3 basic steps: 
-
-- Select only rural population 
-- Compute the total income of rural population 
-- Count the number of rural households
-
-Then the result will simply be 
+The formula is the following: 
+ 
 $$
 Avg\_Income_{rural} = \frac{Total\_Income_{rural}}{Nb\_Households_{rural}}
 $$
 
-### Step-by-step
+There are 4 basic steps: 
 
-Filter only rural households
+- Select only rural population 
+- Compute the total income of rural population $\rightarrow$ Numerator
+- Count the number of rural households $\rightarrow$ Denominator
+- Compute the ratio 
 
-**Step 1**: Selecting only rurla households
-```{r}
+We will compute this step-by step! 
+
+### Step 1: Selecting only rural households
+
+This can be done using the `filter` function in the *tidyverse* librar. This function allows to filter only observations (rows) that satisfy a condition.
+
+> In our case, we only want housholds that have a location that is rural
+
+Give it a try and create a new data frame with only rural households
+
+```{r Popex, exercise.eval = TRUE}
 household_rural <- household_survey %>%
   filter(location == "Rural")
 
 ```
 
-**Step 2**: Calculating the total income for rural households
+```{r Popex1,  exercise = TRUE, exercise.eval = FALSE, exercise.setup = "Popex"}
+# Enter your solution below
+household_rural <- household_survey %>%
+  
+
+```
+
+```{r Popex1-hint-1}
+# You should use the data from household_survey and the %>% operator
+household_rural <- 
+  
+```
+
+```{r Popex1-hint-2}
+# Now, you can filter!  Write the condition in the filter() function
+household_rural <- household_survey %>%
+  filter()
+  
+```
+
+```{r Popex1-solution}
+# Solution: pay attention to the  double  == when conditioning
+household_rural <- household_survey %>%
+  filter(location == "Rural")
+
+```
+
+**Congratulations** The data frame *household_rural* has now only rural households. 
+
+Check the new data frame here and observe the  first rows. They should now be all rural (run code).  
+
+```{r Poex-Valid, exercise = TRUE, exercise.eval = FALSE, exercise.setup = "Popex"}
+head(household_rural)
+```
+
+
+### Step 2: Compute the total income of rural population
+
 ```{r}
 total_rural <- household_rural %>%
   summarize(total = sum(income))
@@ -136,7 +178,7 @@ pull(avg_income)
 
 
 
-# Quiz
+### Quiz
 
 ```{r quiz2, echo = FALSE}
 quiz(

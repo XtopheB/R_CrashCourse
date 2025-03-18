@@ -81,8 +81,6 @@ The best way is to follow the instructions in this video (*2 min 45s*)
 
 Link to install R: [https://cran.r-project.org/](https://cran.r-project.org/)
 
-
-
 ### Test your knowledge
 
 ```{r quiz2, echo=FALSE}
@@ -163,9 +161,6 @@ quiz(caption = "Quiz - Install RStudio",
 R has several functions that are loaded and available in the basic installation of the programme. However, there are a range of other convenient functions and codes written by R users that can be used freely during your R session. These functions are distributed as R packages, which are basically a collection of R code, data sets, documentation, and tests that can be easily shared with others.
 
 > If your computer was a plane, we may think of the packages as all the components needed to fly (landing gear, gyroscope, lights, GPS, ... )   
-
-
-
 
 ### How to install R packages
 The best way is to follow the instructions in this video (*1 min 02s*)
