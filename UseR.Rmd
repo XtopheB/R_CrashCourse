@@ -1,7 +1,7 @@
 ---
 title: "Use R: \n A crash course"
-author: " ---- \n *Christophe Bontemps*  \n ![](www/SIAP_logo_2020_1800.png){width=30%}  "
-date: '2025-01-10'
+author: " ---- \n *Christophe Bontemps*  \n  ![](www/SIAP_logo_2020_1800.png){width=30%}  "
+date: 'Version: 1.02 \n (March 2025)'
 output:
   learnr::tutorial: 
     progressive: true
@@ -23,7 +23,7 @@ library(stringr)
 # Loading data--  
 
 ## For SDG computation 
-household_survey <- read.csv2("https://raw.githubusercontent.com/XtopheB/JICA23/main/Exercises/Household_Survey.csv") %>% select(-"X") %>%
+  household_survey <- read.csv2("https://raw.githubusercontent.com/XtopheB/R_CrashCourse/main/RawData/Household_Survey.csv") %>% select(-"X") %>%
   select(c("household_id", "income", "location"), everything()) %>%
   rename(Id = household_id)%>%
   mutate(income = income /1000)
@@ -38,7 +38,7 @@ Nb_rural <- household_rural %>%
 
 ```
 
-## Welcome 
+## Module 2: Use R!
 
 Welcome to the course.^[This document uses materials developed by *Garrick Aden-Buie, Barret Schloerke, JJ Allaire & Alexander Rossell Hayes* , the creators of the [learner](https://rstudio.github.io/learnr/) package. *This version is 2.4 (October 2023)*.]  
 
@@ -65,7 +65,7 @@ question("Have you completed the R- Tutorial?  (*Check all that is TRUE*):",
   answer("Yes, and R is installed on my computer", correct = TRUE, message = "Perfect"),
   answer("Yes, but R is not installed on my computer", 
         message = "*No worries*, you can run R directly here, but **please install R** later at [cran.r-project.org](http://cran.r-project.org)"),
-  answer("No, I'm just starting here", message = "Please start at the beginning with the R Tutorial"), 
+  answer("No, I'm just starting here", message = "Please start at the beginning with [Module1](https://xtophedataviz.shinyapps.io/LearnR/)"), 
   allow_retry = TRUE
   )
   
@@ -107,34 +107,39 @@ This can be done using the `filter` function in the *tidyverse* librar. This fun
 
 Give it a try and create a new data frame with only rural households
 
-```{r Popex, exercise.eval = TRUE}
+```{r PopDat, exercise.eval = TRUE}
 household_rural <- household_survey %>%
   filter(location == "Rural")
 
 ```
 
-```{r Popex1,  exercise = TRUE, exercise.eval = FALSE, exercise.setup = "Popex"}
+```{r PopDat1,  exercise = TRUE, exercise.eval = FALSE, exercise.setup = "PopDat"}
 # Enter your solution below
-household_rural <- household_survey %>%
+
+household_rural <-
   
 
 ```
 
-```{r Popex1-hint-1}
+```{r PopDat1-hint-1}
 # You should use the data from household_survey and the %>% operator
-household_rural <- 
+# Use a new line with a condition on location
+
+household_rural <-  household_survey %>%
   
 ```
 
-```{r Popex1-hint-2}
-# Now, you can filter!  Write the condition in the filter() function
+```{r PopDat1-hint-2}
+# You can use function filter () --> Write the condition in the filter() function
+
 household_rural <- household_survey %>%
   filter()
   
 ```
 
-```{r Popex1-solution}
-# Solution: pay attention to the  double  == when conditioning
+```{r PopDat1-solution}
+# Solution: Pay attention to the double == when conditioning
+
 household_rural <- household_survey %>%
   filter(location == "Rural")
 
@@ -142,31 +147,104 @@ household_rural <- household_survey %>%
 
 **Congratulations** The data frame *household_rural* has now only rural households. 
 
-Check the new data frame here and observe the  first rows. They should now be all rural (run code).  
+Check the new data frame here and observe the first rows. They should now be all rural (run code).  
 
-```{r Poex-Valid, exercise = TRUE, exercise.eval = FALSE, exercise.setup = "Popex"}
+```{r Popex-Valid, exercise = TRUE, exercise.eval = FALSE, exercise.setup = "PopDat"}
 head(household_rural)
 ```
 
 
 ### Step 2: Compute the total income of rural population
 
-```{r}
+```{r PopNum, exercise.eval = TRUE, exercise.setup = "PopDat"}
+total_rural <- household_rural %>%
+  summarize(total = sum(income))
+
+```
+
+
+
+```{r PopNum1,  exercise = TRUE, exercise.eval = FALSE, exercise.setup = "PopNum"}
+# Enter your solution below
+
+total_rural <-
+  
+
+```
+
+
+```{r PopNum1-hint-1}
+# You should use the data from household_rural and the %>% operator
+# Use a new line to compute the total of Income
+
+total_rural <- household_rural %>%
+  
+
+```
+
+```{r PopNum1-hint-2}
+# You can use function summarize() -->  Write the code in the function
+
+total_rural <- household_rural %>%
+  summarize()
+
+
+```
+
+```{r PopNum1-solution}
+# Solution: We use the function sum()  to compute the total
+
 total_rural <- household_rural %>%
   summarize(total = sum(income))
 
 total_rural
+
 ```
 
-**Step 3**: Counting rural households
-```{r count}
+
+### Step 3: Counting rural households
+
+
+
+```{r PopDen1,  exercise = TRUE, exercise.eval = FALSE, exercise.setup = "PopDat"}
+# Enter your solution below
+
+Nb_rural <-
+  
+
+```
+
+
+```{r PopDen1-hint-1}
+# You should use the data from household_rural and the %>% operator
+# Use a new line to compute the total of Income
+
+Nb_rural <- household_rural %>%
+  
+
+```
+
+```{r PopDen1-hint-2}
+# You can use the function count() -->  Write the code in a new line
+
+Nb_rural <- household_rural %>%
+  count()
+
+
+```
+
+
+```{r PopDen1-solution}
+# Solution: We simply use the count() function to compute the number of rows!
 Nb_rural <- household_rural %>%
   count()
 
 Nb_rural
 ```
 
-**Finally**: Computing the average income for rural households 
+
+
+### Finally: Computing the average income for rural households 
 
 ```{r final}
 avg_income <- household_survey %>%
