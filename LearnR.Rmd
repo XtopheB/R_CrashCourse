@@ -31,9 +31,9 @@ mydata <- data.frame(name = c("John", "Sokol", "Chris"),
 
 ```
 
-## Welcome 
+## Module 1: Learn R! 
 
-Welcome to the course. This is an interactive tutorial that should help you verify that you and your computer are ready to use the materials developed for this course using R and RStudio.^[This document uses materials developed by *Garrick Aden-Buie, Barret Schloerke, JJ Allaire & Alexander Rossell Hayes* , the creators of the [learner](https://rstudio.github.io/learnr/) package. *This version is 2.4 (October 2023)*.]  
+Welcome to the course. This is an interactive tutorial that should help you verify that you and your computer are ready to use the materials developed for this course using R and RStudio.^[This document uses materials developed by *Garrick Aden-Buie, Barret Schloerke, JJ Allaire & Alexander Rossell Hayes* , the creators of the [learner](https://rstudio.github.io/learnr/) package.]  
 
 
 ### Learning Objectives
@@ -288,7 +288,7 @@ myage
 
 Now if I want to make it pretty, I can use the `paste()` function.  This function is quite useful for presenting results, titles, etc; as it *paste* text ( within quotes "  ") and other R objects (here a number). 
 
-```{r, prepâre}
+```{r, prepare}
 paste("My age is", myage)
 
 ```
