@@ -1,7 +1,7 @@
 ---
 title: "Learn R: \n A tutorial"
 author: " ---- \n *Christophe Bontemps*  \n ![](www/SIAP_logo_2020_1800.png){width=30%}  "
-date: 'Version: 1.02 \n (March 2025)'
+date: 'Version: 1.1 \n (April 2025)'
 output:
   learnr::tutorial: 
     progressive: true
@@ -19,7 +19,7 @@ library(tidyverse)
 library(nycflights13)
 #library(stringer)
 
-# Loading data (at SIAP)
+# Loading data (at SIAP -- Different name of CSV!! but same content )
 # SouthAfrica <-read.csv2("https://www.unsiap.or.jp/on_line/ML/MLData/ML_SouthAfrica.csv")
 
 # Loading data (at GitHub)
@@ -289,7 +289,7 @@ myage <- 25
 myage
 ```
 
-Now if I want to make it pretty, I can use the `paste()` function.  This function is quite useful for presenting results, titles, etc; as it *paste* text ( within quotes "  ") and other R objects (here a number). 
+Now if I want to make it pretty, I can use the `paste()` function.  This function is quite useful for presenting results, titles, etc.,  as it *paste* text ( within quotes "  ") and other R objects (here a number). 
 
 ```{r, prepare}
 paste("My age is", myage)
@@ -330,13 +330,13 @@ paste("My age is", myage)
 
 ### Objects
 
-In R everything is an **object**. This means that an element may embed some other *"things"*
+In R everything is an **object**. This means that an element may embed some other *"things"* (other object)
 
 > Let's create objects!
 
 #### Vectors
 
-Vectors can be create (and conceived) as a concatenation of numbers. We use The c()`  function to concatenate objects.
+Vectors can be created (and conceived) as a concatenation of numbers. We use The c()`  function to concatenate objects.
 
 ```{r}
 # Let's create a vector
@@ -344,10 +344,10 @@ a <- c(1, 2, 3)
 # And another one 
 b <- c(4, 5, 6)
 
-# Assign values to "mystring"
-mystring <- c(a, b)
+# Concatenate and assign values to "myvect"
+myvect <- c(a, b)
 
-mystring
+myvect
 ```
 
 We have a double concatenation here since `c(1,2,3)`is already a concatenate object (a vector here)
@@ -397,7 +397,7 @@ head(mydata)
 ```
 
 
-The **structure** of the data frame is given by `str()` function. It is very important to identify which variable is numerical or  integer, or a character (string) or a Boolean (TRUE/FALSE) as some operations will only apply for some *type* of variables.
+The **structure** of the data frame is given by `str()` function. It is very important to identify which variable is numerical (*num*) or an integer (*int*), a factor (*factor*) or even a string (*chr*, for character) or a Boolean (*logi* with values TRUE/FALSE) as some operations will only apply for some *type* of variables.
 
 ```{r}
 str(mydata)
@@ -410,7 +410,7 @@ mydata$name
 ```
 
 
-But, we can also extract information directly from the data frame using its rows and columns.  
+But, we can also extract information directly from the data frame `mydata` using its rows and columns.  
 
 ***What will the following code return?** 
   
@@ -421,9 +421,9 @@ mydata[1,]
 
 ```{r extract, echo = FALSE}
 question("",
-         answer("The first row of mydata (John 25 TRUE) ", message = " Well-done", correct = TRUE),
+         answer("The first row of mydata (*i.e.*, John  25  TRUE) ", message = " Well-done", correct = TRUE),
          answer("The first column of mydata with all names (John Sokol Chris) ",
-                message = "No, but that was close"),
+                message = "No, but that was close!"),
           answer("The first element of mydata (John)",
                 message = "No, try again"),
          random_answer_order = TRUE,
@@ -441,7 +441,7 @@ mydata[1,]
 
 We can also have quick statistics using the  `summary()` function. As you see in the output, the `summary()`  function adapts the result to the **type** of variable, whether it is a character (no summary for  *name*), a numeric variable (*age*), or a Boolean or logical variable (*student* takes TRUE or FALSE values).  
 
-> This is an important feature of R functions and highlights the importance having the right *type* for the variables used in our analysis.  
+> This is an important feature of R functions and highlights the importance having **the corect *type*** for the variables in a data frame.  
 
 
 ```{r, eval=TRUE}
@@ -511,7 +511,13 @@ R allows the import of data of various types, from data stored in commonly used 
 
 ### Importing MS Excel files 
 
-It is really easy to import files in R. As usual, we will just need to use the right package for that. We use here the package "**readxl**", even if some other exists.  As any package, you'll need to install it before loading using the `install.packages()` function.
+It is really easy to import files in R. As usual, we will just need to use the right package for that. We use here the package "**readxl**", even if some other exists.  As any package, you'll need to install it before loading using the `install.packages()` function as below. 
+
+```{r eval=FALSE}
+install.packages(readxl)
+```
+
+> Remeber that you only need to intall a package once, but have to load it at in every R session that uses it. 
 
 The function `read_excel( )` accepts several arguments, such as the sheet to read in the excel file, or whether or not to use the column names, but the most important argument is the **path** to the xls/xlsx file, as below:  
 
@@ -611,10 +617,13 @@ head(SDG, n=5)
 
 
 
-### Playing with `tidyverse` 
-There are many functions available in this package `tidyverse`, in particular, one has many tools for filtering and visualizing the data. 
+## Playing with `tidyverse` 
+
+The tidyverse makes working with data in R easier and more natural, like telling a story with your data.
+
+There are many functions available in the package `tidyverse`, in particular, one has many tools for filtering and visualizing the data. 
  
- First, let's examine the `pipe` operator that links operations:  `%>% `. 
+First, let's examine the `pipe` operator that links operations:  `%>% `. This is how we tell the story and move the data set from one transformation to another.  
  
 Imagine we are only interested in the first 3 variables and want to count the number of countries that are in the "Asia" region.
 
@@ -631,24 +640,31 @@ nrow(df)
 
 This requires quite a few lines of code...
 
->  But there is a quicker and more readable solution
+>  But there is a more readable solution
 
 
 Then `%>% ` links operations in a very easy-to-read sequence. The code below does exactly the same operation as before, but using operation linking using  `%>% `
 
+> One may read  `%>% ` as:  *next do this (please)* !
+
+
 ```{r filter1, exercise = TRUE, exercise.eval = FALSE}
 SDG %>%  
-  subset(region_name == "Asia" &  population >= 50) %>%
+  filter(region_name == "Asia" &  population >= 50) %>%
   nrow()
 ```
 
+The function `filter()`  lets you use a logical test to extract specific rows from a data frame. `filter()` will return every row that passes **each** logical test.^[ `filter()` is an alternative to `subset()`]
 
 This operator `%>% ` (or *pipe*) will forward a value, or the result of an expression, into the next function call/expression.
 
-> One may read  `%>% ` as *next do this (please)* !
+So the story above reads as: 
 
-An alternative to `subset()` is the function `filter()` that lets you use a logical test to extract specific rows from a data frame. `filter()` will return every row that passes **each** logical test.
+- Take the data set `SDG`,
+- **then**  `filter` only observations where *region_name* is exactly "ASIA"  **and** for which *population* is above 50,  
+- **then** give me the number of rows.  
 
+Easy, no? 
 
 ### Test Your Knowledge
 We can use many different operations to filter data, such as:
@@ -658,12 +674,11 @@ We can use many different operations to filter data, such as:
 
 
 
-
 ***What will the following code return?** 
   
 ```{r, eval= FALSE}
 SDG %>%  
-  filter(region_name == 'Asia' | region_name == "Africa",
+  filter(region_name == 'Asia' | region_name == "Africa", 
          internet_use > 60 ) 
   
 ```
@@ -693,15 +708,12 @@ question("",
 
 In R, the order of operations doesn't work like English. You **can't** write `filter(SDG, region_name == "Asia" | "Africa" )`, even though you want all countries that are either in Asia or Africa. 
 
-Here are four more tips to help you use logical tests and Boolean operators in R:
 
-###
-
-1. A useful short-hand for this problem is `x %in% y`. This will select every row where `x` is one of the values in `y`. We could use it to rewrite the code in the question above:
+A useful short-hand for this problem is `x %in% y`. This will select every row where `x` is one of the values in `y`. We could use it to rewrite the code in the question above:
 
 ```{r, eval = FALSE}
 SDG %>%  
- filter(region_name %in% c("Asia", "Africa") , internet_use > 60 ) 
+ filter(region_name %in% c("Asia", "Africa") & internet_use > 60 ) 
     
 ```
 
@@ -709,7 +721,7 @@ One may also use some advanced functions such as `str_starts` (*string starts wi
 
 ```{r}
 SDG %>%  
-  filter(str_starts(region_name, 'A') , internet_use > 50 ) 
+  filter(str_starts(region_name, 'A') & internet_use > 50 ) 
 ```
 
 ### Exercise 
@@ -718,8 +730,8 @@ Use the code chunks below to count the number of countries that:
 
 #### Have a *maternal mortality rate* lower than 12%
 
-```{r filterex1, exercise = TRUE}
-
+```{r filterex1, exercise = TRUE, exercise.eval = FALSE}
+SDG %>%
 ```
     
 ```{r filterex1-solution}
@@ -727,8 +739,9 @@ SDG %>%
   filter(maternal_mortality_ratio <= 12)
 ```
 
+Find the variable *maternal_mortality_ratio* (use the small right arrow) and explore the results
 
-> Is there a problem in the result ? 
+> Is there a problem with the data? 
 
 #### Find out wich are the countries with a negative values for *maternal mortality rate* 
 
@@ -787,5 +800,5 @@ RStudio IDE. (2021). RStudio. Retrieved October 4, 2021, from [https://www.rstud
 *Posit Primers* developed by RStudio (now *Posit*) are also useful references [https://posit.cloud/learn/primers](https://posit.cloud/learn/primers)
 
 ---
-<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><span property="dct:title">This tutorial, created</span> by <span property="cc:attributionName">Christophe Bontemps (SIAP) </span>, is licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1"></a></p>
+<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><span property="dct:title">This tutorial, created</span> by <span property="cc:attributionName">Christophe Bontemps (SIAP)</span>, is licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1"></a></p>
 
