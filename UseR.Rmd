@@ -29,7 +29,8 @@ library(stringr)
   # mutate(income = income /1000)
   
 # Stored in shinyApp
-household_survey <- read.csv2("./www//Household_Survey.csv") %>% select(-"X") %>%
+household_survey <- read.csv2("./www//Household_Survey.csv") %>% 
+  select(-"X") %>%
   select(c("household_id", "income", "location"), everything()) %>%
   rename(Id = household_id)%>%
   mutate(income = income /1000)
