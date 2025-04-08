@@ -1,7 +1,7 @@
 ---
 title: "Use R: \n A crash course"
 author: " ---- \n *Christophe Bontemps*  \n  ![](www/SIAP_logo_2020_1800.png){width=30%}  "
-date: 'Version: 1.02 \n (March 2025)'
+date: 'Version: 1.03 \n (March 2025)'
 output:
   learnr::tutorial: 
     progressive: true
@@ -22,8 +22,14 @@ library(stringr)
 # We need to have here all objects used in multiple chunks!!
 # Loading data--  
 
-## For SDG computation 
-  household_survey <- read.csv2("https://raw.githubusercontent.com/XtopheB/R_CrashCourse/main/RawData/Household_Survey.csv") %>% select(-"X") %>%
+## For SDG computation (online)
+  # household_survey <- read.csv2("https://raw.githubusercontent.com/XtopheB/R_CrashCourse/main/RawData/Household_Survey.csv") %>% select(-"X") %>%
+  # select(c("household_id", "income", "location"), everything()) %>%
+  # rename(Id = household_id)%>%
+  # mutate(income = income /1000)
+  
+# Stored in shinyApp
+household_survey <- read.csv2("./www//Household_Survey.csv") %>% select(-"X") %>%
   select(c("household_id", "income", "location"), everything()) %>%
   rename(Id = household_id)%>%
   mutate(income = income /1000)
@@ -35,20 +41,22 @@ household_rural <- household_survey %>%
 Nb_rural <- household_rural %>%
   count()
 
-
 ```
 
-## Module 2: Use R!
+## UseR!
 
 Welcome to the course.^[This document uses materials developed by *Garrick Aden-Buie, Barret Schloerke, JJ Allaire & Alexander Rossell Hayes* , the creators of the [learner](https://rstudio.github.io/learnr/) package. *This version is 2.4 (October 2023)*.]  
+
 
 
 ### Learning Objectives **TBD**
 At the end of this module you should be able to:   
 
 * Run a few lines of R code
-* Compute a few simple SDG indicators
-* Write a function, define the scope and utility of its parameters 
+* Compute averages from Survey data
+* Create descriptive statistics and graphics
+* Compute with matrices
+
 
 >*We highly recommend that you follow the order of the items proposed in this tutorial*!
 
@@ -61,12 +69,9 @@ At the end of this module you should be able to:
 ### Have you successfully completed the R-Tutorial?
 
 ```{r quiz0, echo = FALSE}
-question("Have you completed the R- Tutorial?  (*Check all that is TRUE*):",
-  answer("Yes, and R is installed on my computer", correct = TRUE, message = "Perfect"),
-  answer("Yes, but R is not installed on my computer", 
-        message = "*No worries*, you can run R directly here, but **please install R** later at [cran.r-project.org](http://cran.r-project.org)"),
-  answer("No, I'm just starting here", message = "Please start at the beginning with [Module1](https://xtophedataviz.shinyapps.io/LearnR/)"), 
-  allow_retry = TRUE
+question("Have you completed the basic R- Tutorial?  (*Check all that is TRUE*):",
+  answer("Yes", correct = TRUE, message = "Perfect"),
+  answer("No, I'm just starting here",  message = "Please start at the beginning with the Basic R course (https://xtophedataviz.shinyapps.io/BasicR/)" )
   )
   
 ```
@@ -298,5 +303,4 @@ RStudio IDE. (2021). RStudio. Retrieved October 4, 2021, from [https://www.rstud
 *Posit Primers* developed by RStudio (now *Posit*) are also useful references [https://posit.cloud/learn/primers](https://posit.cloud/learn/primers)
 
 ---
-<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><span property="dct:title">This tutorial, created</span> by <span property="cc:attributionName">Christophe Bontemps (SIAP) </span>, is licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1"></a></p>
-
+<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><span property="dct:title">This tutorial, created</span> by <span property="cc:attributionName">Christophe Bontemps (SIAP)</span>, is licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1"></a></p>

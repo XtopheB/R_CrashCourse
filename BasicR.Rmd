@@ -1,5 +1,5 @@
 ---
-title: "Learn R: \n A tutorial"
+title: "Basic R!"
 author: " ---- \n *Christophe Bontemps*  \n ![](www/SIAP_logo_2020_1800.png){width=30%}  "
 date: 'Version: 1.2 \n (April 2025)'
 output:
@@ -23,9 +23,8 @@ library(nycflights13)
 # SouthAfrica <-read.csv2("https://www.unsiap.or.jp/on_line/ML/MLData/ML_SouthAfrica.csv")
 
 # Loading data (at GitHub)
-# SouthAfrica <- read.csv2("https://raw.githubusercontent.com/XtopheB/R_CrashCourse/main/RawData/SouthAfrica.csv") 
+#SouthAfrica <- read.csv2("https://raw.githubusercontent.com/XtopheB/R_CrashCourse/main/RawData/SouthAfrica.csv") 
 
-# Stored in shinyApp
 SouthAfrica <- read.csv2("./www/SouthAfrica.csv") 
 
 SDG <- read.csv("./www/SDGperRegion.csv") %>%
@@ -37,7 +36,7 @@ mydata <- data.frame(name = c("John", "Sokol", "Chris"),
 
 ```
 
-## Learn R! 
+## Build foundational skills data handling with R 
 
 >Welcome to the course! 
 
@@ -47,216 +46,28 @@ This is an interactive tutorial that should help you verify that you and your co
 ### Learning Objectives
 At the end of this tutorial you should be able to:   
 
-* Install R on your computer
-* Install the RStudio IDE (*Integrated Development Environment*) 
-* Install packages
 * Run a few lines of R code
 * Import data into R
 * Start data exploration with `tidyverse` functions
 
-You can skip this tutorial if you've already done these things and are familiar with R and RStudio environments, but it may be safer to check!
+You can skip this tutorial if you are familiar with R, but it may be safer to refresh practice and maybe discover some new truick and packages. 
 
 ### Is this tutorial for you?
 
-Do you need to work through the tutorial? Take the quiz below to find out.
+Do you need to work through the tutorial? Take the quiz below to find out
 
-```{r quiz1, echo = FALSE}
+```{r quiz0, echo = FALSE}
 question("Check all that is TRUE:",
-  answer("R is **not** installed on my computer", message = "* Install R"),
-  answer("RStudio is **not** installed on my computer", message = "* Install RStudio IDE"),
-  answer("The ***tidyverse*** package is **not** installed on my computer", message = "* Install Packages"),
-  answer("I have **never** used R before ", message = "* A short Tutorial on R"),
-  answer("I **don't know** how to import data in R ", message = "* Importing data into R"),
-  answer("I'm good with all of that.", correct = TRUE, message = "You can skip the next steps and test your R skils directly  ;-) "),
+  answer("R is  installed on my computer",  correct = TRUE, message = "Good."),
+  answer("RStudio is installed on my computer",  correct = TRUE, message = "* RStudio will be useful later"),
+  answer("I have no experience in R",  message = "No worries, we will guide you ;-) "),
   type = "multiple",
-  incorrect = "Don't worry, this tutorial is here to help! Follow the whole tutorial and **at least** the following topics: "
+  incorrect = "Note that will compute everything online here"
 )
+  
 ```
 
 >*We highly recommend that you follow the order of the items proposed in this tutorial*!
-
-## Install R
-
-### What is R? 
-R is a statistical programming language and environment for statistical computing and graphics. It is an alternative to the traditional statistical packages such as SPSS, STATA and SAS. It has several benefits including: 
-
-- it is open source – license free
-- it can be used on 3 all operating systems: MacOS, Linux, UNIX and Windows; and 
-- it is supported by an extensive community.
-
-> If your computer was a plane, we may think of R as the engine and propeller
-
-### How to install R
-The best way is to follow the instructions in this video (*2 min 45s*)
-
-![](https://youtu.be/5W8w9F1dsRA?si=ox-_JmUHV-3X9lUt)
-
-Link to install R: <a href= "https://cran.r-project.org/" target="_blank">https://cran.r-project.org/</a>
-
-### Test your knowledge
-
-```{r quiz2, echo=FALSE}
-quiz(caption = "Quiz - About R",
-  question("Is R free to download and use?",
-    answer("Yes!", correct = TRUE, message = "R is free _and_ open source, which means that anyone can read, use, and copy the source code of the R language."),
-    answer("No.",  message = "R is indeed free _AND_ open source, which means that anyone can read, use, and copy the source code of the R language.")
-  ),
-  question("Where do you download R?",
-    answer("www.rstudio.com/download"),
-    answer("[cloud.r-project.org](http://cloud.r-project.org)", correct = TRUE, message = "You can also download R from [cran.r-project.org](http://cran.r-project.org)"),
-    answer("www.r-project.org", message = "Good try, but not exactly. www.r-project.org doesn't provide a download link, but it does provide a link to one the websites above."),
-    answer("www.r.com"),
-    allow_retry = TRUE
-  ),
-  question("How often should you update R?",
-    answer("Everytime you use it", message = "This will be too often unless you use R very rarely!"),
-    answer("About once a year", correct = TRUE, "A new version of R is released about once a year. Update sooner if you encounter a bug that you cannot explain."),
-    answer("Never", message = "A new version of R is released about once a year. I'll assume that you are using the newest version of R, which will be the fastest version with the fewest unexpected behaviors." ),
-    random_answer_order = TRUE,
-    allow_retry = TRUE
-  )
-)
-```
-
-## Install RStudio
-
-### What is RStudio?
-RStudio is an R-specific Integrated Development Environment (IDE). This means it is a piece of software that was built for R (even though it can support other programming languages software) that combines several tools in one environment to make working with R more productive. 
-
-The RStudio IDE comprises several windows including a console, an editor for writing, editing and executing source code along with tools for plotting, viewing history, debugging and managing your workspace.
-
-RStudio is the most common, beginner-friendly software for R users and the main tool that will be used for the practical exercises in this e-learning course.
-
-> If your computer was a plane, we may think of RStudio as the cockpit  
-
-### How to install RStudio
-
- RStudio makes editing, programming and visualizing in R much easier and we highly recommend that you install it and use it.  
- 
- For that, follow the instructions in this video (*50 sec*)
-
-![](https://vimeo.com/203516968)
-
-Link to install RStudio: <a href= "https://www.rstudio.com/products/rstudio/download/" target="_blank">https://www.rstudio.com/products/rstudio/download/</a>  
-
-
-### Test your knowledge
-
-```{r quiz3, echo=FALSE}
-quiz(caption = "Quiz - Install RStudio",
-  question("What is the RStudio IDE?",
-    answer("An application that makes it easier to use R.", correct = TRUE, message = "RStudio organizes your workspace and makes it easier to write, use, debug, and save R code. We highly recommend it and we will rely on the RStudio IDE in this course."),
-    answer("An application that let's you use R without writing any code", message = "And thank goodness! Code provides a reproducible record of your work, which is essential for data science."),
-    answer("A spreadsheet program like Microsoft Excel.", message = "No. Although we can visualise data in RStudio almost as in Microsoft Excel, RStudio is much more than that!"),
-    answer("Another name for R", message = "No. R and RStudio are two separate things: R is the real data and code processing *engine* while RStudio is the environment that facilitate your life to provide instrcutions, like a *cokpit*. "),
-    allow_retry = TRUE
-  ),
-  question("Is the RStudio IDE free to download and use?",
-    answer("Yes!", correct = TRUE, message = "Like R, RStudio is free and open-source. There do exist professional versions of RStudio with enhanced features, but we will not rely on those features."),
-    answer("No.", message = "Like R, RStudio is free and open-source. There do exist professional versions of RStudio with enhanced features, but we will not rely on those features.")
-  ),
-  question("Where do you download RStudio?",
-    answer("www.rstudio.com/download", correct = TRUE, message = "For these tutorials, download and install the RStudio Desktop Open Source License."),
-    answer("[cloud.r-project.org](http://cloud.r-project.org)", message = "This is where you download R, not RStudio."),
-    answer("www.r-project.org"),
-    answer("[cran.rstudio.org](http://cran.rstudio.org)"),
-    allow_retry = TRUE
-  ),
-  question("Do you need to install R if you already have RStudio?",
-    answer("Yes.", correct = TRUE, message = " Yes. RStudio needs the R *engine* to work"),
-    answer("No.", message = "R does not come with RStudio; you need to install R separately. It is best to start by installing R and then RStudio.")
-  )
-)
-```
-
-## Install Packages
-R has several functions that are loaded and available in the basic installation of the programme. However, there are a range of other convenient functions and codes written by R users that can be used freely during your R session. These functions are distributed as R packages, which are basically a collection of R code, data sets, documentation, and tests that can be easily shared with others.
-
-> If your computer was a plane, we may think of the packages as all the components needed to fly (landing gear, gyroscope, lights, GPS, ... )   
-
-### How to install R packages
-The best way is to follow the instructions in this video (*1 min 02s*)
-
-![](https://youtu.be/u1r5XTqrCTQ?si=JxTF-VWz14EqY44t)
-
-
-### The “tidyverse” package
-To use an R package that did not come with the installation of RStudio, you must first install it, using the command `install.packages()`. 
-
-For example, to install the package *tidyverse*, type and execute the following line of code in the script editor window. The argument for the R function is the name of the package, which must be enclosed by double quotation marks.  The tidyverse package is essential for data manipulation, exploration and visualization
-
-```{r, eval= FALSE}
-install.packages("tidyverse")
-```
-
-
-This command will install the package *tidyverse* and store it in a directory in the R environment referred to as the “library”. 
-The *tidyverse* package contains 8 packages namely *ggplot2, dplyr, tidyr, readr, purrr, tibble, stringr, and forcats* that are loaded automatically once with the `install.packages(“tidyverse”)` command.
-
-### The “foreign” and “haven” Packages 
-
-One very commonly used R package is called “*foreign*”. This package is necessary to read and write data files from other statistical software such as SPSS, Stata, SAS and Minitab into R. It is also needed for reading and writing “dBase” files that carry the .dbf extension.
-
-> To search for the “foreign” package, go to the “*Files/ Plots/ Packages and Help*” pane and select the tab Packages. Type “*foreign*” in the search bar. You should see a result like the image below.  The unchecked box means that the package is available in the library but has not been loaded for the library for use in the current R session.  ![](www/packages.png){width=60%}
-
-
-Similar to the “*foreign*” package, R includes a package called “*haven*” that also support the import and export of data sets in commercial statistical packages such as SPSS, Stata and SAS. 
-
-
-### How to access packages after they have been installed
-
-To use R packages during your R session, you must load it from the library using the `library()` function. For example, to load the foreign package, we do the following:
-
-```{r, eval= FALSE}
-library("foreign")
-```
-
-To access the manual for packages that have been loaded in the library, use the *help* argument with the function `library( )`
-
-
-```{r, eval= FALSE}
-library(help="foreign")
-```
-
-
-Alternatively, you can simply use `help( )` function and specify the name of the package:
-
-```{r, eval= FALSE}
-help("foreign")
-```
-
-
-> Note: You need to install R packages only once. However, you must load the relevant packages needed to perform the desired functions in R (using the `library( )` function), each time you start any R session.
-
-
-
-### Test your knowledge
-
-```{r names, echo = FALSE}
-quiz(caption = "Quiz - Working with Packages",
-  question("What command do you use to install packages?",
-    answer("`library()`", message = "We will see what `library()` does later."),
-    answer("`install.packages()`", correct = TRUE),
-    answer("`install_packages()`"),
-    answer("There is no command. You must visit [cran.r-project.org](http://cran.r-project.org) and download packages manually.", message = "R makes it easy to download packages. You connect to the internet and then run one of the commands above."),
-    allow_retry = TRUE
-  ),
-  question("How often do you need to install a package on your computer?",
-    answer("Every time you restart R"),
-    answer("Every time you restart your computer"),
-    answer("Only once. Afterwards, R can find it on your hard drive as needed.", correct = TRUE),
-    answer("Never, as long as you are connected to the internet.", message = "This could be true if you are using R over a cloud service. However, if you are using R locally on your own computer, you will need to install each package that you use on your computer."),
-    allow_retry = TRUE
-  ),
-  question("What is the tidyverse?",
-    answer("A collection of packages that work well together and provide tools for common data science tasks.", correct = TRUE, message = 'You can install all of the tidyverse packages at once with `install.packages("tidyverse")`.'),
-    answer("A word processing program for R"),
-    answer("A code style that reads like poetry"),
-    answer("An alternate universe where everyone is an R programmer."),
-    allow_retry = TRUE
-  )
-)
-```
 
 
 ## A short tutorial on R
