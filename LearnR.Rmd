@@ -1,7 +1,7 @@
 ---
 title: "Learn R: \n A tutorial"
 author: " ---- \n *Christophe Bontemps*  \n ![](www/SIAP_logo_2020_1800.png){width=30%}  "
-date: 'Version: 1.1 \n (April 2025)'
+date: 'Version: 1.2 \n (April 2025)'
 output:
   learnr::tutorial: 
     progressive: true
@@ -36,7 +36,7 @@ mydata <- data.frame(name = c("John", "Sokol", "Chris"),
 
 ## Module 1: Learn R! 
 
-Welcome to the course. This is an interactive tutorial that should help you verify that you and your computer are ready to use the materials developed for this course using R and RStudio.^[This document uses materials developed by *Garrick Aden-Buie, Barret Schloerke, JJ Allaire & Alexander Rossell Hayes* , the creators of the [learner](https://rstudio.github.io/learnr/) package.]  
+Welcome to the course. This is an interactive tutorial that should help you verify that you and your computer are ready to use the materials developed for this course using R and RStudio.^[This document uses materials developed by *Garrick Aden-Buie, Barret Schloerke, JJ Allaire & Alexander Rossell Hayes* , the creators of the <a href="https://rstudio.github.io/learnr/" target="_blank">learnR</a> package.]  
 
 
 ### Learning Objectives
@@ -44,8 +44,10 @@ At the end of this tutorial you should be able to:
 
 * Install R on your computer
 * Install the RStudio IDE (*Integrated Development Environment*) 
-* Install the `tidyverse` R package
+* Install packages
 * Run a few lines of R code
+* Import data into R
+* Start data exploration with `tidyverse` functions
 
 You can skip this tutorial if you've already done these things and are familiar with R and RStudio environments, but it may be safer to check!
 
@@ -82,7 +84,7 @@ The best way is to follow the instructions in this video (*2 min 45s*)
 
 ![](https://youtu.be/5W8w9F1dsRA?si=ox-_JmUHV-3X9lUt)
 
-Link to install R: [https://cran.r-project.org/](https://cran.r-project.org/)
+Link to install R: <a href= "https://cran.r-project.org/" target="_blank">https://cran.r-project.org/</a>
 
 ### Test your knowledge
 
@@ -128,7 +130,7 @@ RStudio is the most common, beginner-friendly software for R users and the main 
 
 ![](https://vimeo.com/203516968)
 
-Link to install RStudio: [https://www.rstudio.com/products/rstudio/download/ ](https://www.rstudio.com/products/rstudio/download/ )
+Link to install RStudio: <a href= "https://www.rstudio.com/products/rstudio/download/" target="_blank">https://www.rstudio.com/products/rstudio/download/</a>  
 
 
 ### Test your knowledge
@@ -788,7 +790,8 @@ filter(maternal_mortality_ratio <30 , region_name =="Asia" ) %>%
 **Yes**,  there is a  duplicate problem! Can you solve it? (*see the `hints` to find out*).
 
 
-> There are a lot of other things to learn, please read the [Tidyverse reference manual](https://dplyr.tidyverse.org/reference/index.html) and  enjoy other tutorials like [this one](https://www.r-bloggers.com/2021/04/tidyverse-in-r-complete-tutorial/)  or [that one](https://www.pkimes.com/PR2019replicathon/tutorials/0b_R_tidyverse.html) and search on the web by yourself, there are hundreds of examples. Enjoy!
+> There are a lot of other things to learn, please read the <a href = "https://dplyr.tidyverse.org/reference/index.html" target="_blank"> Tidyverse reference manual</a> and  enjoy other tutorials like <a href = "https://www.r-bloggers.com/2021/04/tidyverse-in-r-complete-tutorial/" target="_blank"> this one </a>  or <a href = "https://www.pkimes.com/PR2019replicathon/tutorials/0b_R_tidyverse.html" target="_blank"> that one </a>  and search on the web by yourself, there are hundreds of examples. Enjoy!
+
 
 ---
 
