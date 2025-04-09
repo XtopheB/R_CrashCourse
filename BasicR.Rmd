@@ -16,8 +16,6 @@ description: >
 # In this chuck, all elements are loaded for the rest of the document!
 library(learnr)
 library(tidyverse)
-library(nycflights13)
-#library(stringer)
 
 # Loading data (at SIAP -- Different name of CSV!! but same content )
 # SouthAfrica <-read.csv2("https://www.unsiap.or.jp/on_line/ML/MLData/ML_SouthAfrica.csv")
@@ -36,21 +34,18 @@ mydata <- data.frame(name = c("John", "Sokol", "Chris"),
 
 ```
 
-## Build foundational skills data handling with R 
+## Develop essential skills for data handling
 
->Welcome to the course! 
-
-This is an interactive tutorial that should help you verify that you and your computer are ready to use R and RStudio.^[This document uses materials developed by *Garrick Aden-Buie, Barret Schloerke, JJ Allaire & Alexander Rossell Hayes* , the creators of the <a href="https://rstudio.github.io/learnr/" target="_blank">learnR</a> package.]  
-
+This short interactive tutorial will introduce you to the essential elements of data handling in R, with a focus on using `tidyverse` for simple and efficient coding.  
 
 ### Learning Objectives
 At the end of this tutorial you should be able to:   
 
 * Run a few lines of R code
 * Import data into R
-* Start data exploration with `tidyverse` functions
+* Start data exploration with `tidyverse` 
 
-You can skip this tutorial if you are familiar with R, but it may be safer to refresh practice and maybe discover some new truick and packages. 
+You can skip this tutorial if you are familiar with R and `tidyverse` but it may be safer to refresh your practice and maybe discover some new tricks and packages. 
 
 ### Is this tutorial for you?
 
@@ -80,18 +75,19 @@ a <- 3 + 4
 a
 ```
 
-In the block of code above, we performed a simple mathematical operation **3 + 4** and stored the sum in **a** variable called a. Variables are used to store values for later use. The code above allows R to evaluate the expression 3 + 4 (on the right of the assignment operator) and then assign the sum 7, to the variable a (on the left of the assignment operator), for later use.
+In the block of code above, we performed a simple mathematical operation **3 + 4** and stored the result (here the sum) in a variable called ***a***. Variables are used to store values for later use. The code above allows R to evaluate the expression 3 + 4 (on the right of the assignment operator) and then assign the sum; here 7, to the variable a (on the left of the assignment operator), for later use.
 
-> Notice that the result is not immediately visible in the console. Instead, you can see the name of the variable in the R workspace, under the environment tab. To print out or view the content of the variable **a** in the console, simply type the name of the variable and run the command. You should now see the value (7) displayed in the console.
+> The assignment done in the first line is "silent" - nothing will be displayed. One must request the value of the variable to be displayed, hence the second line.  
 
 ### Adding comments to your code:
+
 It is a good practice to annotate your code in the R script editor. This includes adding short explanations on what the code or commands that you have written do as well as the meaning of variables or any objects that are created during an R Session. These explanations are written as comments.
 
 In R, comments are preceded by the symbol `# ` (pound or hash). This helps R distinguish between comments and actual lines or blocks of code that the R programme must execute.
 
 
 ```{r, eval =TRUE}
-# Create variable a that stores the sum of 3 and 4
+# Create variable, named a, that stores the sum of 3 and 4
 a <- 3 + 4
 a
 ```
@@ -109,7 +105,7 @@ myage <- 25
 myage
 ```
 
-Now if I want to make it pretty, I can use the `paste()` function.  This function is quite useful for presenting results, titles, etc.,  as it *paste* text ( within quotes "  ") and other R objects (here a number). 
+The first line does the assignment to the variable ** myage** (silently).  Now if I want to see the value, and  make it pretty, I can use the `paste()` function.  This function is quite useful for presenting results, titles, etc.,  as it *paste* text ( within quotes "  ") and other R objects (here a number). 
 
 ```{r, prepare}
 paste("My age is", myage)
@@ -138,7 +134,7 @@ question("",
 )
 ```
 
-Try it by yourself and click on the `Run Code`  blue button. You can modify the code to change value, rename the objects *myage*, *MyAge etc.  
+Try it by yourself and click on the `Run Code`  blue button. You can modify the code to change value, rename the objects *myage*, *MyAge etc.  The `Start Over` button resets the code to initial, so don't be shy to try! 
 
 ```{r tryit, exercise = TRUE, exercise.eval = FALSE }
 myage <- 25
@@ -150,27 +146,55 @@ paste("My age is", myage)
 
 ### Objects
 
-In R everything is an **object**. This means that an element may embed some other *"things"* (other object)
+In R everything is an **object**. This means that an element may embed some other *"things"* (other objects)
 
 > Let's create objects!
 
 #### Vectors
 
-Vectors can be created (and conceived) as a concatenation of numbers. We use The c()`  function to concatenate objects.
+Vectors can be created (and conceived) as a concatenation of numbers. We use The `c()`  function to concatenate objects.
 
 ```{r}
 # Let's create a vector
 a <- c(1, 2, 3)
+
+# Print content
+a
+```
+
+> Try by yourself!
+
+In the code below:
+
+- Change the value of ***a*** and ***b***
+- Concatenate ***a*** and ***b*** in the new vector ***myvect*** (fill the blank with code)
+- Display it! 
+
+
+```{r tryvect, exercise = TRUE, exercise.eval = FALSE }
+a <- c(1, 2, 3)
 # And another one 
 b <- c(4, 5, 6)
-
 # Concatenate and assign values to "myvect"
-myvect <- c(a, b)
+myvect <- 
+```
+
+
+```{r tryvect-hint-1}
+# You can use again the c() function (fill the blanks)
+myvect <- c( , )
+
+```
+
+```{r tryvect-solution}
+# Solution: You can use again the c() function 
+# Concatenate a and b and assign values to "myvect"
+myvect <- c(a,b)
 
 myvect
 ```
 
-We have a double concatenation here since `c(1,2,3)`is already a concatenate object (a vector here)
+We have a double concatenation here since ***a*** = `c(1,2,3)` is already a concatenated object (a vector here)
 
 > But we can also concatenate things that are of **different nature**! 
 
@@ -193,7 +217,6 @@ question("",
          allow_retry = TRUE
 )
 ```
-
 
 ### Data Frames
 
@@ -219,20 +242,28 @@ head(mydata)
 
 The **structure** of the data frame is given by `str()` function. It is very important to identify which variable is numerical (*num*) or an integer (*int*), a factor (*factor*) or even a string (*chr*, for character) or a Boolean (*logi* with values TRUE/FALSE) as some operations will only apply for some *type* of variables.
 
+> Look at the output below and identify the *type* of each variable
+
 ```{r}
 str(mydata)
 ```
 
-In this example,  we have 3 objects embedded in the data frame `mydata` which are: `name` (character), `age` (numeric) and  `student` (logical). Each element can be accessed directly by adding the  \$ sign to the data frame. For example, the full list of names can be accessed using:   
+In this example,  we have 3 objects embedded in the data frame `mydata` which are:
+
+- `name` (*character*), 
+- `age` (*numeric*) and  
+- `student` (*logical*). 
+
+Each element can be accessed directly by adding the  `$` sign to the data frame. For example, the content of the variable `name` can be accessed using:   
 
 ```{r}
 mydata$name
 ```
 
 
-But, we can also extract information directly from the data frame `mydata` using its rows and columns.  
+But, we can also extract eaxh cell of  the data frame `mydata` using its rows and columns numbers.  
 
-***What will the following code return?** 
+***What will the following code return?*** 
   
 ```{r, eval= FALSE}
 mydata[1,]
@@ -241,10 +272,10 @@ mydata[1,]
 
 ```{r extract, echo = FALSE}
 question("",
-         answer("The first row of mydata (*i.e.*, John  25  TRUE) ", message = " Well-done", correct = TRUE),
-         answer("The first column of mydata with all names (John Sokol Chris) ",
+         answer("The first row of mydata (*i.e.*, *John  25  TRUE*) ", message = " Well-done", correct = TRUE),
+         answer("The first column of mydata with all names (*John Sokol Chris*) ",
                 message = "No, but that was close!"),
-          answer("The first element of mydata (John)",
+          answer("The first element of mydata (*John*)",
                 message = "No, try again"),
          random_answer_order = TRUE,
          allow_retry = TRUE
@@ -253,21 +284,29 @@ question("",
 
 Check it out by yourself
 
-```{r mydata, exercise = TRUE}
+```{r mydata, exercise = TRUE, exercise.eval = FALSE}
 # run this code to find out! 
 mydata[1,]
 
 ```
 
+```{r mydata-hint-1}
+# You can visualize the whole data set again to be sure 
+mydata
+
+```
+
 We can also have quick statistics using the  `summary()` function. As you see in the output, the `summary()`  function adapts the result to the **type** of variable, whether it is a character (no summary for  *name*), a numeric variable (*age*), or a Boolean or logical variable (*student* takes TRUE or FALSE values).  
 
-> This is an important feature of R functions and highlights the importance having **the corect *type*** for the variables in a data frame.  
+> This is an important feature of R functions and highlights the importance having the correct ***type*** for the variables in a data frame.  
 
 
 ```{r, eval=TRUE}
 # A summary
 summary(mydata)
 ```
+
+> Typically, data sets (imported or created) will be stored in data frames
 
 #### A new data.frame 
 
@@ -281,7 +320,6 @@ mynewdata <-  data.frame(
   english = c(TRUE, FALSE, FALSE, FALSE, TRUE)
 )
 ```
-
 
 Play with `mynewdata` (recommended)  and **then** extract the **third** element of the **first** row
 
@@ -314,15 +352,12 @@ mynewdata[ , ]
 
 ```
 
-
 ```{r extract2-solution}
 # Solution : 1 for the row and 3 for column in that order
 mynewdata[1,3]
 ```
 
-
-
-> We'll see later on that there are many other ways to play with `data.frames`
+>We'll see later on that there are many other ways to play with *data frames*, in particular using the `tidyverse`syntax
 
 ##  Importing data into R
 
@@ -337,7 +372,7 @@ It is really easy to import files in R. As usual, we will just need to use the r
 install.packages(readxl)
 ```
 
-> Remeber that you only need to intall a package once, but have to load it at in every R session that uses it. 
+> Remember that you only need to intall a package once, but have to load it at in every R session that uses it. 
 
 The function `read_excel( )` accepts several arguments, such as the sheet to read in the excel file, or whether or not to use the column names, but the most important argument is the **path** to the xls/xlsx file, as below:  
 
@@ -350,6 +385,8 @@ Mydataset <- read_excel(path ="Myexcel.xls")
 ```
 
 The lines of code above first load the package *readxl* using the `library()` function.  The second line, creates a data frame called *Mydataset* that stores the data from the excel data file called “*Myexcel.xls*”.  Remember that a data frame is a data structure in R that stores spread-sheet like data, as rows (observations or cases) and columns (variables). 
+
+> The `path` indicates where the file is located on your hard drive. By default, R will search in the same folder of your file but this can vary, and can be adjusted.
 
 
 ### Importing Stata files 
@@ -433,8 +470,7 @@ Now, can you display the first 5 lines of the data set (maybe using using the `h
 head(SDG, n=5)
 ```
 
-> That was easy, right? 
-
+> That was easy, right? But this will be even easier with the `tidyverse`syntax.
 
 
 ## Playing with `tidyverse` 
@@ -443,27 +479,27 @@ The tidyverse makes working with data in R easier and more natural, like telling
 
 There are many functions available in the package `tidyverse`, in particular, one has many tools for filtering and visualizing the data. 
  
-First, let's examine the `pipe` operator that links operations:  `%>% `. This is how we tell the story and move the data set from one transformation to another.  
+> First, let's examine the `pipe` operator that pass the result of one expression into the next:  `%>%`. This is how we tell a story with code and, for example, move the data set from one transformation to another.^[In R, both `%>%`  (from tidyverse) and `|>`  (base R) can be used to pass the result of one expression into the next. We will work with the tidyverse where `%>%` has more features, but the logic is the same.]  
  
-Imagine we are only interested in the first 3 variables and want to count the number of countries that are in the "Asia" region.
+Imagine the following data story:  we are interested in only the first 3 variables and want to count the number of countries that are in the "Asia" region. This is how the code would translate that story: 
 
 ```{r}
-# I create a new data frame with only the first 3 variables (note the use of " : " )
+# Firstly, I create a new data frame with only the first 3 variables (note the use of " : " )
 df <- SDG[, 1:3]
 
-#Now I want to subset that data to keep only the "Asia" region (note the use of " subset() " )
+# Then,  I want to subset that data to keep only the "Asia" region (note the use of " subset() " )
 df <- subset(df, region_name == "Asia" & population >= 50) 
 
-# Counting the number of rows (note the use of " nrow()" )
+# Finally, I Count the number of rows (note the use of " nrow()" )
 nrow(df)
 ```
 
-This requires quite a few lines of code...
+This requires quite a few lines of code, and a sequence of actions...
 
 >  But there is a more readable solution
 
 
-Then `%>% ` links operations in a very easy-to-read sequence. The code below does exactly the same operation as before, but using operation linking using  `%>% `
+Then `%>% ` links operations in a very easy-to-read sequence. The code below does exactly the same operation as before, but passing the result of one expression into the next using  `%>% `.
 
 > One may read  `%>% ` as:  *next do this (please)* !
 
@@ -476,25 +512,24 @@ SDG %>%
 
 The function `filter()`  lets you use a logical test to extract specific rows from a data frame. `filter()` will return every row that passes **each** logical test.^[ `filter()` is an alternative to `subset()`]
 
-This operator `%>% ` (or *pipe*) will forward a value, or the result of an expression, into the next function call/expression.
-
 So the story above reads as: 
 
 - Take the data set `SDG`,
 - **then**  `filter` only observations where *region_name* is exactly "ASIA"  **and** for which *population* is above 50,  
 - **then** give me the number of rows.  
 
-Easy, no? 
+> Easy, no? 
 
 ### Test Your Knowledge
-We can use many different operations to filter data, such as:
+We can use many different logical tests to filter data, such as:
 
-- ==  (identical),  > (strictly greater), >= (greater or equal)   
--  & (and) , | (or) , ! (not) 
+- `==`  (identical),
+- `>` (strictly greater),
+- `>=` (greater or equal)   
+-  `&` (and) , `|` (or) , `!` (not) 
 
 
-
-***What will the following code return?** 
+***What will the following code return?*** 
   
 ```{r, eval= FALSE}
 SDG %>%  
@@ -522,14 +557,19 @@ question("",
 )
 ```
 
-
+> From now on, we will write code using the `tidyverse` syntax and the pipe  `%>%` operator as often as possible. 
 
 ### Common mistakes
 
-In R, the order of operations doesn't work like English. You **can't** write `filter(SDG, region_name == "Asia" | "Africa" )`, even though you want all countries that are either in Asia or Africa. 
+In R, the order of operations doesn't work like English.
 
+$\hookrightarrow$ You **cannot** write `filter(SDG, region_name == "Asia" | "Africa" )`, even though you want all countries that are either in Asia or Africa.  You have to repeat the condition in full:
 
-A useful short-hand for this problem is `x %in% y`. This will select every row where `x` is one of the values in `y`. We could use it to rewrite the code in the question above:
+`filter(SDG, region_name == "Asia" | region_name == "Africa" )`
+
+> This is one of the common mistake we all do! 
+
+A useful solution for this problem is to use the ` %in%` operator.  In the condition:  `x %in% y`, we will select every row where *x* is one of the values **in** *y*. We could use it to rewrite the code above as:
 
 ```{r, eval = FALSE}
 SDG %>%  
@@ -537,7 +577,9 @@ SDG %>%
     
 ```
 
-One may also use some advanced functions such as `str_starts` (*string starts with*), but in our case, the output will include "Americas"
+### Advanced functions
+
+You can also use advanced functions like `str_starts()` (*string starts with*) to select countries in a region starting with "A" —though in our case, this would include "*Americas*" as well!
 
 ```{r}
 SDG %>%  
@@ -559,9 +601,9 @@ SDG %>%
   filter(maternal_mortality_ratio <= 12)
 ```
 
-Find the variable *maternal_mortality_ratio* (use the small right arrow) and explore the results
+Find the variable *maternal_mortality_ratio* variable (use the small right arrow) and explore the table with the results
 
-> Is there a problem with the data? 
+> Is there a problem with the *maternal_mortality_ratio* values? 
 
 #### Find out wich are the countries with a negative values for *maternal mortality rate* 
 
@@ -570,7 +612,6 @@ Find the variable *maternal_mortality_ratio* (use the small right arrow) and exp
 ```
     
 
-    
 ```{r filterex2-solution}
 # To ease the reading, we use select() to restrict to variables of interest 
 SDG %>% 
@@ -580,36 +621,68 @@ filter(maternal_mortality_ratio < 0 ) %>%
 
 #### Find the number of countries in Asia with a  *maternal mortality rate* lower than 30%? 
 
-```{r filterex3, exercise = TRUE}
+```{r filterex3, exercise = TRUE, exercise.eval = FALSE}
+SDG %>% 
+```
+
+
+```{r filterex3-hint}
+# we can use filter() to select the countries fulfilling the conditions
+
+SDG %>% 
+filter(maternal_mortality_ratio <30 & region_name =="Asia" )
 
 ```
 
-```{r filterex3-hint}
-# Here there is a problem since we  have duplicates. One may use  distinct() 
+
+```{r filterex3-solution}
+# we use select() to restrict to variables of interest (easier to read)
 
 SDG %>% 
-filter(maternal_mortality_ratio <30 , region_name =="Asia" ) %>%
+filter(maternal_mortality_ratio <30 & region_name =="Asia" ) %>%
   select(country, population, maternal_mortality_ratio) 
 
 
 ```
 
-```{r filterex3-solution}
-# Solution: We use distinct() in the end to remove duplicates
 
+> Is there a second problem with the data set ? 
+
+ Let's look again and use the function `select`to select only few variables of interest (easier to read) 
+
+```{r filterex4, exercise = TRUE, exercise.eval = TRUE}
+# we use select() to restrict to variables of interest (easier to read)
 SDG %>% 
 filter(maternal_mortality_ratio <30 , region_name =="Asia" ) %>%
-  select(country, population, maternal_mortality_ratio)  %>% 
-  distinct() 
-
+  select(country, population, maternal_mortality_ratio) 
 
 ```
 
-**Yes**,  there is a  duplicate problem! Can you solve it? (*see the `hints` to find out*).
+**Yes**,  there is a  duplicate problem! 
+Can you solve it and **count**  the number of countries who fulfill the conditions? (*see the `hints` to find out*).
+
+```{r filterex4-hint}
+# we can use distinct() to select only lines with distinct values 
+
+SDG %>% 
+filter(maternal_mortality_ratio <30 & region_name =="Asia" ) %>%
+  select(country, population, maternal_mortality_ratio) %>%
+  distinct()
+```
+
+```{r filterex4-solution }
+# Solution:  we can use distinct() to select only lines with distinct values 
+
+SDG %>% 
+filter(maternal_mortality_ratio <30 & region_name =="Asia" ) %>%
+  select(country, population, maternal_mortality_ratio) %>%
+  distinct() %>%
+  nrow()
+  
+```
 
 
-> There are a lot of other things to learn, please read the <a href = "https://dplyr.tidyverse.org/reference/index.html" target="_blank"> Tidyverse reference manual</a> and  enjoy other tutorials like <a href = "https://www.r-bloggers.com/2021/04/tidyverse-in-r-complete-tutorial/" target="_blank"> this one </a>  or <a href = "https://www.pkimes.com/PR2019replicathon/tutorials/0b_R_tidyverse.html" target="_blank"> that one </a>  and search on the web by yourself, there are hundreds of examples. Enjoy!
-
+> Many other functions from the `tidyverse` can help you explore, refine, and transform a dataset to compute meaningful values and indicators. With practice, you'll discover these tools and naturally incorporate them into your coding routine.
 
 ---
 
