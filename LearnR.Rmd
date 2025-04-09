@@ -16,8 +16,6 @@ description: >
 # In this chuck, all elements are loaded for the rest of the document!
 library(learnr)
 library(tidyverse)
-library(nycflights13)
-#library(stringer)
 
 # Loading data (at SIAP -- Different name of CSV!! but same content )
 # SouthAfrica <-read.csv2("https://www.unsiap.or.jp/on_line/ML/MLData/ML_SouthAfrica.csv")
