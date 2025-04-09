@@ -533,7 +533,7 @@ We can use many different logical tests to filter data, such as:
   
 ```{r, eval= FALSE}
 SDG %>%  
-  filter(region_name == 'Asia' | region_name == "Africa", 
+  filter( (region_name == 'Asia' | region_name == "Africa") &
          internet_use > 60 ) 
   
 ```
@@ -541,10 +541,10 @@ SDG %>%
 
 ```{r logicals, echo = FALSE}
 question("",
-         answer("Every country in either Asia or Africa with internet use greater than 60% ",
+         answer("Every country in either Asia or Africa,  with internet use greater than 60% ",
                 message = " Yes, the filter applies to region_name with  \" | \"  wich means  \" or \" , Excellent!",
                 correct = TRUE),
-         answer("Every country with a name starting with \"A\" with internet use greater than 50% ",
+         answer("Every country with a name starting with \"A\",  with internet use greater than 60% ",
                 message = " No, the filter  applies to region_name  not to country. Try again!  "),
           answer("Every country in either Asia or Africa",
                 message = " No, the filter also conditions on internet_use, try again!  "),
@@ -563,13 +563,13 @@ question("",
 
 In R, the order of operations doesn't work like English.
 
-$\hookrightarrow$ You **cannot** write `filter(SDG, region_name == "Asia" | "Africa" )`, even though you want all countries that are either in Asia or Africa.  You have to repeat the condition in full:
+$\hookrightarrow$ You **cannot** write `filter(SDG, region_name == "Asia" | "Africa" )`, R will expect a condition after the `|` and will return an error, even though you want `region_name` that are *either* Asia ***or**  Africa. You have to repeat the condition in full, and write: 
 
 `filter(SDG, region_name == "Asia" | region_name == "Africa" )`
 
 > This is one of the common mistake we all do! 
 
-A useful solution for this problem is to use the ` %in%` operator.  In the condition:  `x %in% y`, we will select every row where *x* is one of the values **in** *y*. We could use it to rewrite the code above as:
+A useful solution for this problem is to use the ` %in%` operator.  In the condition:  `x %in% y`, we will select every row where *x* is one of the values **in** *y* (for example a vector with a set of values). We could use it to rewrite the code above as:
 
 ```{r, eval = FALSE}
 SDG %>%  
