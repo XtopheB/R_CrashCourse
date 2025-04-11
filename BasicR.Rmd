@@ -682,6 +682,9 @@ filter(maternal_mortality_ratio <30 & region_name =="Asia" ) %>%
 ```
 
 
+### The mutate and summarize functions  TTTT
+
+
 > Many other functions from the `tidyverse` can help you explore, refine, and transform a dataset to compute meaningful values and indicators. With practice, you'll discover these tools and naturally incorporate them into your coding routine.
 
 ---

@@ -1,5 +1,5 @@
 ---
-title: "Use R: \n A crash course"
+title: "Use R!"
 author: " ---- \n *Christophe Bontemps*  \n  ![](www/SIAP_logo_2020_1800.png){width=30%}  "
 date: 'Version: 1.03 \n (March 2025)'
 output:
@@ -38,16 +38,19 @@ household_survey <- read.csv2("./www//Household_Survey.csv") %>%
 household_rural <- household_survey %>%
   filter(location == "Rural")
 
+total_rural <- household_rural %>%
+  mutate(total = sum(income))
+
 Nb_rural <- household_rural %>%
   count()
+
+
 
 ```
 
 ## Work with survey data and Compute SDG indicators 
 
-Welcome to the course.^[This document uses materials developed by *Garrick Aden-Buie, Barret Schloerke, JJ Allaire & Alexander Rossell Hayes* , the creators of the [learner](https://rstudio.github.io/learnr/) package. *This version is 2.4 (October 2023)*.]  
-
-
+Using the materials covered in the previous modules, we will start computing some simple SDGs using interactive coding and with a focus on using `tidyverse` for simple and efficient coding. 
 
 ### Learning Objectives **TBD**
 At the end of this module you should be able to:   
@@ -58,13 +61,7 @@ At the end of this module you should be able to:
 * Compute with matrices
 
 
->*We highly recommend that you follow the order of the items proposed in this tutorial*!
-
-```{r}
-#  The code below is for the moment a copy of LearnR.Rmd
-#  The construction will be based on the same structure
-```
-
+> *We highly recommend that you follow the order of the items proposed in this tutorial*!
 
 ### Have you successfully completed the R-Tutorial?
 
@@ -76,10 +73,11 @@ question("Have you completed the basic R- Tutorial?  (*Check all that is TRUE*):
   
 ```
 
-## Let's start simple
 
-### Compute the average income by category from survey data
-We have a data set from a survey that reports information on `r nrow(household_survey)` households, including their *location* (urban or rural), their *income* and other information.
+
+## Average income from survey data
+
+We have a data set from a survey that reports information on `r nrow(household_survey)` households, including their *location* (urban or rural), their *income* and other information. 
 
 Let's have a look at the 5 first rows of this data set called *household_survey*:
 
@@ -87,12 +85,14 @@ Let's have a look at the 5 first rows of this data set called *household_survey*
 head(household_survey)
 ```
 
+In total we have  `r ncol(household_survey)` variable to explore (*use the top right black arrow to navigate*).
+
 > We want to compute  the average income for *rural*` population.  How would you do? 
 
 The formula is the following: 
  
 $$
-Avg\_Income_{rural} = \frac{Total\_Income_{rural}}{Nb\_Households_{rural}}
+Avg\_Income^{rural} = \frac{Total\_Income^{rural}}{Nb\_Households^{rural}}
 $$
 
 There are 4 basic steps: 
@@ -128,14 +128,15 @@ household_rural <-
 
 ```{r PopDat1-hint-1}
 # You should use the data from household_survey and the %>% operator
-# Use a new line with a condition on location
+# Use a new line with the condition on location
 
 household_rural <-  household_survey %>%
   
 ```
 
 ```{r PopDat1-hint-2}
-# You can use function filter () --> Write the condition in the filter() function
+# You can use function filter () 
+# --> Write the condition in the filter() function
 
 household_rural <- household_survey %>%
   filter()
@@ -158,16 +159,23 @@ Check the new data frame here and observe the first rows. They should now be all
 head(household_rural)
 ```
 
-
 ### Step 2: Compute the total income of rural population
+
+This is the numerator $Total\_Income^{rural}$, computed as the sum of incomes over all observations. 
+
+To compute this value, we will start with the data frame with only rural observations, and then **sum** the incomes.
+We may create a new variable (using `mutate()`) and compute  using the function `sum()` :
+
+> Your turn to try!
+
+(*You may use the hints*)
+
 
 ```{r PopNum, exercise.eval = TRUE, exercise.setup = "PopDat"}
 total_rural <- household_rural %>%
-  summarize(total = sum(income))
+  mutate(total = sum(income))
 
 ```
-
-
 
 ```{r PopNum1,  exercise = TRUE, exercise.eval = FALSE, exercise.setup = "PopNum"}
 # Enter your solution below
@@ -176,7 +184,6 @@ total_rural <-
   
 
 ```
-
 
 ```{r PopNum1-hint-1}
 # You should use the data from household_rural and the %>% operator
@@ -188,28 +195,57 @@ total_rural <- household_rural %>%
 ```
 
 ```{r PopNum1-hint-2}
-# You can use function summarize() -->  Write the code in the function
+# We will use mutate() to create a new variable(new column)
+# --> Write what we want in the ()
+
 
 total_rural <- household_rural %>%
-  summarize()
+  mutate()
 
 
 ```
 
-```{r PopNum1-solution}
-# Solution: We use the function sum()  to compute the total
 
+```{r PopNum1-solution}
+# We use the function sum()  to compute the total
+# Total has the sum of income across all rows
+
+total_rural <- household_rural %>%
+  mutate(total = sum(income))
+
+
+```
+
+A bit of explanation: 
+
+- `mutate()` creates a new variable (here *total*) in a data frame
+- `sum(income)` sums the income across all rows
+-  So our variable `total` has that value in every row
+
+> Check it here
+
+```{r }
+# Visualizing only a few variables with select()
+total_rural %>%
+  select(Id, income, location, total)%>%
+  head()
+```
+
+
+A solution to reduce the data frame to a single value is to summarize the variable *total* using the function `summarize ()` instead of `mutate()`
+
+
+```{r}
+# We use the function summarize()  to resume total to a single value
 total_rural <- household_rural %>%
   summarize(total = sum(income))
 
-total_rural
-
+head(total_rural)
+  
 ```
 
 
 ### Step 3: Counting rural households
-
-
 
 ```{r PopDen1,  exercise = TRUE, exercise.eval = FALSE, exercise.setup = "PopDat"}
 # Enter your solution below
@@ -218,7 +254,6 @@ Nb_rural <-
   
 
 ```
-
 
 ```{r PopDen1-hint-1}
 # You should use the data from household_rural and the %>% operator
@@ -247,19 +282,16 @@ Nb_rural <- household_rural %>%
 Nb_rural
 ```
 
-
-
-### Finally: Computing the average income for rural households 
+### Step4: Computing the average income for rural households 
 
 ```{r final}
 avg_income <- household_survey %>%
   filter(location == "Rural") %>%
   summarize(avg_income = sum(income) / Nb_rural)
 
-pull(avg_income)
+
+round(pull(avg_income), 2)
 ```
-
-
 
 ### Quiz
 
@@ -282,10 +314,88 @@ quiz(
     answer("summarize()", correct = TRUE),
     answer("mutate()", correct = FALSE),
     answer("group_by()", correct = FALSE)
+  ), 
+   question_checkbox("Is there a problem in the way we compute that average?",
+    answer("Yes, because we have survey and thus *weights*", correct = TRUE),
+    answer("No, this is the correct way to go", correct = FALSE),
+    answer("I don't know !", correct = FALSE)
   )
 )
 
 ```
+
+
+###  We should compute a weighted average! 
+
+> The previous computation did not take into account the fact that,  in a survey, observations are associated with a weight characterizing their representativeness in the target population.
+
+Let's redo the computation with the exact formula: 
+
+ 
+$$
+Avg\_Income^{rural} = \frac{Total\_weighted\_Income^{rural}}{Nb\_weighted\_Households^{rural}} =  \frac{\sum_i Income^{rural}_i \times weight_i }{\sum_i weight_i^{rural}}
+$$
+We can follow the same scheme, but note that we already have the rural sub population in a specific data frame *household_rural*, no need to recompute this! 
+
+###  Step 2: Compute the **weighted** income of rural population
+
+```{r WPopNum, exercise.eval = TRUE, exercise.setup = "PopDat"}
+income_weighted_rural <- household_rural %>%
+  summarize(total = sum(income * weight))
+
+```
+
+
+
+```{r WPopNum1,  exercise = TRUE, exercise.eval = FALSE, exercise.setup = "WPopNum"}
+# Enter your solution below
+
+total_rural <-
+  
+
+```
+
+```{r WPopNum1-hint-1}
+# You should use the data from household_rural and the %>% operator
+# Use a new line to compute the total of Income
+
+total_rural <- household_rural %>%
+  
+
+```
+
+```{r WPopNum1-hint-2}
+# You can use function summarize() 
+
+total_rural <- household_rural %>%
+  summarize()
+
+
+```
+
+```{r WPopNum1-solution}
+# Solution: We use the function sum()  to compute the total
+
+income_weighted_rural <- household_rural %>%
+  summarize(total = sum(income * weight))
+
+income_weighted_rural
+
+```
+
+A bit of explanation: 
+
+- `income * weight` multiplies row by row (without explicitly creating a new column).
+- As previously `sum()` then sums the result across all rows
+
+
+
+
+
+
+
+
+
 
 
 
