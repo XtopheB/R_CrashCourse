@@ -26,7 +26,8 @@ library(tidyverse)
 SouthAfrica <- read.csv2("./www/SouthAfrica.csv") 
 
 SDG <- read.csv("./www/SDGperRegion.csv") %>%
-  select(country, region_name,  population, gross_domestic_product, maternal_mortality_ratio, internet_use) 
+  select(country, region_name,  population, gross_domestic_product, maternal_mortality_ratio, internet_use) %>%
+  mutate(population = population * 10^6)
 
 mydata <- data.frame(name = c("John", "Sokol", "Chris"),
                      age = c(25, 30, 28),
@@ -623,6 +624,7 @@ filter(maternal_mortality_ratio < 0 ) %>%
 
 ```{r filterex3, exercise = TRUE, exercise.eval = FALSE}
 SDG %>% 
+  
 ```
 
 
@@ -682,7 +684,177 @@ filter(maternal_mortality_ratio <30 & region_name =="Asia" ) %>%
 ```
 
 
-### The mutate and summarize functions  TTTT
+### The `mutate()` function  
+
+The `mutate()` function is used to create new variables or transform existing ones by adding columns to a data frame. It’s especially useful to do calculations using existing variables.
+
+Let's work again with our data frame *SDG*. 
+
+```{r}
+# Creating a new variable with the GDP per capita
+SDG <- SDG %>% 
+  mutate(gdp_per_capita = gross_domestic_product / population)
+    
+```
+
+We applied `mutate()` to the data frame *SDG* (through the pipe  `%>%`) to create a new variable *gdp_per_capita* that is simply the row-by-row division of *gross_domestic_product* by *population*. We now have this new variable in our data frame. 
+
+```{r, eval = TRUE}
+# Display the names of all variables 
+names(SDG)
+```
+
+> Your turn!
+
+In the data frame *SDG*,  using `mutate(), create a new variable  named *pop_milions* that converts the population to millions (simply divide *population* by 10^6).
+
+
+```{r mutatex1, exercise = TRUE, exercise.eval = FALSE}
+# Create a new variable with population in millions
+SDG <-
+```
+    
+```{r mutatex1-hint-1}
+# You must start by saying that the result will be affected to the data frame SDG
+SDG <- SDG %>%
+  
+  
+```
+
+    
+```{r mutatex1-hint-2}
+# Defining the new variable uses mutate(). Fill the blank
+SDG <- SDG %>%
+   mutate(pop_millions =      )
+ 
+```
+
+    
+```{r mutatex1-solution}
+# Solution: One million can be written as 1000000 or 10^6 or simply 1e6 
+SDG <- SDG %>%
+   mutate(pop_millions = population / 10^6) 
+ 
+```
+
+#### Multiple transformations at once
+
+It is possible to create many variables at once with `mutate()` as in this example: 
+
+
+```{r, eval = FALSE}
+SDG_rich <- SDG %>%
+  mutate(
+    gdp_per_capita = gross_domestic_product / population,
+    pop_millions = population / 10^6  )
+```
+
+note that you can reuse a variable name you're overwriting - because mutate() evaluates expressions sequentially. So in this code:
+
+```{r, eval = FALSE}
+SDG <- SDG %>%
+  mutate(population = population / 10^6)
+```
+  
+`mutate()` takes the original value of *population* from the input data frame and **transforms**^[Technically, `mutate()` takes the original value of *population* from the input data frame and creates a ***new*** *population* column with the updated value (divided by 1 million). The left-hand side (population = ...) defines the ***new*** column - and it can have the same name -while the right-hand side still has access to the original column values.]  the original *population* column with the updated value (divided by 1 million).
+
+#### This is however dangerous
+While R allows it, it's often considered **risky** or **confusing**  because:
+
+- You lose the original data by overwriting *population* and changing units
+- It reduces clarity for someone reading your code  and not realize you've changed the units.
+- It can cause bugs and multiple divisions of the same variable (by $10^6$) if you're runing  multiple calls of your code reusing the same name across them
+
+> We recommend to use new names and to never alter the original variables 
+ 
+***What will the following code return?*** 
+  
+
+```{r, eval = FALSE}
+SDG_rich <- SDG %>%
+  mutate(
+    gdp_per_capita = gross_domestic_product / population,
+    pop_millions = population / 10^6  ) %>%
+  filter(gdp_per_capita > 20 )
+
+```
+
+
+```{r mutateQ, echo = FALSE}
+question("",
+         answer("A new data frame ",
+                message = " - The data frame *SDG_rich* is created from *SDG* through `SDG_rich <- SDG` ",
+                correct = TRUE),
+         answer("A copy of *SDG* data frame, with two new variables and only countries with *GDP_per_capita* >20  ",
+                message = " - The fifth line uses the newly created variable *GDP_per_capita* for filtering, 
+                thanks to piping ( `%>%`).", correct = TRUE),
+          answer("The *SDG* data frame, with two new variables and only countries with GDP per capita >20 ",
+                message = " - The output is a new data frame *SDG_rich* - not *SDG*  created from *SDG* through `SDG_rich <- SDG`  "),
+         answer("Every country  from *SDG* data frame with with GDP per capita >20    ",
+                message = " - The output is a new data frame"),
+         answer("An error since the variable  *GDP_per_capita* does not exist yet in the data frame.",
+                message = " - This code is perfectly fine- and quite efficient!"),
+         random_answer_order = TRUE,
+         post_message = "It is indeed possible to create many variables at once with `mutate()`, and to use them immediately, by combining functions - such as  `filter()`  - with  the pipe `%>%`!",
+         allow_retry = TRUE
+)
+```
+
+>Let's discover other powerful functions!
+
+### The `summarize()` function  
+
+The `summarise()` function is used to collapse multiple rows into a summary statistic, such as a total, average, min, max, etc. It's often used to calculate summaries by group.^[Using the operator `group_by()`for example. Although very convenient, this is not covered here.]
+
+> Using `summarise()` one can create a summary of any **numeric** variable
+
+
+```{r , eval = TRUE}
+SDG %>%
+  summarise(mean_gdp = mean(gross_domestic_product))
+```
+
+Formally, the output is a single-row data frame with a summary - here the mean- of the variable *gross_domestic_product*. Just like `mutate()`, it creates a new variable but that variable is at the same time aggregated accross rows to create a single value. 
+
+> Your turn!
+
+***What is the maximum maternal mortality ratio in the dataset?***
+Use `summarise()` to compute *max_mortality*.
+
+
+
+```{r sumex1, exercise = TRUE, exercise.eval = FALSE}
+#  Start with the data set SDG
+SDG %>%
+```
+    
+```{r sumex1-hint-1}
+# Compute the maximum with summarise(). Fill the blank
+SDG %>%
+  summarise(max_mortality = )
+  
+```
+
+    
+```{r sumex1-solution}
+# Compute the maximum with max()
+SDG %>%
+  summarise(max_mortality = max(maternal_mortality_ratio) )
+  
+ 
+```
+
+There are many functions that can be used with  `summarize()` :
+
+- `mean()`	=: Average  value
+- `median()` :  Median 	value
+- `sum()`	 :  Aggregates the total of the variable
+- `min()` ,  `max()`	: Smallest ,  largest value
+- `sd()` , `var()`		:  Standard deviation, Variance
+- `n()`	:  Count of rows
+- `n_distinct()`	: Number of unique values
+- and many others..
+
 
 
 > Many other functions from the `tidyverse` can help you explore, refine, and transform a dataset to compute meaningful values and indicators. With practice, you'll discover these tools and naturally incorporate them into your coding routine.

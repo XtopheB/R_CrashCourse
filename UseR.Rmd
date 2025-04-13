@@ -337,9 +337,9 @@ avg_income <- household_survey %>%
 
 - `filter()` keep only households from rural areas.
 - `sum()` computes the sum over all households (which are all rural now) 
--  `n()` is the number of observations in the current state of the data frame (so only rural here).^[`n()`is a special function that returns the number of rows in a data frame, typically used inside summarise, mutate, or filter when working with *grouped data*. `count()` groups the data, counts the obseravtions and returns a single value.]
+-  `n()` is the number of observations in the current state of the data frame (so only rural here).^[`n()`is a special function that returns the number of rows in a data frame, typically used inside summarise(), mutate(), or filter() when working with *grouped data*. `count()` groups the data, counts the obseravtions and returns a single value.]
 -  The result is affected to the variable named here *avg*
-- `summarize()` is used as a *trick*  to have only one value (*avg* would be the same for each row)^[The function `summarize()` returns the *mean*  of a variable. Since the variable created has only one value repeated, this gives us that value with no effort. There are other way to proceed, but this is one of the simplest one.]
+- `summarize()` is used as a *trick*  to aggregate across the rows one value since *avg* would be the same for each row)^[The function `summarize()` returns the *mean*  of a variable across the rows. Since here the variable created has only one value repeated, this gives us that value with no effort. There are other way to proceed, but this is one of the simplest one.]
 
 > We will see later that there are  different methods to compute the same results. It is important though to follwo the flow of operation and understand the logic of each step. ^[This is another way of computing 
 `avg_income2 <- household_survey %>%
