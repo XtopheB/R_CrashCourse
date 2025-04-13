@@ -55,10 +55,10 @@ Do you need to work through the tutorial? Take the quiz below to find out
 ```{r quiz0, echo = FALSE}
 question("Check all that is TRUE:",
   answer("R is  installed on my computer",  correct = TRUE, message = "Good."),
-  answer("RStudio is installed on my computer",  correct = TRUE, message = "* RStudio will be useful later"),
-  answer("I have no experience in R",  message = "No worries, we will guide you ;-) "),
+  answer("RStudio is installed on my computer",  correct = TRUE, message = "- RStudio will be useful later"),
+  answer("I have no experience in R",  message = "- No worries, we will guide you ;-) "),
   type = "multiple",
-  incorrect = "Note that will compute everything online here"
+  incorrect = "Note that we will compute everything online here"
 )
   
 ```
@@ -127,10 +127,10 @@ paste("My age is", myage)
 ```{r Case, echo = FALSE}
 question("",
          answer("My age is 45",
-                message = "Well, that would true be if ***MyAge*** and ***myage***  are similar. But since R is case sensitive, these two objects are different"),
-         answer("My age is 25", message = "Well-done! \"My age is 25\" because R is case-sensitive", correct = TRUE),
+                message = "- Well, that would true be if ***MyAge*** and ***myage***  are similar. But since R is case sensitive, these two objects are different"),
+         answer("My age is 25", message = "- Well-done! \"My age is 25\" because R is case-sensitive", correct = TRUE),
          answer("25",
-                message = "No, We used `paste()` to heave a sentence that assemble the text \"My age is\" and the value"),
+                message = " - We used `paste()` to heave a sentence that assemble the text \"My age is\" and the value"),
          allow_retry = TRUE
 )
 ```
@@ -273,11 +273,11 @@ mydata[1,]
 
 ```{r extract, echo = FALSE}
 question("",
-         answer("The first row of mydata (*i.e.*, *John  25  TRUE*) ", message = " Well-done", correct = TRUE),
+         answer("The first row of mydata (*i.e.*, *John  25  TRUE*) ", message = " - Well-done", correct = TRUE),
          answer("The first column of mydata with all names (*John Sokol Chris*) ",
-                message = "No, but that was close!"),
+                message = " - That was close!"),
           answer("The first element of mydata (*John*)",
-                message = "No, try again"),
+                message = "- Try again"),
          random_answer_order = TRUE,
          allow_retry = TRUE
 )
@@ -543,16 +543,16 @@ SDG %>%
 ```{r logicals, echo = FALSE}
 question("",
          answer("Every country in either Asia or Africa,  with internet use greater than 60% ",
-                message = " Yes, the filter applies to region_name with  \" | \"  wich means  \" or \" , Excellent!",
+                message = " - The filter applies to *region_name* with  \" | \"  wich means  \" or \" , Excellent!",
                 correct = TRUE),
          answer("Every country with a name starting with \"A\",  with internet use greater than 60% ",
-                message = " No, the filter  applies to region_name  not to country. Try again!  "),
+                message = " - The filter  applies to *region_name*  not to country. Try again!  "),
           answer("Every country in either Asia or Africa",
-                message = " No, the filter also conditions on internet_use, try again!  "),
+                message = "- The filter also conditions on *internet_use*, try again!  "),
          answer("Every country  with internet use greater than 60%  ",
-                message = " No, the filter applies also to region_name try again!  "),
+                message = " - The filter applies also to *region_name*,  try again!  "),
          answer("An error. This is an incorrect way to combine tests.",
-                message = "No, this code is perfectly fine and use two conditions"),
+                message = "- This code is perfectly fine and use **two** conditions"),
          random_answer_order = TRUE,
          allow_retry = TRUE
 )
@@ -661,7 +661,7 @@ filter(maternal_mortality_ratio <30 , region_name =="Asia" ) %>%
 ```
 
 **Yes**,  there is a  duplicate problem! 
-Can you solve it and **count**  the number of countries who fulfill the conditions? (*see the `hints` to find out*).
+Can you solve it and **count**  the number of countries with distinct values? (*see the `hints` to find out*).
 
 ```{r filterex4-hint}
 # we can use distinct() to select only lines with distinct values 
@@ -804,7 +804,7 @@ question("",
 
 ### The `summarize()` function  
 
-The `summarise()` function is used to collapse multiple rows into a summary statistic, such as a total, average, min, max, etc. It's often used to calculate summaries by group.^[Using the operator `group_by()`for example. Although very convenient, this is not covered here.]
+The `summarise()` function is used to collapse multiple rows into a summary statistic, such as a total, average, min, max, etc. It's often used to calculate summaries by group.^[Using the operator `group_by()` that is presented below.]
 
 > Using `summarise()` one can create a summary of any **numeric** variable
 
@@ -818,9 +818,9 @@ Formally, the output is a single-row data frame with a summary - here the mean- 
 
 > Your turn!
 
-***What is the maximum maternal mortality ratio in the dataset?***
-Use `summarise()` to compute *max_mortality*.
+***What is the maximum maternal mortality ratio in the data set?***
 
+(*Use `summarise()` to compute *max_mortality**.)
 
 
 ```{r sumex1, exercise = TRUE, exercise.eval = FALSE}
@@ -835,7 +835,6 @@ SDG %>%
   
 ```
 
-    
 ```{r sumex1-solution}
 # Compute the maximum with max()
 SDG %>%
@@ -846,7 +845,7 @@ SDG %>%
 
 There are many functions that can be used with  `summarize()` :
 
-- `mean()`	=: Average  value
+- `mean()`	: Average  value
 - `median()` :  Median 	value
 - `sum()`	 :  Aggregates the total of the variable
 - `min()` ,  `max()`	: Smallest ,  largest value
@@ -855,6 +854,72 @@ There are many functions that can be used with  `summarize()` :
 - `n_distinct()`	: Number of unique values
 - and many others..
 
+
+### The `group_by()` function
+
+The `group_by()` is a very powerful function is used to **group rows** of your data by one or more **categorical** variables (like *region*, here). It doesn’t change the data you see, but it changes how R thinks about the data.  It  organize the data into groups based on the values of one or more variables. Once grouped, any function you apply (like  `mutate()`, `summarise()`, `filter()`, etc.) will act **within each group**, instead of across the whole dataset.
+
+> Think of `group_by()` like computing one category at the time (independently).
+
+Look at the result of this code: 
+
+```{r}
+SDG %>%
+  group_by(region_name) %>%
+  summarise(Nb_countries = n())
+
+```
+
+#### A bit of explanation 
+ The code here starts with the data frame *SDG*, then using `group_by()` we compute the next code **for each** *region_name*.
+
+The result is the number of country (using `n()`) in each region. Note that the data frame *SDG* has not been modified at all.  
+
+> Your turn! 
+
+***What is the median value of the maternal mortality ratio for each region?*** 
+
+(use the variable *maternal_mortality_ratio* )
+
+
+```{r groupex1, exercise = TRUE, exercise.eval = FALSE}
+# Compute the max population by area (using region_name)
+SDG %>%
+```
+    
+```{r groupex1-hint-1}
+# We need to compute by region, then use the group_by() function
+SDG %>%
+  group_by()
+  
+  
+```
+
+```{r groupex1-hint-2}
+# Now, any following computation is done independently in  each region 
+SDG %>%
+  group_by(region_name) %>%
+  
+  
+```
+
+```{r groupex1-hint-3}
+# We can use the function summarise() to do the computation! 
+SDG %>%
+  group_by(region_name) %>%
+  summarise() 
+  
+```
+
+```{r groupex1-solution}
+# Solution: Simply use summarize to compute this for each category in region_name
+SDG %>%
+  group_by(region_name) %>%
+  summarise(median_mortality = median(maternal_mortality_ratio))
+ 
+```
+
+The function `group_by()` is extremely useful and powerful. It greatly simplifies coding, avoiding looping across categories of a variable like by region, year, or gender. By combining `group_by()` with functions like `summarise()` or `mutate()` one can break data into separate parts and analyze each part separately.
 
 
 > Many other functions from the `tidyverse` can help you explore, refine, and transform a dataset to compute meaningful values and indicators. With practice, you'll discover these tools and naturally incorporate them into your coding routine.
