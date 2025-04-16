@@ -731,6 +731,7 @@ Enjoy!
 ---
 
 ### References:
+
 Richard, Cotton (2013). Learning R. Sebastopol, California: O’Reilly Media.
 
 RStudio IDE. (2021). RStudio. Retrieved October 4, 2021, from [https://www.rstudio.com/products/rstudio/download/](https://www.rstudio.com/products/rstudio/download/)
