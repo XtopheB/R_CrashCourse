@@ -45,6 +45,9 @@ income_rural <- household_rural %>%
 Nb_rural <- household_rural %>%
   count()
 
+income_rural_value <- household_rural %>%
+  summarize(total = sum(income))
+
 ## For SDG 16.1.3
 envipe <- read.dbf("./www/TPer_Vic2.dbf")
 
@@ -282,10 +285,10 @@ We have a data frame with a variable (*total*) that has our result, but repeated
 
 ```{r}
 # We use the function summarize()  to resume total to a single value
-income_rural <- household_rural %>%
+income_rural_value <- household_rural %>%
   summarize(total = sum(income))
 
-income_rural
+income_rural_value
   
 ```
 
@@ -319,7 +322,7 @@ avg_income <-  ? / ?
 ```{r Avg1-solution}
 # Solution: Divide numerator by denominator
 
-avg_income <- income_rural/Nb_rural
+avg_income <- income_rural_value/Nb_rural
 
 avg_income
 
@@ -731,7 +734,6 @@ Enjoy!
 ---
 
 ### References:
-
 Richard, Cotton (2013). Learning R. Sebastopol, California: O’Reilly Media.
 
 RStudio IDE. (2021). RStudio. Retrieved October 4, 2021, from [https://www.rstudio.com/products/rstudio/download/](https://www.rstudio.com/products/rstudio/download/)
