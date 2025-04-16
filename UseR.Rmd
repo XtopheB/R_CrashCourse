@@ -1,7 +1,7 @@
 ---
 title: "Use R!"
 author: " ---- \n *Christophe Bontemps*  \n  ![](www/SIAP_logo_2020_1800.png){width=30%}  "
-date: 'Version: 1.03 \n (March 2025)'
+date: 'Version: 1.1 \n (April 2025)'
 output:
   learnr::tutorial: 
     progressive: true
@@ -17,6 +17,7 @@ description: >
 library(learnr)
 library(tidyverse)
 library(stringr)
+library(foreign)
 
 # We need to have here all objects used in multiple chunks!!
 # Loading data--  
@@ -43,6 +44,13 @@ income_rural <- household_rural %>%
 
 Nb_rural <- household_rural %>%
   count()
+
+## For SDG 16.1.3
+envipe <- read.dbf("./www/TPer_Vic2.dbf")
+
+envipe2019 <- envipe %>%
+  select(SEXO,EDAD, AP7_3_11,FAC_ELE)
+
 
 ```
 
@@ -156,8 +164,6 @@ Check the new data frame here and observe the first rows. They should now be all
 ```{r Popex-Valid, exercise = TRUE, exercise.eval = FALSE, exercise.setup = "PopDat"}
 head(household_rural)
 ```
-
-
 
 ### Step 2: Counting rural households (*denominator*)
 
@@ -335,21 +341,21 @@ avg_income <- household_survey %>%
 
 #### A bit of explanation: 
 
-- `filter()` keep only households from rural areas.
+- `filter()` keep only households from *rura*l areas.
 - `sum()` computes the sum over all households (which are all rural now) 
--  `n()` is the number of observations in the current state of the data frame (so only rural here).^[`n()`is a special function that returns the number of rows in a data frame, typically used inside summarise(), mutate(), or filter() when working with *grouped data*. `count()` groups the data, counts the obseravtions and returns a single value.]
+-  `n()` is the number of observations in the current state of the data frame (*so only rural counted here*).^[`n()`is a special function that returns the number of rows in a data frame, typically used inside summarise(), mutate(), or filter() when working with *grouped data*. `count()` groups the data, counts the observations and returns a single value.]
 -  The result is affected to the variable named here *avg*
-- `summarize()` is used as a *trick*  to aggregate across the rows one value since *avg* would be the same for each row)^[The function `summarize()` returns the *mean*  of a variable across the rows. Since here the variable created has only one value repeated, this gives us that value with no effort. There are other way to proceed, but this is one of the simplest one.]
+- `summarize()` is used as a *"trick"*  to aggregate across the rows one value since the variable *avg* would be the same for each row)^[The function `summarize()` returns the *mean*  of a variable across the rows. Since here the variable created has only one value repeated, this gives us that value with no effort. There are other way to proceed, but this is one of the simplest one.]
 
-> We will see later that there are  different methods to compute the same results. It is important though to follwo the flow of operation and understand the logic of each step. ^[This is another way of computing 
+> We will see later that there are  different methods to compute the same results. It is important though to follow the flow of operations and understand the logic of each step. ^[This is another way of computing the same value:
 `avg_income2 <- household_survey %>%
   filter(location == "Rural") %>%
   pull(income) %>%
   mean()` 
-  where we use `pull() `to extract the income values as a vector (only on rural households) and compute the mean of that vector using `mean()`.]
+  where we use `pull() `to extract the income values (only on rural households) **as a vector**  and to compute the mean of that vector using `mean()`.]
 
 
-### Quiz
+### Check your understanding
 
 ```{r quiz2, echo = FALSE}
 quiz(
@@ -360,16 +366,23 @@ quiz(
   ),
   
   question("Which function helps to count the number of households?",
-    answer("count()", correct = TRUE),
-    answer("sum()", correct = FALSE, message = "No, the sum() fucntion just sums a vairable over all observations."),
-    answer("group_by()", correct = FALSE, message = " No,even if we could have counted both location using group_by (but this is a bit advanced)")
+    answer("n()", correct = TRUE),
+    answer("sum()", correct = FALSE, message = "No, the sum() function just sums a variable over all observations."),
+    answer("group_by()", correct = FALSE, message = " No,even if we could have counted both location using `group_by()` - but this is a bit advanced.")
   ),
   
-  question_checkbox("Which functions were used in computing the average income?",
-    answer("filter()", correct = TRUE, message = "Yes, the filter() function is equivalent to subset()"),
-    answer("summarize()", correct = TRUE, message = "Yes, summarize provides a summary of a variable"),
-    answer("mutate()", correct = FALSE, message = " No, mutate is used to create a new variable"),
-    answer("group_by()", correct = FALSE, message = " No,even if we could have made the computation for both location using group_by (but this is a bit advanced)")
+  question("Is this code \n
+                    avg_income <- household_survey %>%
+                        filter(location == 'Rural') %>%
+                        summarize(avg = sum(income) / n() \n and this code:  \n
+                    avg_income <- household_survey %>%
+                        summarize(avg = sum(income) / n()) %>%
+                        filter(location == 'Rural') \n  computing the same thing?" ,
+
+    answer("No, because the second code computes the average income over the whole population", correct = TRUE, message = "It is important to first filter() the observations- and the second code does not work"),
+    answer("Yes, with the pipe (`%>%`), order is not important", correct = FALSE, message = "The pipe defines a strict order on what is computed! "),
+    answer("The first code does not work", correct = FALSE, message = " The first code is a correct way of writing the code"),
+    answer("The second code does not work", correct = TRUE, message = " It is not possible to filter  after the summarize, since the variable location does not exist any more")
     ), 
     
    question_checkbox("IMPORTANT: Is there a problem in the way we compute that average?",
@@ -382,7 +395,7 @@ quiz(
 ```
 
 
-###  We should compute a weighted average! 
+### **Wait: **  Shouldn't we compute a ***weighted*** average? 
 
 > The previous computation did not take into account the fact that,  in a survey, observations are associated with a weight characterizing their representativeness in the target population.
 
@@ -392,16 +405,30 @@ Let's redo the computation with the exact formula:
 $$
 Avg\_Income^{rural} = \frac{Total\_weighted\_Income^{rural}}{Nb\_weighted\_Households^{rural}} =  \frac{\sum_i Income^{rural}_i \times weight_i }{\sum_i weight_i^{rural}}
 $$
-We can follow the same scheme, but note that we already have the rural sub population in a specific data frame *household_rural*, no need to recompute this! 
+We can follow the same scheme, but note that - in step 1 - we already computed the rural sub population in a specific data frame *household_rural*, no need to recompute this! 
 
-###  Step 2: Compute the **weighted** income of rural population
+###  Step 2bis: Compute the **weighted** income of rural population
+
+Using the code from step 2 above can help:  
+                                   
+```{r, eval= FALSE}
+# This code does not use weights. Remember that the function sum() computes the sum over all observations
+income_rural <- household_rural %>%
+  summarize(total = sum(income))
+
+income_rural
+
+```
+
+What we have to do is to is to *tweak* a bit that code to include weights, as in the correct formula above.  
+
+#### Your turn 
 
 ```{r WPopNum, exercise.eval = TRUE, exercise.setup = "PopDat"}
 income_weighted_rural <- household_rural %>%
   summarize(total = sum(income * weight))
 
 ```
-
 
 
 ```{r WPopNum1,  exercise = TRUE, exercise.eval = FALSE, exercise.setup = "WPopNum"}
@@ -431,10 +458,10 @@ income_rural <- household_rural %>%
 ```
 
 ```{r WPopNum1-solution}
-# Solution: We use the function sum()  to compute the total
+# Solution: We use the function sum() to compute the total
 
 income_weighted_rural <- household_rural %>%
-  summarize(total = sum(income * weight))
+  summarize(weighted_average = sum(income * weight)/ sum(weight))
 
 income_weighted_rural
 
@@ -442,8 +469,59 @@ income_weighted_rural
 
 A bit of explanation: 
 
-- `income * weight` multiplies row by row (without explicitly creating a new column).
+- `income * weight` multiplies *income* with *weights*  row-by-row (for each observation).
 - As previously `sum()` then sums the result across all rows
+- since the variable created (weighted_average) is in a data frame, one must take only one value using `summarize()` as previously.
+
+> The computation is done in 2 lines! If we start from the original data set (*household_survey*), it takes 3 lines, and the story is easy to read and tell! 
+
+```{r}
+income_weighted_rural <- household_survey %>%
+  filter(location == "Rural") %>%
+  summarize(weighted_average = sum(income * weight)/ sum(weight))
+
+round(income_weighted_rural, 2)
+
+```
+
+Let's move on and  compute some SDG indicator now!
+
+## Computing SDG 16.1.3
+
+We now will earn how to compute SDG 16.1.3 - Proportion of persons subjected to physical, psychological or sexual harassment, in the previous12 months with disaggregation by sex.
+
+We will be using the data set for the 2019 National Survey of Victimization and Perception of Public Security abbreviated **ENVIPE 2019**.^[The microdata for the survey can be accessed on the website of  [INEGI](https://www.inegi.org.mx/programas/envipe/2019/#microdatos)  under the tab labelled *Microdatos*. Related survey documentation, including the survey questionnaire, report, tabulations and data dictionary can be found under the related tabs.]
+The ENVIPE 2019 data set is saved in *.dbf* format (from SPSS software). To load files with that extension, we need the `foreign` package.
+
+
+```{r, eval = FALSE}
+library(foreign)
+envipe <- read.dbf("TPer_Vic2.dbf")
+```
+
+As usual, let us explore the *raw* data set that has **`r nrow(envipe)`** observations and **`r ncol(envipe)`** variables. We can familiarize ourselves with the names of the variables using the  function `names()`
+
+```{r}
+names(envipe)
+```
+
+> It is a good idea to extract only the variables we need for computing the indicator and work with a lighter data set.
+
+The variable we need include (names are in Spanish): 
+- **SEXO** :  The sex of the survey respondent
+- **EDAD**: Age of respondents 
+- **AP7_3_11**: Response to question 7 (option 11) "crimes on physical violence that respondents have been victims of, in the previous 12 months 
+- **FAC_ELE**: Sampling weight for persons 18+ 
+
+In the next code chunk, we create a new data frame - called envipe2019 - with only those variables. We use for that the function `select()`. 
+
+
+```{r}
+envipe2019 <- envipe %>%
+  select(SEXO,EDAD, AP7_3_11,FAC_ELE)
+```
+
+
 
 
 
