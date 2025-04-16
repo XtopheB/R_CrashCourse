@@ -480,9 +480,12 @@ The tidyverse makes working with data in R easier and more natural, like telling
 
 There are many functions available in the package `tidyverse`, in particular, one has many tools for filtering and visualizing the data. 
  
-> First, let's examine the `pipe` operator that pass the result of one expression into the next:  `%>%`. This is how we tell a story with code and, for example, move the data set from one transformation to another.^[In R, both `%>%`  (from tidyverse) and `|>`  (base R) can be used to pass the result of one expression into the next. We will work with the tidyverse where `%>%` has more features, but the logic is the same.]  
+First, let's examine the `pipe`  operator (or `%>%`) that pass the result of one expression into the next.
+
+> With `%>%`,  we tell a story with code and move data set from one transformation to another.^[In R, both `%>%`  (from tidyverse) and `|>`  (base R) can be used to pass the result of one expression into the next. We will work with the tidyverse where `%>%` has more features, but the logic is the same.]  
  
-Imagine the following data story:  we are interested in only the first 3 variables and want to count the number of countries that are in the "Asia" region. This is how the code would translate that story: 
+ 
+Imagine the following data story:  "*Take only the first 3 variables in the data set `SDG` , then count the number of countries that are in the "Asia" region and with a population greater than 50 millions*". This is how the code would translate that story: 
 
 ```{r}
 # Firstly, I create a new data frame with only the first 3 variables (note the use of " : " )
@@ -495,12 +498,12 @@ df <- subset(df, region_name == "Asia" & population >= 50)
 nrow(df)
 ```
 
-This requires quite a few lines of code, and a sequence of actions...
+This requires quite a few lines of code, the creation of temporaty files (*df*) and a sequence of actions...
 
 >  But there is a more readable solution
 
 
-Then `%>% ` links operations in a very easy-to-read sequence. The code below does exactly the same operation as before, but passing the result of one expression into the next using  `%>% `.
+The`%>% `  helps linking operations in a very easy-to-read sequence. The code below does exactly the same operation as before, but passing the result of one expression into the next using  `%>% `.
 
 > One may read  `%>% ` as:  *next do this (please)* !
 
@@ -511,7 +514,7 @@ SDG %>%
   nrow()
 ```
 
-The function `filter()`  lets you use a logical test to extract specific rows from a data frame. `filter()` will return every row that passes **each** logical test.^[ `filter()` is an alternative to `subset()`]
+The function `filter()`  lets you use a logical test to extract specific rows from a data frame. `filter()` will return every row that passes **each** logical test.^[ `filter()` is an alternative to `subset()`] `nrow()` finally counts the number of rows in the resulting data frame. 
 
 So the story above reads as: 
 
