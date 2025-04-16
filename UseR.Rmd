@@ -51,6 +51,9 @@ envipe <- read.dbf("./www/TPer_Vic2.dbf")
 envipe2019 <- envipe %>%
   select(SEXO,EDAD, AP7_3_11,FAC_ELE)
 
+envipe2019_clean <- envipe2019 %>%
+  mutate( Age = as.numeric(as.character(EDAD)), 
+          Weight = as.numeric(as.character(FAC_ELE)))
 
 ```
 
@@ -436,7 +439,6 @@ income_weighted_rural <- household_rural %>%
 
 income_rural <-
   
-
 ```
 
 ```{r WPopNum1-hint-1}
@@ -507,13 +509,14 @@ names(envipe)
 
 > It is a good idea to extract only the variables we need for computing the indicator and work with a lighter data set.
 
-The variable we need include (names are in Spanish): 
+The variables we need include (*names are in Spanish*): 
+
 - **SEXO** :  The sex of the survey respondent
 - **EDAD**: Age of respondents 
 - **AP7_3_11**: Response to question 7 (option 11) "crimes on physical violence that respondents have been victims of, in the previous 12 months 
 - **FAC_ELE**: Sampling weight for persons 18+ 
 
-In the next code chunk, we create a new data frame - called envipe2019 - with only those variables. We use for that the function `select()`. 
+In the next code chunk, we create a new data frame - called *envipe2019* - with only those variables. We use for that the function `select()` to keep only the variables listed.  
 
 
 ```{r}
@@ -521,16 +524,203 @@ envipe2019 <- envipe %>%
   select(SEXO,EDAD, AP7_3_11,FAC_ELE)
 ```
 
+> We use that data set, with still  **`r nrow(envipe2019)`** observations but only  **`r ncol(envipe2019)`** variables, in the rest of the analysis.
+
+### Checking the *type* of each variable
+
+When we read data into R using the import function `read.dbf()`, R tries to keep the structure of the initial data set and interprets numbers and values to assign a *type* to each variable.
+
+> It is very important to identify which variable is of wich *type*, since some operations will only apply for some *type* of variable. For example, Computing the mean of a string variable will not work! 
+
+Types can be **numerical** (*num*),   **integer** (*int*), a **factor** (*factor*)  a **string** (*chr*, for character) or a **Boolean** (*logi* with values TRUE/FALSE) (see the tutorial <a href="https://xtophedataviz.shinyapps.io/BasicR/#section-a-short-tutorial-on-r" target="_blank">Basic R!</a> for a review )  
+
+> The function `str()` provides the structure of the data set and displays the *type* of each variable
+
+```{r}
+str(envipe2019)
+```
+
+
+```{r quiz3, echo = FALSE}
+quiz(
+  question("In the *envipe2019*, are all variables encoded as **factors**?",
+    answer("Yes, and this is a problem!", correct = TRUE,  message = " We need to change that since some variables are numerical "),
+    answer("Yes, but this is correct", correct = FALSE, message = " - Having variables that are numerical encoded as factors will cause a lot of problem, since some operations will not work correctly on factor variable"),
+    answer("No, they are all numbers", correct = FALSE, message = " - All variables, including *EDAD* (Age) and *FAC_ELE* (sampling weight)  are encoded as factors.")
+  ), 
+  
+  question_checkbox("Which operation can be done with the variable *EDAD* (Age) encoded as a `factor`? \n (*Check all correct answers*) ",
+    answer("`summary(envipe2019$EDAD)` will provide a summary of the variable *EDAD*" ,
+           correct = TRUE,  message = " -  `summary()` applies to factor variables. However it  will consider each unique value of EDAD as a specific factor and count the number of occurence. Not very useful here. "),
+     answer("`mean(envipe2019$EDAD)` will provide the mean of *EDAD* " ,
+            correct = FALSE,  message = "- It is not possible to take the mean of a factor variable"),
+    answer("The code \n
+    envipe2019 %>%  \n
+        filter(EDAD ==18) \n   extracts observations where EDAD is 18", 
+    correct = TRUE, message = "- Yes, the `filter()` function is equivalent to `subset()` and works with factors. It follows the logical condition `EDAD ==18`, keeping only obervations for which the outcome of the test is TRUE"), 
+    answer("The code \n
+    envipe2019 %>%  \n
+        group_by(EDAD) %>% \n 
+        count() \n   counts the number of observations for each unique value of EDAD",
+    correct = TRUE, message = "- The `group_by()` function is used mostly to compute things for each category of a factor variable. This is something useful when the factor variable has few categories such as *Gender*, or married (Yes/no). Here, since EDAD is not really a factor and has many different values,  we will have a long list."), 
+    try_again = " Please try again (check all correct answers) ", allow_retry = TRUE,
+    incorrect = "- There are many good answers, try again",
+    random_answer_order = TRUE 
+  )
+)
+```
+
+
+> We have to convert some variables to their right type! 
+
+We know that some variables - namely *EDAD* (Age), and *FAC_ELE* (sampling weights) - are not factor but numbers. We have to convert them to *numeric*  using  `as.numeric()`. **Unfortunately**, we have to be very careful in doing that. In R, factors are stored as integer codes behind the scenes, with labels that appear as characters. When  working  data stored as factors (like *EDAD* or *FAC_ELE*), **you must use** `as.character()`  **before** using `as.numeric()`, to safely recover the numeric values as intended. Skipping this step leads to incorrect data.^[If you convert a factor directly to numeric using `as.numeric()`, R will return the underlying code (by default $1, 2, 3$ etc...), not the actual value you see.]
+
+
+This operation can be done while creating a new variable with `mutate()`. We take this opportunity to change the name of the variable for easier reading and comprehension and to create a new data frame *envipe2019_clean*. 
+
+
+```{r}
+envipe2019_clean <- envipe2019 %>%
+  mutate( Age = as.numeric(as.character(EDAD)), 
+          Weight = as.numeric(as.character(FAC_ELE)))
+```
+
+
+Our new data set *envipe2019_clean* has now 2 new variables (Age, and Weight)  and a total of  **`r ncol(envipe2019_clean)`** variables. We can again check their type. 
+
+
+```{r}
+str(envipe2019_clean)
+```
+
+
+> Your turn
+
+#### Compute the summary statistics of the variables *Age* and *Weight* (be careful of the capital letters at the begining of  **A**ge and **W**eight). 
+
+
+```{r envipe1,  exercise = TRUE, exercise.eval = FALSE}
+# Enter your solution below
+
+envipe2019_clean %>%
+  
+  
+```
+
+```{r envipe1-hint-1}
+# You first need to select the variables you want to use in the  summary() function
+
+envipe2019_clean %>%
+  select() %>%
+
+
+```
+
+```{r envipe1-hint-2}
+# You can use function summary()  function directly
+
+envipe2019_clean %>%
+  select(Age, Weight) %>%
+  summary()
+
+
+```
+
+```{r envipe1-solution}
+# Solution: We use the function summary() , with some options such as the number of digits
+
+envipe2019_clean %>%
+  select(Age, Weight) %>%
+  summary(digits = 3)
+
+```
+
+> Now that all the variables have the right type, we can start compute the SDG indicator 16.1.3
+
+### The indicator is a ratio of weighted sums 
+
+The SDG indicator  16.1.3  is defined as "*the proportion of persons subjected to physical, psychological or sexual harassment, in the previous 12 months*". This is a proportion, which means that it is a ratio, defined by the following equation: 
+
+ 
+$$
+Indicator  = \frac{Nb\_Victims}{Nb\_Population} \times 100
+$$
+
+In the ENVIPE questionnaire, the question **AP7_3_11.**  allows to determine if respondents have been the victims of physical, psychological harassment and sexual violence. People victim of physical violence during the reference period can be identified by  **AP7_3_11 == 1**.
+
+
+But since we have survey, we now know that we should take the sampling weights into consideration. So the exact (and detailed) formula is: 
+
+ 
+$$
+Indicator  =  \frac{Weighted\_Nb\_Victims}{Weighted\_Nb\_Population} \times 100 =  \frac{\sum_i 1_{[Victim_i==1]} \times weight_i }{\sum_i weight_i} \times 100
+$$
+
+### Step by step
+
+> **TBC**
+
+
+### In a single code, using the pipe `%>%`
+
+> Comments **TBC**
+
+```{r}
+SDG_16.3.3 <- envipe2019_clean  %>%
+  mutate(WeightedPop = sum(Weight)) %>%
+  filter(AP7_3_11 ==1) %>%
+  summarize( Indicator = 100* sum(Weight) / unique(WeightedPop)) 
+  
+
+SDG_16.3.3
+  
+
+
+```
+
+#### A bit of explanation:
+
+- `mutate(TotalPop = sum(Weight))` calculates the row-sum of the weighted population for the full data set. The result is stored (as a constant value)  in the variable *WeightedPop*
+
+- After filtering (*i.e.*, selecting only the victims: `AP7_3_11 == 1`), we compute the percentage in summarize(). sum(Weight) is done here only on the sub population of victims ( *i.e.*, our *numerator*) divided by the complete weighted population  generated by `unique(WeightedPop)` (our *denominator*). We have to use   `unique(WeightedPop)`  because *WeightedPop* is repeated across all rows, and we only want a single value for the denominator.^[We could have used `max(WeightedPop)` or `min(WeightedPop)` or even `mean(WeightedPop)`, they all provide the same value as `unique(WeightedPop)`.]
+
+
+### Disagregating the SDG indicator 16.1.3 by Sex
+
+The magic with the code we used for computing the indicator 16.1.3 is that it is extremely easy and straightforwad to compute that indicator for each value of the factor variable *SEXO*. 
+
+
+We can use the function `group_by()` to compute in the same way (that is we the same code) for each subgroup of the variable SEXO where Male is coded as SEXO = 1 and Female as SEXO = 2.
+
+
+```{r}
+
+SDG_16.3.3_Sex <- envipe2019_clean  %>%
+  group_by(SEXO) %>%
+  mutate(WeightedPop = sum(Weight)) %>%
+  filter(AP7_3_11 ==1) %>%
+  summarize( Indicator = 100* sum(Weight) / unique(WeightedPop)) 
+  
+
+SDG_16.3.3_Sex
+  
+
+```
+
+
+
+## Matrices and vectors
+
+
+
+> ***TBC**
 
 
 
 
 
 
-
-
-
-
+## Conclusion
 
 
 
