@@ -706,8 +706,8 @@ SDG_16.1.3
 We follow the slightly simpler formula: 
  
 $$
-SDG\_16.1.3  = =  \frac{\sum_{j= Victim} \; weight_j }{\sum_{i=All} \; weight_i} \times 100 =  \sum_{j= Victim}\frac{ \; weight_j }{\sum_{i=All} \; weight_i} \times 100  =  \sum_{j= Victim} \frac{  weight_j }{WeightedPop} \times 100\\
-
+SDG\_16.1.3  =  \frac{\sum_{j= Victim} \; weight_j }{\sum_{i=All} \; weight_i} \times 100 =  \sum_{j= Victim}\frac{ weight_j }{\sum_{i=All} \; weight_i} \times 100  \\ 
+\; \; \; \;  \; =  \sum_{j= Victim} \frac{weight_j }{WeightedPop} \times 100 
 $$
 
 
