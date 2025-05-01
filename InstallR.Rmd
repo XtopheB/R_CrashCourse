@@ -114,7 +114,7 @@ RStudio is the most common, beginner-friendly software for R users and the main 
 
 ![](https://vimeo.com/203516968)
 
-Link to install RStudio: <a href= "https://www.rstudio.com/products/rstudio/download/" target="_blank">https://www.rstudio.com/products/rstudio/download/</a>  
+Link to install RStudio: <a href= "https://posit.co/download/rstudio-desktop/" target="_blank">https://posit.co/download/rstudio-desktop/</a>  
 
 
 ### Test your knowledge
@@ -133,7 +133,7 @@ quiz(caption = "Quiz - Install RStudio",
     answer("No.", message = "Like R, RStudio is free and open-source. There do exist professional versions of RStudio with enhanced features, but we will not rely on those features.")
   ),
   question("Where do you download RStudio?",
-    answer("www.rstudio.com/download", correct = TRUE, message = "For these tutorials, download and install the RStudio Desktop Open Source License."),
+    answer("https://posit.co/download/rstudio-desktop/", correct = TRUE, message = "For these tutorials, download and install the RStudio Desktop Open Source License."),
     answer("[cloud.r-project.org](http://cloud.r-project.org)", message = "This is where you download R, not RStudio."),
     answer("www.r-project.org"),
     answer("[cran.rstudio.org](http://cran.rstudio.org)"),
