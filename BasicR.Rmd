@@ -440,22 +440,55 @@ The lines of code above first load the package *foreign* using the `library()` f
 The second line creates a new data frame called *MyTest2* that stores the data from the SPSS data file called "*testdata.sav*".  
 
 
-### Knowledge check
+***Test yourself! ***
 
-```{r extract, echo = FALSE}
-question("Which of the packages are used to import SPSS files into R? ",
-         answer("The package *haven* ", message = " - Well-done", correct = TRUE),
-         answer("The package *readr* ", message = "- Try again"),
-         answer("The package *xlsxr* ", message = "- Try again"),
-         answer("The package *tidyverse* ", message = "- *tidyverse* is a greta libray, but not for importing data"),
+
+```{r Qoperator, echo = FALSE}
+question("Which operator is used to access a column by name in a data frame? ",
+          answer("The operator `$` ", message = " - Well-done: In a data frame, one can access to a specific column by its name after a `$`, as in `mydata$age`. This is equivalent to `mydata[,2]` if *age* is in the column index 2.", correct = TRUE),
+         answer("The operator `@` ", message = "- Try again"),
+         answer("The operator `&` ", message = "- Try again"),
+         answer("The operator `#` ", message = "- Try again"),
          random_answer_order = TRUE,
          allow_retry = TRUE
 )
 ```
 
 
+```{r Qaccess, echo = FALSE}
+question("How do you access the element in the **second row** and **first column** of a data frame *df*? ",
+          answer("Using `df[1, 2]` ", message = " - Well-done!", correct = TRUE),
+         answer("Using `df[2, 1]`  ", message = "- Read the instruction again, you're close!"),
+         answer("Using `df$1[2]` ", message = "- Try again"),
+         answer("Using `df[1,]`", message = "- Try again"),
+         random_answer_order = TRUE,
+         allow_retry = TRUE
+)
+```
 
 
+```{r Qimport, echo = FALSE}
+question("Which of the packages are used to import SPSS files into R? ",
+         answer("The package *haven* ", message = " - Well-done", correct = TRUE),
+         answer("The package *readr* ", message = "- Try again"),
+         answer("The package *xlsxr* ", message = "- Try again"),
+         answer("The package *tidyverse* ", message = "- *tidyverse* is a great libray, but not for importing data"),
+         random_answer_order = TRUE,
+         allow_retry = TRUE
+)
+```
+
+
+```{r Qstata, echo = FALSE}
+question("What is the correct function to import Stata files into R? ",
+          answer("The function `read_dta()` ", message = " - Well-done!", correct = TRUE),
+         answer("The function `read.dta()` ", message = "- This is a very common mistake. Try again."),
+         answer("The function `read.stata()` ", message = "- Try again"),
+         answer("The function `haven()` ", message = "- *haven* is a library, not a fonction! Try again"),
+         random_answer_order = TRUE,
+         allow_retry = TRUE
+)
+```
 
 
 ### Importing any file with RStudio
