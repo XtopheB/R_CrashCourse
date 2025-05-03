@@ -440,6 +440,19 @@ The lines of code above first load the package *foreign* using the `library()` f
 The second line creates a new data frame called *MyTest2* that stores the data from the SPSS data file called "*testdata.sav*".  
 
 
+### Knowledge check
+
+```{r extract, echo = FALSE}
+question("Which of the packages are used to import SPSS files into R? ",
+         answer("The package *haven* ", message = " - Well-done", correct = TRUE),
+         answer("The package *readr* ", message = "- Try again"),
+         answer("The package *xlsxr* ", message = "- Try again"),
+         answer("The package *tidyverse* ", message = "- *tidyverse* is a greta libray, but not for importing data"),
+         random_answer_order = TRUE,
+         allow_retry = TRUE
+)
+```
+
 
 
 
