@@ -58,6 +58,12 @@ envipe2019_clean <- envipe2019 %>%
   mutate( Age = as.numeric(as.character(EDAD)), 
           Weight = as.numeric(as.character(FAC_ELE)))
 
+
+## For matrices
+I_3 <- matrix( c(1, 0, 0, 0, 1, 0, 0, 0, 1) , nrow =3)
+A <- matrix(c(1, 2, 3, 4), nrow = 2)
+B <- matrix(c(5, 6, 7, 8), nrow = 2)
+
 ```
 
 ## Work with survey data and Compute SDG indicators 
@@ -752,12 +758,131 @@ SDG_16.1.3_Sex
 ```
 
 
-
 ## Matrices and vectors
 
+We now introduce the basics of vectors and matrices in R. These are essential for understanding Input-Output analysis later.
+
+### Matrices
+
+Matrices are 2D arrays of numbers, we use the function `matrix()` to define one. To create a 2x2 matrix, we simply provide  4 numbers composing the matrix in their reading order and specify the dimension of the matrix, here using `nrow = 2`.  
 
 
-> 
+```{r}
+M <- matrix(c(1, 2, 3, 4), nrow = 2)
+M
+```
+
+
+> Your turn
+
+#### Create a 3 by 3 identity matrix 
+
+The result should be the matrix $I_3$:  
+$$
+I_3 = \begin{bmatrix}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{bmatrix}
+$$
+
+```{r Idmatrix,  exercise = TRUE, exercise.eval = FALSE}
+# Enter your solution below
+
+I_3 <- 
+  
+```
+
+
+```{r Idmatrix-hint-1}
+# You need to use the matrix() function 
+
+I_3 <- matrix()
+
+```
+
+
+```{r Idmatrix-hint-2}
+# Since this is a 3 x3 matrix, we can specify the number of rows
+
+I_3 <- matrix( , nrow =3)
+
+
+```
+
+```{r Idmatrix-solution}
+# Solution: : The sequence of numbers (0 and 1) should be carefully written  
+
+I_3 <- matrix( c(1, 0, 0, 0, 1, 0, 0, 0, 1) , nrow =3)
+I_3
+
+```
+
+As we can imagine, there is also a function (`diag()`) for creating diagonal matrices, and in particular the identity matrix. We can use then simplify our life by using ` I_3 <- diag(3)`
+
+### Matrix operations
+
+One can add matrices of the same dimensions, simply by using ` + `
+
+```{r}
+A <- matrix(c(1, 2, 3, 4), nrow = 2)
+B <- matrix(c(2, 0, 0, 1), nrow = 2)
+
+A + B
+
+```
+
+Use `%*%` for matrix multiplication
+
+
+
+```{r}
+# Matrix multiplication
+C = A %*% B  
+C
+
+
+```
+The result is:  $$
+C = \begin{bmatrix}
+1 & 2  \\
+3 & 4  
+\end{bmatrix} \times
+\begin{bmatrix}
+2 & 0  \\
+0 & 1 
+\end{bmatrix} = \begin{bmatrix}
+2 & 3  \\
+4 & 4 
+\end{bmatrix}
+$$
+
+
+
+**TODO**
+
+```{r}
+# Invert a matrix
+A <- matrix(c(1, 2, 3, 4), nrow = 2)
+InvA <- solve(A)
+
+```
+
+
+> Your turn! 
+
+Verify that $A \times InvA  = Id_2$!
+
+
+### Vectors
+
+Vectors are one-dimensional matrices. Here's how to create one:
+```{r}
+
+V<- matrix(c(1, 2, 3, 4), nrow = 2)
+M
+
+```
 
 
 
