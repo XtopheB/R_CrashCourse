@@ -437,7 +437,7 @@ MyTest2 <- read_sav(file ="testdata.sav")
 ```
 
 The lines of code above first load the package *haven* using the `library()` function. 
-The second line creates a new data frame called *MyTest2* that stores the data from the SPSS data file called "*testdata.sav*".^[There are other packages available for importing data sets from other software, such a the popular *foreign* package. However, *haven* is recommended for its integration into the  *tidyverse* environment.]  
+The second line creates a new data frame called *MyTest2* that stores the data from the SPSS data file called "*testdata.sav*".^[There are other packages available for importing data sets from other software, such a the popular *foreign* package. However, *haven* is recommended for its integration into the  *tidyverse* environment. See the description of the haven package (https://haven.tidyverse.org/) for more.]  
 
 
 ***Test yourself! ***
