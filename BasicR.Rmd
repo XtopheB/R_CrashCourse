@@ -394,11 +394,11 @@ The function `read_excel( )` accepts several arguments, such as the sheet to rea
 # loading the readxl package
 library(readxl)
 # loading the data
-Mydataset <- read_excel(path ="Myexcel.xls")
+Mydataset <- read_excel(path ="MyExcel.xls")
 
 ```
 
-The lines of code above first load the package *readxl* using the `library()` function.  The second line, creates a data frame called *Mydataset* that stores the data from the excel data file called “*Myexcel.xls*”.  Remember that a data frame is a data structure in R that stores spread-sheet like data, as rows (observations or cases) and columns (variables). 
+The lines of code above first load the package *readxl* using the `library()` function.  The second line, creates a data frame called *Mydataset* that stores the data from the excel data file called “*MyExcel.xls*”.  Remember that a data frame is a data structure in R that stores spread-sheet like data, as rows (observations or cases) and columns (variables).^[One can also configure options such as the sheet to open in excel, using a second (optional) argument `sheet` as in:  `Mydataset <- read_excel(path ="MyExcel.xls", sheet = “SheetName”)`. ] 
 
 > The `path` indicates where the file is located on your hard drive. By default, R will search in the same folder of your file but this can vary, and can be adjusted.
 
@@ -407,9 +407,9 @@ The lines of code above first load the package *readxl* using the `library()` fu
 
 We will explore now how to import a data set in Stata file format, which carries the file extension *.dta*. 
 
-To read a Stata data file into R, we use the command `read_dta( )` function.  To use this function, we need to load the “**haven**” package presented earlier.  This package has the relevant tools and functions to import data from commercial software.  
+To import or read files of that format into R, we need the R package called ***haven***. This package contains a range of functions that will allow you to import data files from some of the other statistical software packages aside from SPSS such as Stata and SAS into R. If you have not yet installed the *haven* package, use the command `install.packages(“haven” )`.  
 
-The function `read_dta( )` accepts only one argument, which is the full name or file path, including the file extension as shown below. 
+To read a Stata data file into R, we use the command `read_dta( )` function. This function accepts several arguments but really needs only one argument, which is the full name or file path, including the file extension as shown below. 
 
 ```{r eval=FALSE}
 # loading the  haven package
@@ -424,20 +424,20 @@ The lines of code above first load the package *haven* using the `library()` fun
 
 ### Importing SPSS data into R
 
-We will now see how to import a data set in SPSS file format that carries the file extension *.sav*.  To import or read files of that format into R, we need the R package called **foreign**. Like the **haven** package, the **foreign** package contains a range of functions that will allow you to import data files from some of the other statistical software packages aside from SPSS such as Stata and SAS into R. If you have not yet installed the foreign package, use the command `install.packages(“foreign” )`.  
+We will now see how to import a data set in SPSS file format that carries the file extension *.sav*.  Here again, we need the R package ***haven***. 
 
-We are now ready to read SPSS data into R.  To do this, we use the `read.spss( )` function. This function accepts several arguments. The first argument, *file is the name of the data file. The second argument  *to.data.frame* tells R to convert the data set into a data frame. We should assign a name to the data frame that will be created when the data set has been imported into R. 
+To do this, we use the `read_sav( )` function. The output is a converted version of the original data set into a data frame. We should assign a name to the data frame that will be created when the data set has been imported into R. 
 
 ```{r eval=FALSE}
-# loading the foreign package
-library(foreign)
+# loading the haven package
+library(haven)
 # loading the data drom SPSS file
-MyTest2 <- read.spss(file ="testdata.sav", to.data.frame=TRUE) 
+MyTest2 <- read_sav(file ="testdata.sav") 
 
 ```
 
-The lines of code above first load the package *foreign* using the `library()` function. 
-The second line creates a new data frame called *MyTest2* that stores the data from the SPSS data file called "*testdata.sav*".  
+The lines of code above first load the package *haven* using the `library()` function. 
+The second line creates a new data frame called *MyTest2* that stores the data from the SPSS data file called "*testdata.sav*".^[There are other packages available for importing data sets from other software, such a the popular *foreign* package. However, *haven* is recommended for its integration into the  *tidyverse* environment.]  
 
 
 ***Test yourself! ***
@@ -500,8 +500,6 @@ Then select the format of your file using the drop down menu.
 
 ![](https://uedufy.com/wp-content/uploads/2023/05/Screenshot-2023-05-28-at-11.36.48-768x219.png)
 
-
-You can also configure options such as the sheet to open in excel, as shown [in this tutorial](https://uedufy.com/how-to-import-an-excel-file-into-r-6-easy-steps/) (from Leonard at Uedufy.com). 
  
  > **NB**: The code resulting form this operation will be copied in your document after the importation for reproducibility. 
  
