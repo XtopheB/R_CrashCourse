@@ -1,7 +1,7 @@
 ---
 title: "Basic R!"
 author: " ---- \n *Christophe Bontemps*  \n ![](www/SIAP_logo_2020_1800.png){width=30%}  "
-date: 'Version: 1.3 \n (May 2025)'
+date: 'Version: 1.4 \n (May 2025)'
 output:
   learnr::tutorial: 
     progressive: true
@@ -481,8 +481,8 @@ question("Which of the packages are used to import SPSS files into R? ",
 
 ```{r Qstata, echo = FALSE}
 question("What is the correct function to import Stata files into R? ",
-          answer("The function `read_dta()` ", message = " - Well-done!", correct = TRUE),
-         answer("The function `read.dta()` ", message = "- This is a very common mistake. Try again."),
+          answer("The function `read_dta()` ", message = " - Well-done! Please be careful and use the *haven* functions with an underscore ( `_` ) in their name.", correct = TRUE),
+         answer("The function `read.dta()` ", message = "- This is a very common mistake. Try again!"),
          answer("The function `read.stata()` ", message = "- Try again"),
          answer("The function `haven()` ", message = "- *haven* is a library, not a fonction! Try again"),
          random_answer_order = TRUE,
@@ -518,8 +518,10 @@ First, let us see what are the variables using the `names()` function.
 names(SDG)
 ```
 
-Now, can you display the first 5 lines of the data set (maybe using using the `head()` function) ?
+As you can see from the output above, the `names()` function is very useful for retrieving the names of the objects in the data frame. It is a very handy function that brings efficiency to data exploration. 
 
+
+Now, for exploring the data set, can you display the first 5 lines of the data set (maybe using using the `head()` function) ?
 
 ```{r filter2, exercise = TRUE, exercise.eval = FALSE}
 
@@ -528,6 +530,8 @@ Now, can you display the first 5 lines of the data set (maybe using using the `h
 **Note:** by default, `head()` shows the **6** first rows! 
 *Try maybe with an option (type a comma, inside the function, after the name of the data frame to see some options)*
 
+
+Like the `names()` function, the `head()` function is another very handy tool for getting a quick and informative look at your data, in the initial stages of data analysis.
 
 ```{r filter2-solution}
 head(SDG, n=5)
@@ -538,7 +542,7 @@ head(SDG, n=5)
 
 ## Playing with `tidyverse` 
 
-The tidyverse makes working with data in R easier and more natural, like telling a story with your data.
+*tidyverse* makes working with data in R easier and more natural, like telling a story with your data.
 
 There are many functions available in the package `tidyverse`, in particular, one has many tools for filtering and visualizing the data. 
  
@@ -565,7 +569,7 @@ This requires quite a few lines of code, the creation of temporaty files (*df*) 
 >  But there is a more readable solution
 
 
-The`%>% `  helps linking operations in a very easy-to-read sequence. The code below does exactly the same operation as before, but passing the result of one expression into the next using  `%>% `.
+The `%>% `helps linking operations in a very easy-to-read sequence. The code below does exactly the same operation as before, but passing the result of one expression into the next using  `%>% `.
 
 > One may read  `%>% ` as:  *next do this (please)* !
 
@@ -581,7 +585,7 @@ The function `filter()`  lets you use a logical test to extract specific rows fr
 So the story above reads as: 
 
 - Take the data set `SDG`,
-- **then**  `filter` only observations where *region_name* is exactly "ASIA"  **and** for which *population* is above 50,  
+- **then**  `filter` only observations where *region_name* is exactly "Asia"  **and** for which *population* is above 50,  
 - **then** give me the number of rows.  
 
 > Easy, no? 
@@ -590,9 +594,9 @@ So the story above reads as:
 We can use many different logical tests to filter data, such as:
 
 - `==`  (identical),
-- `>` (strictly greater),
-- `>=` (greater or equal)   
--  `&` (and) , `|` (or) , `!` (not) 
+- `>` (strictly greater), `<` (strictly less)
+- `>=` (greater or equal), `<=` (less or equal)   
+-  `&` (and) , `|` (or) , `!` (not), `!=` (not equal) 
 
 
 ***What will the following code return?*** 
@@ -608,7 +612,7 @@ SDG %>%
 ```{r logicals, echo = FALSE}
 question("",
          answer("Every country in either Asia or Africa,  with internet use greater than 60% ",
-                message = " - The filter applies to *region_name* with  \" | \"  wich means  \" or \" , Excellent!",
+                message = " - The filter applies to *region_name* with  \" | \"  which means  \" or \" , Excellent!",
                 correct = TRUE),
          answer("Every country with a name starting with \"A\",  with internet use greater than 60% ",
                 message = " - The filter  applies to *region_name*  not to country. Try again!  "),
@@ -671,7 +675,7 @@ Find the variable *maternal_mortality_ratio* variable (use the small right arrow
 
 > Is there a problem with the *maternal_mortality_ratio* values? 
 
-#### Find out wich are the countries with a negative values for *maternal mortality rate* 
+#### Find out which are the countries with a negative values for *maternal mortality rate* 
 
 ```{r filterex2, exercise = TRUE}
 
