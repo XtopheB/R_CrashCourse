@@ -63,6 +63,20 @@ envipe2019_clean <- envipe2019 %>%
 I_3 <- matrix( c(1, 0, 0, 0, 1, 0, 0, 0, 1) , nrow =3)
 A <- matrix(c(1, 2, 3, 4), nrow = 2)
 B <- matrix(c(5, 6, 7, 8), nrow = 2)
+InvA <- solve(A)
+
+## vectors
+v <- c(1, 2, 3)
+u <- c(1, 0, 1)
+
+# Input-Output Analysis
+Z <- matrix(c(20,75,93,
+              31,83,99,
+              26,59,56),  nrow = 3)
+
+M <- c(40, 110, 50)
+VA <- c(42, 77, 189)
+Y <- c(110, 205, 227)
 
 ```
 
@@ -136,7 +150,7 @@ household_rural <- household_survey %>%
 
 ```
 
-```{r PopDat1,  exercise = TRUE, exercise.eval = FALSE, exercise.setup = "PopDat"}
+```{r PopDat1,  exercise = TRUE, exercise.eval = FALSE, exercise.setup = "PopDat", exercise.cap = "Create a data set with only rural households"}
 # Enter your solution below
 
 household_rural <-
@@ -181,7 +195,7 @@ head(household_rural)
 
 Here, we will use the data frame with only rural households (named *household_rural*) and count them. A useful function may be the function `count()`.
 
-```{r PopDen1,  exercise = TRUE, exercise.eval = FALSE, exercise.setup = "PopDat"}
+```{r PopDen1,  exercise = TRUE, exercise.eval = FALSE, exercise.setup = "PopDat", exercise.cap = "Count the rural population"}
 # Enter your solution below
 
 Nb_rural <-
@@ -234,7 +248,7 @@ income_rural <- household_rural %>%
 
 ```
 
-```{r PopNum1,  exercise = TRUE, exercise.eval = FALSE, exercise.setup = "PopNum"}
+```{r PopNum1,  exercise = TRUE, exercise.eval = FALSE, exercise.setup = "PopNum", exercise.cap = "Compute the income sum for rural households"}
 # Enter your solution below
 
 income_rural <-
@@ -310,7 +324,7 @@ Avg\_Income^{rural} = \frac{Total\_Income^{rural}}{Nb\_Households^{rural}} =   \
 $$
 
 
-```{r Avg1,  exercise = TRUE, exercise.eval = FALSE, exercise.setup = "PopDat"}
+```{r Avg1,  exercise = TRUE, exercise.eval = FALSE, exercise.setup = "PopDat", exercise.cap = "Compute the average"}
 # Enter your solution below
 
 avg_income <-
@@ -445,7 +459,7 @@ income_weighted_rural <- household_rural %>%
 ```
 
 
-```{r WPopNum1,  exercise = TRUE, exercise.eval = FALSE, exercise.setup = "WPopNum"}
+```{r WPopNum1,  exercise = TRUE, exercise.eval = FALSE, exercise.setup = "WPopNum", exercise.cap = "Compute the weighted average"}
 # Enter your solution below
 
 income_rural <-
@@ -610,7 +624,7 @@ str(envipe2019_clean)
 #### Compute the summary statistics of the variables *Age* and *Weight* (be careful of the capital letters at the begining of  **A**ge and **W**eight). 
 
 
-```{r envipe1,  exercise = TRUE, exercise.eval = FALSE}
+```{r envipe1,  exercise = TRUE, exercise.eval = FALSE, exercise.cap = "Compute the summary statistics"}
 # Enter your solution below
 
 envipe2019_clean %>%
@@ -764,7 +778,7 @@ We now introduce the basics of vectors and matrices in R. These are essential fo
 
 ### Matrices
 
-Matrices are 2D arrays of numbers, we use the function `matrix()` to define one. To create a 2x2 matrix, we simply provide  4 numbers composing the matrix in their reading order and specify the dimension of the matrix, here using `nrow = 2`.  
+Matrices are 2D arrays of numbers, we use the function `matrix()` to define one. To create a 2x2 matrix, we simply provide 4 numbers composing the matrix in their reading order and specify the dimension of the matrix, here using `nrow = 2`.  
 
 
 ```{r}
@@ -773,7 +787,7 @@ M
 ```
 
 
-> Your turn
+> Your turn! 
 
 #### Create a 3 by 3 identity matrix 
 
@@ -786,7 +800,7 @@ I_3 = \begin{bmatrix}
 \end{bmatrix}
 $$
 
-```{r Idmatrix,  exercise = TRUE, exercise.eval = FALSE}
+```{r Idmatrix,  exercise = TRUE, exercise.eval = FALSE, exercise.cap = "Compute the 3-D Identity matrix "}
 # Enter your solution below
 
 I_3 <- 
@@ -822,9 +836,12 @@ As we can imagine, there is also a function (`diag()`) for creating diagonal mat
 
 ### Matrix operations
 
-One can add matrices of the same dimensions, simply by using ` + `
+***Addition***
+
+One can add matrices of the same dimensions, simply by using ` + `. **Subtraction** works similarly with ` - `.
 
 ```{r}
+# Adding two matrices A and B 
 A <- matrix(c(1, 2, 3, 4), nrow = 2)
 B <- matrix(c(2, 0, 0, 1), nrow = 2)
 
@@ -832,8 +849,14 @@ A + B
 
 ```
 
-Use `%*%` for matrix multiplication
 
+```{r}
+# Subtraction with two matrices A and B 
+A-B
+```
+
+***Multiplication***
+Use ` %*% ` for matrix multiplication. 
 
 
 ```{r}
@@ -841,9 +864,9 @@ Use `%*%` for matrix multiplication
 C = A %*% B  
 C
 
-
 ```
-The result is:  $$
+
+With the previous matrices $A$ and $B$, the result is $C = AB$:  $$
 C = \begin{bmatrix}
 1 & 2  \\
 3 & 4  
@@ -854,36 +877,114 @@ C = \begin{bmatrix}
 \end{bmatrix} = \begin{bmatrix}
 2 & 3  \\
 4 & 4 
-\end{bmatrix}
-$$
+\end{bmatrix} $$
 
 
+***Matrix Inversion***
 
-**TODO**
+When a matrix is invertible, it can be useful to invert it. This will be useful for input-output analysis.  
 
 ```{r}
-# Invert a matrix
-A <- matrix(c(1, 2, 3, 4), nrow = 2)
+# Invert the matrix A
+InvA <- solve(A)
+# Display the inverse of A
+InvA
+
+```
+
+> Your turn! 
+
+#### Verify that $A \times InvA  = Id_2$!
+The product of a matrix by its inverse should be the identity matrix. Compute that inverse of matrix $A$ and verify! 
+
+
+```{r Invert,  exercise = TRUE, exercise.eval = FALSE, exercise.cap = "Verify the inverted matrix"}
+# Enter your solution below
+
+
+  
+```
+
+
+```{r Invert-hint-1}
+# You need to use the solve() function 
+
 InvA <- solve(A)
 
 ```
 
 
-> Your turn! 
+```{r Invert-solution}
+# Solution: The product of A and InvA should be the identity (diemnsion 2)!
 
-Verify that $A \times InvA  = Id_2$!
-
-
-### Vectors
-
-Vectors are one-dimensional matrices. Here's how to create one:
-```{r}
-
-V<- matrix(c(1, 2, 3, 4), nrow = 2)
-M
+A %*% InvA
 
 ```
 
+Of course, the matrix A has to be invertible. If not,   `solve(A)` will return an error. 
+
+## An Input-Output Analysis
+
+In this exercise we will do an *Input-Output* analysis  using a 3x3 industry-by-industry table (named $Ind_1$, $Ind_2$, $Ind_3$). Steps include:
+
+- Computing the technical coefficients
+- Computing the Leontief inverse, 
+- Computing the value-added and import multipliers, and
+- Computing the emissions intensity.
+
+The core of the analysis is the transaction matrix , which shows how much each industry buys from and sells to the others.
+
+
+```{r}
+# Transaction matrix: Inputs (columns) to Outputs (rows)
+Z <- matrix(c(20,75,93,
+              31,83,99,
+              26,59,56),  nrow = 3)
+# We can add names to rows and columns here. 
+rownames(Z) <- colnames(Z) <- c("IND1", "IND2", "IND3")
+Z
+```
+
+
+The matrix Z, is the input-output matrix and will play an important role.  $$
+Z = \begin{bmatrix}
+20 & 75 & 93 \\ 
+31 & 83 & 99 \\  
+26 & 59 & 56
+\end{bmatrix}$$
+
+
+
+We can also define the vector of the values of **imported inputs** $M$, as well as the **Value added** $VA$, and the **final demand** for each good $Y$. 
+
+
+```{r}
+# Imported inputs 
+M <- c(40, 110, 50)
+
+# Value added 
+VA <- c(42, 77, 189)
+
+# Final demand
+Y <- c(110, 205, 227)
+```
+
+### Step 1: Compute Total Output (X)
+
+The total output $X$ of each industry is the sum of intermediate consumption, imports, value-added, and final demand. To compute the sum of the intermediate consumption, we need to sum all column of the matrix $Z$. For that, we can use the function `colSums()`
+. 
+```{r}
+# creating a vector with the sum of each column
+colSums(Z)
+```
+
+The total output for each industry, is then the sum of the vectors representing the intermediate consumption (from Z), imports (M) , value-added (VA), and final demand (Y).
+
+```{r}
+# The total output is the sum  of 3 vectors
+X <- colSums(Z) + M + VA + Y
+X
+```
 
 
 
