@@ -48,16 +48,15 @@ Nb_rural <- household_rural %>%
 income_rural_value <- household_rural %>%
   summarize(total = sum(income))
 
-## For SDG 16.1.3
+## -- For SDG 16.1.3
 
-
-## We will use a subsample
+## Code to create a subsample
 # envipe <- read.dbf("./www/TPer_Vic2.dbf")
 # envipe_light <- envipe %>%
 #   sample_frac(0.1, replace = FALSE)
 # write.dbf(envipe_light, "./www/TPer_Vic2_light.dbf")
 
-# Light version
+# Light version used
 envipe <- read.dbf("./www/TPer_Vic2_light.dbf")
 
 envipe2019 <- envipe %>%
