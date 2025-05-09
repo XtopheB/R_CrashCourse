@@ -1,7 +1,7 @@
 ---
 title: "Use R!"
 author: " ---- \n *Christophe Bontemps*  \n  ![](www/SIAP_logo_2020_1800.png){width=30%}  "
-date: 'Version: 1.2 \n (April 2025)'
+date: 'Version: 1.3 \n (May 2025)'
 output:
   learnr::tutorial: 
     progressive: true
@@ -60,7 +60,7 @@ envipe2019_clean <- envipe2019 %>%
 
 
 ## For matrices
-I_3 <- matrix( c(1, 0, 0, 0, 1, 0, 0, 0, 1) , nrow =3)
+I3 <- matrix( c(1, 0, 0, 0, 1, 0, 0, 0, 1) , nrow =3)
 A <- matrix(c(1, 2, 3, 4), nrow = 2)
 B <- matrix(c(5, 6, 7, 8), nrow = 2)
 InvA <- solve(A)
@@ -803,7 +803,7 @@ $$
 ```{r Idmatrix,  exercise = TRUE, exercise.eval = FALSE, exercise.cap = "Compute the 3-D Identity matrix "}
 # Enter your solution below
 
-I_3 <- 
+I3 <- 
   
 ```
 
@@ -811,7 +811,7 @@ I_3 <-
 ```{r Idmatrix-hint-1}
 # You need to use the matrix() function 
 
-I_3 <- matrix()
+I3 <- matrix()
 
 ```
 
@@ -819,7 +819,7 @@ I_3 <- matrix()
 ```{r Idmatrix-hint-2}
 # Since this is a 3 x3 matrix, we can specify the number of rows
 
-I_3 <- matrix( , nrow =3)
+I3 <- matrix( , nrow =3)
 
 
 ```
@@ -827,12 +827,12 @@ I_3 <- matrix( , nrow =3)
 ```{r Idmatrix-solution}
 # Solution: : The sequence of numbers (0 and 1) should be carefully written  
 
-I_3 <- matrix( c(1, 0, 0, 0, 1, 0, 0, 0, 1) , nrow =3)
-I_3
+I3 <- matrix( c(1, 0, 0, 0, 1, 0, 0, 0, 1) , nrow =3)
+I3
 
 ```
 
-As we can imagine, there is also a function (`diag()`) for creating diagonal matrices, and in particular the identity matrix. We can use then simplify our life by using ` I_3 <- diag(3)`
+As we can imagine, there is also a function (`diag()`) for creating diagonal matrices, and in particular the identity matrix. We can use then simplify our life by using ` I3 <- diag(3)`
 
 ### Matrix operations
 
@@ -856,7 +856,8 @@ A-B
 ```
 
 ***Multiplication***
-Use ` %*% ` for matrix multiplication. 
+
+**Matrix multiplication** use the operator ` %*% `, to distinguish from *term-by-term multiplication* performed by ` * `
 
 
 ```{r}
@@ -894,8 +895,8 @@ InvA
 
 > Your turn! 
 
-#### Verify that $A \times InvA  = Id_2$!
-The product of a matrix by its inverse should be the identity matrix. Compute that inverse of matrix $A$ and verify! 
+#### Verify that $A \times InvA  = I_2$!
+The product of a matrix $A$ by its inverse $InvA* should be the identity matrix $I_2$. Compute that inverse of matrix $A$ and verify! 
 
 
 ```{r Invert,  exercise = TRUE, exercise.eval = FALSE, exercise.cap = "Verify the inverted matrix"}
@@ -990,12 +991,14 @@ TO
 ### Step 2: Technical Coefficient Matrix
 
 
-The **technical coefficient matrix** \( A \) shows the input required from each industry per unit of output of each industry. 
+The **technical coefficient matrix** $A$,  shows the input required from each industry per unit of output of each industry. 
 
-\[ A_{ij} = \frac{Z_{ij}}{X_j} \]
+$$ A_{ij} = \frac{Z_{ij}}{TO_j}$$
 
 This requires a computation by dividing each column of $Z$ by the total output ($TO$). 
 
+
+***Chesca***: I need help here! This is difficult to explain , and the computation uses transposes and term-by-term computation....  I think this is tricky.... 
 
 ```{r}
 # some explanations needed here !!!
@@ -1004,7 +1007,18 @@ MatA
 ```
 
 
+### Step 3: Leontief Inverse
 
+We compute the **Leontief Inverse** \(B = (I - A)^{-1}\):
+
+```{r}
+
+I3 <- diag(3)
+
+B <- solve(I3 - MatA)
+B
+
+```
 
 
 
