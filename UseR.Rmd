@@ -932,7 +932,7 @@ In this exercise we will do an *Input-Output* analysis  using a 3x3 industry-by-
 - Computing the value-added and import multipliers, and
 - Computing the emissions intensity.
 
-The core of the analysis is the transaction matrix , which shows how much each industry buys from and sells to the others.
+The core of the analysis is the transaction matrix $Z$ , which shows how much each industry buys from and sells to the others. In this input-output matrix, the rows signify the output and the columns represent the inputs 
 
 
 ```{r}
@@ -940,8 +940,9 @@ The core of the analysis is the transaction matrix , which shows how much each i
 Z <- matrix(c(20,75,93,
               31,83,99,
               26,59,56),  nrow = 3)
-# We can add names to rows and columns here. 
-rownames(Z) <- colnames(Z) <- c("IND1", "IND2", "IND3")
+# We can add names to rows and columns here
+colnames(Z) <- c("I-IND1", "I-IND2", "I-IND3")
+rownames(Z) <- c("0-IND1", "0-IND2", "0-IND3")
 Z
 ```
 
@@ -971,20 +972,37 @@ Y <- c(110, 205, 227)
 
 ### Step 1: Compute Total Output (X)
 
-The total output $X$ of each industry is the sum of intermediate consumption, imports, value-added, and final demand. To compute the sum of the intermediate consumption, we need to sum all column of the matrix $Z$. For that, we can use the function `colSums()`
+The total output $X$ of each industry is the sum of intermediate consumption, imports, value-added, and final demand. To compute the sum of the intermediate consumption, we need to sum all elements for each columns of the matrix $Z$. For that, we can use the function `colSums()` that computes the sum of the values in each column of a matrix or data frame in R. The result is a line vector. 
+
 . 
 ```{r}
-# creating a vector with the sum of each column
+# creating a vector with the sum of the values in each column
 colSums(Z)
 ```
 
-The total output for each industry, is then the sum of the vectors representing the intermediate consumption (from Z), imports (M) , value-added (VA), and final demand (Y).
+The total output ($TO$) for each industry, is then the sum of the vectors representing the intermediate consumption (from Z), imports (M) , value-added (VA), and final demand (Y).
 
 ```{r}
-# The total output is the sum  of 3 vectors
-X <- colSums(Z) + M + VA + Y
-X
+# The total output is a sum of  vectors
+TO<- colSums(Z) + M + VA + Y
+TO
 ```
+### Step 2: Technical Coefficient Matrix
+
+
+The **technical coefficient matrix** \( A \) shows the input required from each industry per unit of output of each industry. 
+
+\[ A_{ij} = \frac{Z_{ij}}{X_j} \]
+
+This requires a computation by dividing each column of $Z$ by the total output ($TO$). 
+
+
+```{r}
+# some explanations needed here !!!
+MatA <- t(t(Z) / TO)
+MatA
+```
+
 
 
 
