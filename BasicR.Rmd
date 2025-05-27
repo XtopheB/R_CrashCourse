@@ -431,7 +431,7 @@ To do this, we use the `read_sav( )` function. The output is a converted version
 ```{r eval=FALSE}
 # loading the haven package
 library(haven)
-# loading the data drom SPSS file
+# loading the data from SPSS file
 MyTest2 <- read_sav(file ="testdata.sav") 
 
 ```
@@ -991,7 +991,7 @@ SDG %>%
 The function `group_by()` is extremely useful and powerful. It greatly simplifies coding, avoiding looping across categories of a variable like by region, year, or gender. By combining `group_by()` with functions like `summarise()` or `mutate()` one can break data into separate parts and analyze each part separately.
 
 
-> Many other functions from the `tidyverse` can help you explore, refine, and transform a dataset to compute meaningful values and indicators. With practice, you'll discover these tools and naturally incorporate them into your coding routine.
+> Many other functions from the `tidyverse` can help you **explore**, **refine**, and **transform** a dataset to compute meaningful values and indicators. With practice, you'll discover these tools and naturally incorporate them into your coding routine.
 
 ---
 
