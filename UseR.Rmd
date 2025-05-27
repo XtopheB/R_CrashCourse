@@ -17,7 +17,8 @@ description: >
 library(learnr)
 library(tidyverse)
 library(stringr)
-library(foreign)
+#library(foreign)
+library(haven)
 
 # We need to have here all objects used in multiple chunks!!
 # Loading data--  
@@ -54,10 +55,15 @@ income_rural_value <- household_rural %>%
 # envipe <- read.dbf("./www/TPer_Vic2.dbf")
 # envipe_light <- envipe %>%
 #   sample_frac(0.1, replace = FALSE)
-# write.dbf(envipe_light, "./www/TPer_Vic2_light.dbf")
 
-# Light version used
-envipe <- read.dbf("./www/TPer_Vic2_light.dbf")
+# Light version used 
+# with foreign
+# write.dbf(envipe_light, "./www/TPer_Vic2_light.dbf")
+# envipe <- read.dbf("./www/TPer_Vic2_light.dbf")
+
+##  Alternative with haven 
+#write_sav(envipe_light,  "./www/TPer_Vic2_light.sav")
+envipe <- read_sav("./www/TPer_Vic2_light.sav")
 
 envipe2019 <- envipe %>%
   select(SEXO,EDAD, AP7_3_11,FAC_ELE)
@@ -65,6 +71,18 @@ envipe2019 <- envipe %>%
 envipe2019_clean <- envipe2019 %>%
   mutate( Age = as.numeric(as.character(EDAD)), 
           Weight = as.numeric(as.character(FAC_ELE)))
+
+# For SDG 16.1.3
+denominator <- envipe2019_clean  %>%
+  summarize(weightedPop = sum(Weight))
+
+numerator <- envipe2019_clean  %>%
+  filter(AP7_3_11 == 1) %>%
+  summarize(weightedPop = sum(Weight))
+  
+SDG  <-  (numerator/denominator) * 100
+
+
 
 
 ## For matrices
@@ -506,7 +524,7 @@ income_weighted_rural
 
 ```
 
-A bit of explanation: 
+**A bit of explanation**: 
 
 - `income * weight` multiplies *income* with *weights*  row-by-row (for each observation).
 - As previously `sum()` then sums the result across all rows
@@ -531,12 +549,13 @@ round(income_weighted_rural, 2)
 We now will learn how to compute the SDG indicator 16.1.3 - *Proportion of persons subjected to physical, psychological or sexual harassment, in the previous12 months*,  with disaggregation by sex.
 
 We will be using the data set for the 2019 National Survey of Victimization and Perception of Public Security abbreviated **ENVIPE 2019**.^[The microdata for the survey can be accessed on the website of  [INEGI](https://www.inegi.org.mx/programas/envipe/2019/#microdatos)  under the tab labelled *Microdatos*. Related survey documentation, including the survey questionnaire, report, tabulations and data dictionary can be found under the related tabs.]
-The ENVIPE 2019 data set is saved in *.dbf* format (from SPSS software). To load files with that extension, we need the `foreign` package.
+The ENVIPE 2019 data set is saved in *.sav* format (from SPSS software). To load files with that extension, we need the `haven` package (see previous module).
 
 
 ```{r, eval = FALSE}
-library(foreign)
-envipe <- read.dbf("TPer_Vic2.dbf")
+library(haven)
+envipe <- read_sav("TPer_Vic2.sav")
+
 ```
 
 As usual, let us explore the *raw* data set that has **`r nrow(envipe)`** observations and **`r ncol(envipe)`** variables. We can familiarize ourselves with the names of the variables using the  function `names()`
@@ -581,7 +600,7 @@ str(envipe2019)
 
 ```{r quiz3, echo = FALSE}
 quiz(
-  question("In the *envipe2019*, are all variables encoded as **factors**?",
+  question("In the *envipe2019*, are all variables encoded as **factors**? (look above,  after *@ format.spss*)",
     answer("Yes, and this is a problem!", correct = TRUE,  message = " We need to change that since some variables are numerical "),
     answer("Yes, but this is correct", correct = FALSE, message = " - Having variables that are numerical encoded as factors will cause a lot of problem, since some operations will not work correctly on factor variable"),
     answer("No, they are all numbers", correct = FALSE, message = " - All variables, including *EDAD* (Age) and *FAC_ELE* (sampling weight)  are encoded as factors.")
@@ -715,12 +734,107 @@ $$
 
 ### Step by step
 
-> **TBC**
+
+#### Step 1: Compute the denominator
+We now know how to compute a weighted sum for both the numerator and the denominator. Let's start by the easiest: **the denominator!** 
+In fact, the denominator is just a weighted count.
 
 
-### In a single code, using the pipe `%>%`
+```{r CountPop, exercise.eval = TRUE}
+denominator <- envipe2019_clean  %>%
+  summarize(weightedPop = sum(Weight))
+  
+```
 
-> Comments **TBC**
+
+```{r CountPop1,  exercise = TRUE, exercise.eval = FALSE, exercise.setup = "CountPop", exercise.cap = "Compute the denominator"}
+# Enter your solution below
+
+denominator <-
+  
+```
+
+```{r  CountPop1-hint-1}
+# You should use the data set and the %>% operator
+# Use a new line to compute the weighted count of the population
+
+denominator <- envipe2019_clean %>%
+  
+
+```
+
+```{r  CountPop1-hint-2}
+# We need to compute the sum of the weights, but wich function ???? 
+
+ denominator <- envipe2019_clean %>%
+  ????(weightedPop = sum(Weight))
+  
+
+```
+
+```{r  CountPop1-solution}
+# Solution: We use the function summarize() to have only one value
+
+denominator <- envipe2019_clean  %>%
+  summarize(weightedPop = sum(Weight))
+
+denominator
+
+```
+
+#### Step 2: Compute the numerator
+
+Here again, we need to compute a weighted sum, but only for victims, that is only when the variable `AP7_3_11`  is coded as ` 1 `. 
+
+> Hint: You can use the solution of the previous code and modify it for computing the numerator! 
+
+
+```{r CountPop2,  exercise = TRUE, exercise.eval = FALSE, exercise.setup = "CountPop", exercise.cap = "Compute the numerator"}
+# Enter your solution below
+
+numerator <-
+  
+```
+
+```{r  CountPop2-hint-1}
+# We can start with the previous code and use filter() somewhere. Insert it in the code below:
+
+numerator <- envipe2019_clean  %>%
+  summarize(weightedPop = sum(Weight))
+  
+
+```
+
+```{r  CountPop2-solution}
+# Using filter(), we compute the same sum of weights but only for victims!  
+# Note the use of  ==  for filtering
+
+numerator <- envipe2019_clean  %>%
+  filter(AP7_3_11 == 1) %>%
+  summarize(weightedPop = sum(Weight))
+  
+numerator
+```
+
+
+#### Step 3: Compute the ratio
+
+```{r RatioVictim}
+# The SDG 16.1.3 is just the ratio; Since we want the percentage, we multiply by 100
+SDG  <-  (numerator/denominator) * 100
+
+# Display result
+SDG
+
+```
+
+
+So the value of the SDG 16.1.3 in our sample is **`r round(pull(SDG), 2)`**. But its computation required 3 steps, and several auxiliary objects (*numerator, denominator*). 
+
+> We can do this in a single piece of code, using the pipe `%>%` to link all operations!
+
+Examine the code below. 
+
 
 ```{r}
 SDG_16.1.3 <- envipe2019_clean  %>%
@@ -730,6 +844,9 @@ SDG_16.1.3 <- envipe2019_clean  %>%
 
 SDG_16.1.3
 ```
+
+
+And the result is exactly the same! 
 
 #### A bit of explanation:
 
@@ -742,7 +859,6 @@ $$
 SDG\_16.1.3  =  \frac{\sum_{j= Victim} \; weight_j }{\sum_{i=All} \; weight_i} \times 100 =  \sum_{j= Victim}\frac{ weight_j }{\sum_{i=All} \; weight_i} \times 100  \\ 
 Or:  SDG\_16.1.3  =  \sum_{j= Victim} \frac{weight_j }{WeightedPop} \times 100 
 $$
-
 
 
 ### Another way of doing it
@@ -761,6 +877,10 @@ SDG_16.1.3
 
 - After filtering (*i.e.*, selecting only the victims: `AP7_3_11 == 1`), we compute the percentage in `summarize()`. The sum of weights,  `sum(Weight)`, is done here only on the sub population of victims ( *i.e.*, our *numerator*) divided by the complete weighted population  generated by `unique(WeightedPop)` (our *denominator*). We have to use   `unique()`  because *WeightedPop* is repeated across all rows, and we only want a single value for the denominator.^[We could have used `max(WeightedPop)` or `min(WeightedPop)` or even `mean(WeightedPop)`, they all provide the same value as `unique(WeightedPop)`.]
 
+
+These examples show that there are always multiple ways of computing a result, and all lead to same result( fortunately). However, ***concision*** and ***clarity*** are two important attributes of any code.  We encourage you to always rethink your code to see if there is a "better" way to compute the same thing. It is also a nice exercise to try different methods and compare if the results are the same.  
+
+But there is more: This way of computing is extremely powerful and versatile!
 
 ### Disagregating the SDG indicator 16.1.3 by Sex
 
@@ -781,8 +901,10 @@ SDG_16.1.3_Sex <- envipe2019_clean  %>%
 
 SDG_16.1.3_Sex
   
-
 ```
+
+
+There is much more to learn with `tidyverse` and you will improve your skills only with practice. To learn, more please read the [Tidyverse reference manual](https://dplyr.tidyverse.org/reference/index.html) and  enjoy other tutorials like [this one](https://www.r-bloggers.com/2021/04/tidyverse-in-r-complete-tutorial/)  or [that one](https://www.pkimes.com/PR2019replicathon/tutorials/0b_R_tidyverse.html) and search on the web by yourself, there are hundreds of examples.
 
 
 ## Matrices and vectors
@@ -1034,16 +1156,9 @@ B
 ```
 
 
-
 ## Conclusion
 
 >TBC
-
-------
-
-> There are a lot of other things to learn, please read the [Tidyverse reference manual](https://dplyr.tidyverse.org/reference/index.html) and  enjoy other tutorials like [this one](https://www.r-bloggers.com/2021/04/tidyverse-in-r-complete-tutorial/)  or [that one](https://www.pkimes.com/PR2019replicathon/tutorials/0b_R_tidyverse.html) and search on the web by yourself, there are hundreds of examples.
-
-Enjoy!
 
 ---
 
