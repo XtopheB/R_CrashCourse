@@ -1,7 +1,7 @@
 ---
 title: "Use R!"
 author: " ---- \n *Christophe Bontemps*  \n  ![](www/SIAP_logo_2020_1800.png){width=30%}  "
-date: 'Version: 1.32 \n (May 2025)'
+date: 'Version: 1.4 \n (May 2025)'
 output:
   learnr::tutorial: 
     progressive: true
@@ -83,8 +83,6 @@ numerator <- envipe2019_clean  %>%
 SDG  <-  (numerator/denominator) * 100
 
 
-
-
 ## For matrices
 I3 <- matrix( c(1, 0, 0, 0, 1, 0, 0, 0, 1) , nrow =3)
 A <- matrix(c(1, 2, 3, 4), nrow = 2)
@@ -102,7 +100,7 @@ Z <- matrix(c(20,75,93,
 
 M <- c(40, 110, 50)
 VA <- c(42, 77, 189)
-Y <- c(110, 205, 227)
+Y <- c(193,183,132,302,0)  
 
 ```
 
@@ -110,12 +108,12 @@ Y <- c(110, 205, 227)
 
 Using the materials covered in the previous modules, we will start computing some simple SDGs using interactive coding and with a focus on using `tidyverse` for simple and efficient coding. 
 
-### Learning Objectives **TBD**
+### Learning Objectives 
 At the end of this module you should be able to:   
 
 * Run a few lines of R code
 * Compute averages from Survey data
-* Create descriptive statistics and graphics
+* Compute simple indicators using different methods
 * Work with matrices
 
 
@@ -924,7 +922,7 @@ M
 
 > Your turn! 
 
-#### Create a 3 by 3 identity matrix 
+#### Create a $3 \times 3$ identity matrix 
 
 The result should be the matrix $I_3$:  
 $$
@@ -952,7 +950,7 @@ I3 <- matrix()
 
 
 ```{r Idmatrix-hint-2}
-# Since this is a 3 x3 matrix, we can specify the number of rows
+# Since this is a 3x3 matrix, we can specify the number of rows
 
 I3 <- matrix( , nrow =3)
 
@@ -967,13 +965,25 @@ I3
 
 ```
 
-As we can imagine, there is also a function (`diag()`) for creating diagonal matrices, and in particular the identity matrix. We can use then simplify our life by using ` I3 <- diag(3)`
+As we can imagine, there is also a function (`diag()`) for creating diagonal matrices, including  the identity matrix. We can use then simplify our life by using ` I3 <- diag(3)`. The `diag()` function can also be used to extract or replace the diagonal of a matrix. 
 
 ### Matrix operations
 
-***Addition***
+***Addition and substraction***
+
+Let's work here with: $$ A = \begin{bmatrix}
+1 & 2  \\
+3 & 4  
+\end{bmatrix}  \;  and \;  B = 
+\begin{bmatrix}
+2 & 0  \\
+0 & 1 
+\end{bmatrix}
+$$
+
 
 One can add matrices of the same dimensions, simply by using ` + `. **Subtraction** works similarly with ` - `.
+
 
 ```{r}
 # Adding two matrices A and B 
@@ -992,7 +1002,7 @@ A-B
 
 ***Multiplication***
 
-**Matrix multiplication** use the operator ` %*% `, to distinguish from *term-by-term multiplication* performed by ` * `
+Two matrices can be multiplied if the number of columns in the lead (or first) matrix matches the number of rows in the lag (or second) matrix. Use` %*% ` for matrix multiplication to distinguish from *term-by-term multiplication* performed by ` * `
 
 
 ```{r}
@@ -1031,7 +1041,7 @@ InvA
 > Your turn! 
 
 #### Verify that $A \times InvA  = I_2$!
-The product of a matrix $A$ by its inverse $InvA* should be the identity matrix $I_2$. Compute that inverse of matrix $A$ and verify! 
+The product of a matrix $A$ by its inverse $InvA$ should be the identity matrix $I_2$. Compute that inverse of matrix $A$ and verify! 
 
 
 ```{r Invert,  exercise = TRUE, exercise.eval = FALSE, exercise.cap = "Verify the inverted matrix"}
@@ -1059,16 +1069,80 @@ A %*% InvA
 
 Of course, the matrix A has to be invertible. If not,   `solve(A)` will return an error. 
 
+***Division*** is not a standard matrix operation. This is often approached by multiplying the lead matrix with an inverse of the lag matrix. The column dimension of the lead matrix should be the same as the row dimension of the lag matrix.  
+
+For example, we can compute $D = AB^{-1}$ as:
+
+$$
+D = \begin{bmatrix}
+1 & 2  \\
+3 & 4  
+\end{bmatrix} \times
+\begin{bmatrix}
+0.5 & 0  \\
+0 & 0.5 
+\end{bmatrix} = \begin{bmatrix}
+0.5 & 3  \\
+1 & 4 
+\end{bmatrix}
+$$
+
+***Transpose*** 
+
+A matrix can be transposed by interchanging its rows and columns. The first row becomes the first column and vice versa. The transpose of A is denoted by $A'$ or $A^t$ 
+
+ 
+```{r}
+# Transpose of a Matrix 
+E = t(A) 
+
+E  
+```
+
+
+```{r quizMat, echo = FALSE}
+quiz(
+question("What is the result of `A %*% B`?",
+answer("A matrix multiplication of A and B", correct = TRUE),
+answer("An element-wise multiplication of A and B", correct = FALSE),
+answer("The transpose of matrix A", correct = FALSE),
+correct = "Yes! `%*%` performs matrix multiplication in R.",
+incorrect = "Remember, `%*%` is used for matrix multiplication.",
+allow_retry = TRUE
+),
+
+question("What does `t(A)` do?",
+answer("Returns the transpose of matrix A", correct = TRUE),
+answer("Returns the inverse of matrix A", correct = FALSE),
+answer("Returns the determinant of matrix A", correct = FALSE),
+correct = "Exactly! `t()` transposes a matrix.",
+incorrect = "Try again.", 
+allow_retry = TRUE
+),
+
+question("What value is returned by A[2,1]?",
+answer("2", correct = FALSE),
+answer("3", correct = TRUE),
+answer("4", correct = FALSE),
+correct = "Right! `A[2,1]` accesses the 2nd row, 1st column of matrix A.",
+incorrect = "Check your row and column indices carefully.", 
+allow_retry = TRUE
+)
+)
+```
+
+<!--
+
 ## An Input-Output Analysis
 
-In this exercise we will do an *Input-Output* analysis  using a 3x3 industry-by-industry table (named $Ind_1$, $Ind_2$, $Ind_3$). Steps include:
+In this exercise we will do the **first steps**  of an *Input-Output* analysis  using a $3 \times 3$ industry-by-industry table (named $Ind_1$, $Ind_2$, $Ind_3$). Steps include:
 
 - Computing the technical coefficients
 - Computing the Leontief inverse, 
 - Computing the value-added and import multipliers, and
 - Computing the emissions intensity.
 
-The core of the analysis is the transaction matrix $Z$ , which shows how much each industry buys from and sells to the others. In this input-output matrix, the rows signify the output and the columns represent the inputs 
+The core of the analysis is the transaction matrix $Z$ , which shows how much each industry buys from and sells to the others. Each row signifies the output of an industry, particularly, how the production of one industry is used as intermediates by other industries (Z) or as final demand (Y). The column denotes the inputs, *i.e*., intermediate and primary inputs, that an industry needs to produce its output. One of the fundamental identities of an input-output table is that the total input of each industry should equal the total output of the same industry. This means the column sum of industry $i$ is equal to the row sum of the same industry $i$. 
 
 
 ```{r}
@@ -1076,20 +1150,21 @@ The core of the analysis is the transaction matrix $Z$ , which shows how much ea
 Z <- matrix(c(20,75,93,
               31,83,99,
               26,59,56),  nrow = 3)
+
 # We can add names to rows and columns here
 colnames(Z) <- c("I-IND1", "I-IND2", "I-IND3")
 rownames(Z) <- c("0-IND1", "0-IND2", "0-IND3")
+
+# Display the matrix
 Z
 ```
 
-
-The matrix Z, is the input-output matrix and will play an important role.  $$
+The matrix $Z$, is the **transaction matrix** and will play an important role in analyzing inter-industry linkages. $$
 Z = \begin{bmatrix}
 20 & 75 & 93 \\ 
 31 & 83 & 99 \\  
 26 & 59 & 56
 \end{bmatrix}$$
-
 
 
 We can also define the vector of the values of **imported inputs** $M$, as well as the **Value added** $VA$, and the **final demand** for each good $Y$. 
@@ -1103,26 +1178,68 @@ M <- c(40, 110, 50)
 VA <- c(42, 77, 189)
 
 # Final demand
-Y <- c(110, 205, 227)
+Y <- c(193,183,132,302,0)  
 ```
+
 
 ### Step 1: Compute Total Output (X)
 
-The total output $X$ of each industry is the sum of intermediate consumption, imports, value-added, and final demand. To compute the sum of the intermediate consumption, we need to sum all elements for each columns of the matrix $Z$. For that, we can use the function `colSums()` that computes the sum of the values in each column of a matrix or data frame in R. The result is a line vector. 
+The total output $X$ of each industry is the sum of intermediate consumption, imported inputs, and value-added. Similarly, it is equal to the sum of intermediate consumption and final demand. The intermediate consumption of an industry is calculated as the sum of all elements in the columns of that industry in the transaction matrix $Z$. For that, we can use the function `colSums()` that computes the sum of the values in each column of a matrix. The result is a line vector. 
 
-. 
 ```{r}
 # creating a vector with the sum of the values in each column
 colSums(Z)
 ```
 
-The total output ($TO$) for each industry, is then the sum of the vectors representing the intermediate consumption (from Z), imports (M) , value-added (VA), and final demand (Y).
+The total output ($TO$) for each industry, is then the sum of the vectors representing the intermediate consumption (from Z), imported inputs (M) and value-added (VA).
 
 ```{r}
 # The total output is a sum of  vectors
-TO<- colSums(Z) + M + VA + Y
+TO<- colSums(Z) + M + VA 
 TO
 ```
+
+### Step 2: Construct the Input-Output Matrix 
+
+It is very often useful to combine matrices with same number of rows, or same number of columns. We use for that the functions `rbind()` and `cbind()` respectively. 
+
+```{r}
+Mat <- rbind(Z,M,VA) 
+Mat <- cbind(Mat,Y)
+```
+
+
+```{r}
+# GO <- colSums(Mat) 
+# 
+# Mat <- rbind(Mat,GO) 
+# 
+# GO2 <- rowSums(Mat) 
+# 
+# Mat <- cbind(Mat,GO2) 
+```
+
+ 
+### Check that total input = total output 
+
+GO[1:3]==GO2[1:3] 
+
+ 
+
+#Check that GDP by production approach = GDP by expenditure approach 
+
+GDP_P <- Reduce("+",VA) 
+
+GDP_P 
+
+GDP_E <- Reduce("+",Y) - Mat[4,5] 
+
+GDP_E 
+
+GDP_P == GDP_E 
+
+
+
 ### Step 2: Technical Coefficient Matrix
 
 
@@ -1155,10 +1272,32 @@ B
 
 ```
 
+-->
 
 ## Conclusion
 
->TBC
+> This training is just a start!
+
+You've taken significant steps toward mastering R as a tool for manipulating, analyzing, and computing some  official statistics. 
+
+You’ve learned how to produce a few lines of R code, import data and compute averages from survey data, how to compute simple indicators using different methods using a consistent and readable grammar of data science. You also have explored the simplicity and power of computation using **tidyverse** and even done a bit of of **matrix manipulation** that are often essential in statistics and SDG monitoring.
+
+These tools are not just programming tricks, they are foundations for **modern, agile, and reproducible statistical systems**. 
+
+###  Where to go from here?
+
+* **Practice** on real datasets from your institution. Start simple and with a clear goal.
+* **Collaborate** by sharing scripts, or with coding sessions of *pair programming*^[In **pair programming** two persons work together on just one computer, meaning they work simultaneously (one typing , one reading) on a code. this is a very efficeint way of learning ([more here](https://en.wikipedia.org/wiki/Pair_programming)).]
+* **Explore** the web to find examples and code similar to what you want to do. Then reuse and tweak the code to your needs. 
+* **Continue learning** through platforms like [R for Data Science](https://r4ds.had.co.nz/), [Posit recipes](https://posit.cloud/learn/recipes), and  [A ModernDive into R and the Tidyverse](https://moderndive.com/) among many useful references. You can also use *ChatGPT* to help you with some simple requests and code debugging. Be careful though of mistakes,  fake packages and confidential information. 
+
+### Another **R** is possible
+
+In this course, we focused on the **tidyverse** approach to R,  not because base R isn’t powerful, but because **tidyverse** offers a clearer, more consistent, and beginner-friendly grammar for working with data. This modern toolkit helps you think in terms of data pipelines, making your code easier to read, share, and scale across projects. 
+
+With time, you'll learn how to code with R core functions and language. Don't be afraid, what you have learned here with the **tidyverse** will still help you!   
+
+> Good luck! 
 
 ---
 
