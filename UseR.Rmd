@@ -1,7 +1,7 @@
 ---
 title: "Use R!"
 author: " ---- \n *Christophe Bontemps*  \n  ![](www/SIAP_logo_2020_1800.png){width=30%}  "
-date: 'Version: 1.4 \n (May 2025)'
+date: 'Version: 1.45 \n (May 2025)'
 output:
   learnr::tutorial: 
     progressive: true
@@ -878,7 +878,7 @@ SDG_16.1.3
 
 These examples show that there are always multiple ways of computing a result, and all lead to same result( fortunately). However, ***concision*** and ***clarity*** are two important attributes of any code.  We encourage you to always rethink your code to see if there is a "better" way to compute the same thing. It is also a nice exercise to try different methods and compare if the results are the same.  
 
-But there is more: This way of computing is extremely powerful and versatile!
+> But there is more: This way of computing is extremely powerful and versatile!
 
 ### Disagregating the SDG indicator 16.1.3 by Sex
 
