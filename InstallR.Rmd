@@ -168,38 +168,36 @@ install.packages("tidyverse")
 
 
 This command will install the package *tidyverse* and store it in a directory in the R environment referred to as the “library”. 
-The *tidyverse* package contains 8 packages namely *ggplot2, dplyr, tidyr, readr, purrr, tibble, stringr, and forcats* that are loaded automatically once with the `install.packages(“tidyverse”)` command.
+The *tidyverse* package contains 8 packages namely *ggplot2, dplyr, tidyr, readr, purrr, tibble, stringr, and forcats* that are loaded automatically once with the `install.packages(“tidyverse”)` command. These packages allow the use of powerful functions that will be used throughout this course. 
 
-### The “foreign” and “haven” Packages 
+### The “haven” Package 
 
-One very commonly used R package is called “*foreign*”. This package is necessary to read and write data files from other statistical software such as SPSS, Stata, SAS and Minitab into R. It is also needed for reading and writing “dBase” files that carry the .dbf extension.
+One very commonly used R package is called “*haven*”. This package is necessary to read and write data files from other statistical software such as SPSS, Stata, SAS and Minitab into R. 
 
-> To search for the “foreign” package, go to the “*Files/ Plots/ Packages and Help*” pane and select the tab Packages. Type “*foreign*” in the search bar. You should see a result like the image below.  The unchecked box means that the package is available in the library but has not been loaded for the library for use in the current R session.  ![](www/packages.png){width=60%}
+> To search for the “haven” package, go to the “*Files/ Plots/ Packages and Help*” pane and select the tab Packages. Type “*haven*” in the search bar. You should see a result like the image below.  The unchecked box means that the package is available in the library but has not been loaded for the library for use in the current R session.  ![](www/packages.png){width=60%}
 
-
-Similar to the “*foreign*” package, R includes a package called “*haven*” that also support the import and export of data sets in commercial statistical packages such as SPSS, Stata and SAS. 
 
 
 ### How to access packages after they have been installed
 
-To use R packages during your R session, you must load it from the library using the `library()` function. For example, to load the foreign package, we do the following:
+To use R packages during your R session, you must load it from the library using the `library()` function. For example, to load the haven package, we do the following:
 
 ```{r, eval= FALSE}
-library("foreign")
+library("haven")
 ```
 
 To access the manual for packages that have been loaded in the library, use the *help* argument with the function `library( )`
 
 
 ```{r, eval= FALSE}
-library(help="foreign")
+library(help="haven")
 ```
 
 
 Alternatively, you can simply use `help( )` function and specify the name of the package:
 
 ```{r, eval= FALSE}
-help("foreign")
+help("haven")
 ```
 
 
