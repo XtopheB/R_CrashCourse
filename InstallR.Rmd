@@ -1,7 +1,7 @@
 ---
 title: "Install R!"
 author: " ---- \n *Christophe Bontemps*  \n ![](www/SIAP_logo_2020_1800.png){width=30%}  "
-date: 'Version: 0.9 \n (April 2025)'
+date: 'Version: 1.0 \n (May 2025)'
 output:
   learnr::tutorial: 
     progressive: true
@@ -174,11 +174,19 @@ The *tidyverse* package contains 8 packages namely *ggplot2, dplyr, tidyr, readr
 
 One very commonly used R package is called “*haven*”. This package is necessary to read and write data files from other statistical software such as SPSS, Stata, SAS and Minitab into R. 
 
-> To search for the “haven” package, go to the “*Files/ Plots/ Packages and Help*” pane and select the tab Packages. Type “*haven*” in the search bar. You should see a result like the image below.  The unchecked box means that the package is available in the library but has not been loaded for the library for use in the current R session.  ![](www/packages.png){width=60%}
+> To search for the “haven” package, go to the “*Files/ Plots/ Packages and Help*” pane !
+
+- select the tab Packages.
+- type “*haven*” in the search bar. 
+
+You should see a result like the image below.
+
+![](www/packages.png){width=80%}
+
+The unchecked box means that the package is available in the library but has not been loaded for the library for use in the current R session. Checking the box is equivalent to loading the package  using the command `library(haven)`.
 
 
-
-### How to access packages after they have been installed
+### How to access packages after they have been installed?
 
 To use R packages during your R session, you must load it from the library using the `library()` function. For example, to load the haven package, we do the following:
 
