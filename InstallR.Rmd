@@ -174,16 +174,16 @@ The *tidyverse* package contains 8 packages namely *ggplot2, dplyr, tidyr, readr
 
 One very commonly used R package is called “*haven*”. This package is necessary to read and write data files from other statistical software such as SPSS, Stata, SAS and Minitab into R. 
 
-> To search for the “haven” package, go to the “*Files/ Plots/ Packages and Help*” pane !
+> To search for the “haven” package, go to the “*Files | Plots | Packages | Help*” pane !
 
 - select the tab Packages.
 - type “*haven*” in the search bar. 
 
-You should see a result like the image below.
+If the package is not installed, then you can click on "install" and search for it (see the video above), and if already installed, you should see a result like the image below.
 
-![](www/packages.png){width=80%}
+> ![](www/packages.png){width=80%}
 
-The unchecked box means that the package is available in the library but has not been loaded for the library for use in the current R session. Checking the box is equivalent to loading the package  using the command `library(haven)`.
+The unchecked box means that the package is available in the library (it is *installed*) but has not been *loaded* from the library for use in the current R session. Checking the box is equivalent to loading the package  using the command `library(haven)`.
 
 
 ### How to access packages after they have been installed?
