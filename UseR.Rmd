@@ -217,7 +217,7 @@ head(household_rural)
 
 ### Step 2: Counting rural households (*denominator*)
 
-Here, we will use the data frame with only rural households (named *household_rural*) and count them. A useful function may be the function `count()`.
+Here, we will use the data frame with **only rural** households (named *household_rural*) and count them. A useful function may be the function `count()`.
 
 ```{r PopDen1,  exercise = TRUE, exercise.eval = FALSE, exercise.setup = "PopDat", exercise.cap = "Count the rural population"}
 # Enter your solution below
@@ -290,7 +290,7 @@ income_rural <- household_rural %>%
 
 ```{r PopNum1-hint-2}
 # We will use mutate() to create a new variable(new column)
-# --> Write what we want in the ()
+# --> Write what we want in the () for mutate!
 
 income_rural <- household_rural %>%
   mutate()
