@@ -1,7 +1,7 @@
 ---
 title: "Use R!"
 author: " ---- \n *Christophe Bontemps*  \n  ![](www/SIAP_logo_2020_1800.png){width=30%}  "
-date: 'Version: 1.45 \n (May 2025)'
+date: 'Version: 1.48 \n (May 2025)'
 output:
   learnr::tutorial: 
     progressive: true
@@ -954,7 +954,7 @@ I3 <- matrix()
 ```{r Idmatrix-hint-2}
 # Since this is a 3x3 matrix, we can specify the number of rows
 
-I3 <- matrix( , nrow =3)
+I3 <- matrix(      , nrow =3)
 
 
 ```
@@ -967,7 +967,7 @@ I3
 
 ```
 
-As we can imagine, there is also a function (`diag()`) for creating diagonal matrices, including  the identity matrix. We can use then simplify our life by using ` I3 <- diag(3)`. The `diag()` function can also be used to extract or replace the diagonal of a matrix. 
+As we can imagine, there is also a function, `diag()`, for creating diagonal matrices, including  the identity matrix. We can use then simplify our life by using ` I3 <- diag(3)`. The `diag()` function can also be used to extract or replace the diagonal of a matrix. 
 
 ### Matrix operations
 
@@ -1056,7 +1056,7 @@ The product of a matrix $A$ by its inverse $InvA$ should be the identity matrix 
 
 
 ```{r Invert-hint-1}
-# You need to use the solve() function 
+# Use the function  solve() to create the inverse of A
 
 InvA <- solve(A)
 
@@ -1064,15 +1064,15 @@ InvA <- solve(A)
 
 
 ```{r Invert-solution}
-# Solution: The product of A and InvA should be the identity (diemnsion 2)!
-
+# Solution: The product of A and InvA should be the identity (dimension 2)!
+InvA <- solve(A)
 A %*% InvA
 
 ```
 
 Of course, the matrix A has to be invertible. If not,   `solve(A)` will return an error. 
 
-***Division*** is not a standard matrix operation. This is often approached by multiplying the lead matrix with an inverse of the lag matrix. The column dimension of the lead matrix should be the same as the row dimension of the lag matrix.  
+***Division*** is not a standard matrix operation. This is often approached by multiplying the lead matrix $A$ with an inverse of the lag matrix $B^{-1}$. The column dimension of the lead matrix should be the same as the row dimension of the lag matrix.  
 
 For example, we can compute $D = AB^{-1}$ as:
 
@@ -1090,6 +1090,15 @@ D = \begin{bmatrix}
 \end{bmatrix}
 $$
 
+
+
+```{r}
+# Matrix Division
+InvB <- solve(B)
+D = A %*% InvB  
+D
+
+```
 ***Transpose*** 
 
 A matrix can be transposed by interchanging its rows and columns. The first row becomes the first column and vice versa. The transpose of A is denoted by $A'$ or $A^t$ 
@@ -1112,7 +1121,7 @@ answer("A matrix multiplication of A and B", correct = TRUE),
 answer("An element-wise multiplication of A and B", correct = FALSE),
 answer("The transpose of matrix A", correct = FALSE),
 correct = "Yes! `%*%` performs matrix multiplication in R.",
-incorrect = "Remember, `%*%` is used for matrix multiplication.",
+incorrect = "Remember, `%*%` is used for matrices.",
 allow_retry = TRUE
 ),
 
@@ -1121,11 +1130,11 @@ answer("Returns the transpose of matrix A", correct = TRUE),
 answer("Returns the inverse of matrix A", correct = FALSE),
 answer("Returns the determinant of matrix A", correct = FALSE),
 correct = "Exactly! `t()` transposes a matrix.",
-incorrect = "Try again.", 
+incorrect = "There other matrix manipulations", 
 allow_retry = TRUE
 ),
 
-question("What value is returned by A[2,1]?",
+question("What value is returned by A[2,1]? (Use the matrix A above)",
 answer("2", correct = TRUE),
 answer("3", correct = FALSE),
 answer("4", correct = FALSE),

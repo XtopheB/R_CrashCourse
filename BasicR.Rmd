@@ -537,7 +537,7 @@ Like the `names()` function, the `head()` function is another very handy tool fo
 head(SDG, n=5)
 ```
 
-> That was easy, right? But this will be even easier with the `tidyverse`syntax.
+> That was easy, right? But this will be even easier with the `tidyverse` syntax.
 
 
 ## Playing with `tidyverse` 
