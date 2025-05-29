@@ -1,7 +1,7 @@
 ---
 title: "Use R!"
 author: " ---- \n *Christophe Bontemps*  \n  ![](www/SIAP_logo_2020_1800.png){width=30%}  "
-date: 'Version: 1.48 \n (May 2025)'
+date: 'Version: 1.50 \n (May 2025)'
 output:
   learnr::tutorial: 
     progressive: true
@@ -124,7 +124,7 @@ At the end of this module you should be able to:
 ```{r quiz0, echo = FALSE}
 question("Have you completed the basic R- Tutorial?  (*Check all that is TRUE*):",
   answer("Yes", correct = TRUE, message = "Perfect"),
-  answer("No, I'm just starting here",  message = "Please start at the beginning with the Basic R course (https://xtophedataviz.shinyapps.io/BasicR/)" )
+  answer("No, I'm just starting here",  message = "Please start at the beginning with the Basic R course" )
   )
   
 ```
