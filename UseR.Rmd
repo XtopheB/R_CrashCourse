@@ -596,6 +596,8 @@ str(envipe2019)
 ```
 
 
+***Test yourself! ***
+
 ```{r quiz3, echo = FALSE}
 quiz(
   question("In the *envipe2019*, are all variables encoded as **factors**? (look above,  after *@ format.spss*)",
@@ -730,7 +732,7 @@ $$
 Indicator  =  \frac{Weighted\_Nb\_Victims}{Weighted\_Nb\_Population} \times 100 =  \frac{\sum_{j= Victim} \; weight_j }{\sum_{i=All} \; weight_i} \times 100
 $$
 
-### Step by step
+> Let's see how to compute this step by step
 
 
 #### Step 1: Compute the denominator
@@ -971,9 +973,10 @@ As we can imagine, there is also a function (`diag()`) for creating diagonal mat
 
 ***Addition and substraction***
 
-Let's work here with: $$ A = \begin{bmatrix}
-1 & 2  \\
-3 & 4  
+Let's work here with:  
+$$ A = \begin{bmatrix}
+1 & 3  \\
+2 & 4  
 \end{bmatrix}  \;  and \;  B = 
 \begin{bmatrix}
 2 & 0  \\
@@ -1014,8 +1017,8 @@ C
 
 With the previous matrices $A$ and $B$, the result is $C = AB$:  $$
 C = \begin{bmatrix}
-1 & 2  \\
-3 & 4  
+1 & 3  \\
+2 & 4  
 \end{bmatrix} \times
 \begin{bmatrix}
 2 & 0  \\
@@ -1075,12 +1078,12 @@ For example, we can compute $D = AB^{-1}$ as:
 
 $$
 D = \begin{bmatrix}
-1 & 2  \\
-3 & 4  
+1 & 3  \\
+2 & 4  
 \end{bmatrix} \times
 \begin{bmatrix}
 0.5 & 0  \\
-0 & 0.5 
+0 & 1 
 \end{bmatrix} = \begin{bmatrix}
 0.5 & 3  \\
 1 & 4 
@@ -1099,6 +1102,8 @@ E = t(A)
 E  
 ```
 
+
+***Test yourself! ***
 
 ```{r quizMat, echo = FALSE}
 quiz(
@@ -1121,8 +1126,8 @@ allow_retry = TRUE
 ),
 
 question("What value is returned by A[2,1]?",
-answer("2", correct = FALSE),
-answer("3", correct = TRUE),
+answer("2", correct = TRUE),
+answer("3", correct = FALSE),
 answer("4", correct = FALSE),
 correct = "Right! `A[2,1]` accesses the 2nd row, 1st column of matrix A.",
 incorrect = "Check your row and column indices carefully.", 
