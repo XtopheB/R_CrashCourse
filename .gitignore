@@ -2,6 +2,10 @@
 .Rhistory
 .RData
 .Ruserdata
+
+# My Data
+*.dbf
+
 # History files
 .Rhistory
 .Rapp.history
