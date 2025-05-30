@@ -619,7 +619,7 @@ str(envipe2019)
 quiz(
   question("In the *envipe2019*, are all variables encoded as **character**? (look above,  after *@ format.spss*)",
     answer("Yes, and this is a problem!", correct = TRUE,  message = " We need to change that since some variables are numerical "),
-    answer("Yes, but this is correct", correct = FALSE, message = " - Having variables that are numerical encoded as characters will cause a lot of problem, since some operations will not work correctly on factor variable"),
+    answer("Yes, but this is correct", correct = FALSE, message = " - Having variables that are numerical encoded as characters will cause a lot of problem, since some operations will not work correctly on a character variable"),
     answer("No, they are all numbers", correct = FALSE, message = " - All variables, including *EDAD* (Age) and *FAC_ELE* (sampling weight)  are encoded as characters."), allow_retry = TRUE
   )
   
