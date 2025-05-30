@@ -1,7 +1,7 @@
 ---
 title: "Basic R!"
 author: " ---- \n *Christophe Bontemps*  \n ![](www/SIAP_logo_2020_1800.png){width=30%}  "
-date: 'Version: 1.4 \n (May 2025)'
+date: 'Version: 1.46 \n (June 2025)'
 output:
   learnr::tutorial: 
     progressive: true
@@ -23,7 +23,7 @@ library(tidyverse)
 # Loading data (at GitHub)
 #SouthAfrica <- read.csv2("https://raw.githubusercontent.com/XtopheB/R_CrashCourse/main/RawData/SouthAfrica.csv") 
 
-SouthAfrica <- read.csv2("./www/SouthAfrica.csv") 
+# SouthAfrica <- read.csv2("./www/SouthAfrica.csv") 
 
 SDG <- read.csv("./www/SDGperRegion.csv") %>%
   select(country, region_name,  population, gross_domestic_product, maternal_mortality_ratio, internet_use) %>%
@@ -135,9 +135,13 @@ question("",
 )
 ```
 
-Try it by yourself and click on the `Run Code`  blue button. You can modify the code to change value, rename the objects *myage*, *MyAge etc.  The `Start Over` button resets the code to initial, so don't be shy to try! 
+Try it by yourself and click on the `Run Code`  blue button.
 
-```{r tryit, exercise = TRUE, exercise.eval = FALSE }
+> You can modify the code to change values, rename the objects *myage*, *MyAge*, create new ones etc. Then `Run Code`! 
+
+The `Start Over` button resets the code to initial, so don't be shy to try! 
+
+```{r tryit, exercise = TRUE, exercise.eval = FALSE, exercise.cap = "Code by yourself!" }
 myage <- 25
 MyAge <- 45
 
@@ -169,10 +173,12 @@ In the code below:
 
 - Change the value of ***a*** and ***b***
 - Concatenate ***a*** and ***b*** in the new vector ***myvect*** (fill the blank with code)
-- Display it! 
+- Display it! (use `Run Code` button)
+
+> You can use the hints, copy the solution and then paste it in the code chunk!
 
 
-```{r tryvect, exercise = TRUE, exercise.eval = FALSE }
+```{r tryvect, exercise = TRUE, exercise.eval = FALSE, exercise.cap = "Concatenate vectors" }
 a <- c(1, 2, 3)
 # And another one 
 b <- c(4, 5, 6)
@@ -286,9 +292,10 @@ question("",
 
 ***Hints and answers***
 
-In R, square brackets have a special function for accessing or extracting values from objects, which is essential for data manipulation. The value(s) in the square brackets are called the **index**, which indicate the position of the elements to be extracted. The syntax uses the index to access the entire first row of the dataframe `mydata`. The output is the elements in row 1
+In R, square brackets have a special function for accessing or extracting values from objects, which is essential for data manipulation. The value(s) in the square brackets are called the **index**, which indicate the position of the elements to be extracted. The syntax uses the index to access the entire first row of the data frame `mydata`. In the exercise, the output is therefore all the elements in row 1.
 
-> For data frames, the convention is **row** first, then **column**, that is:  `mydata[indexrow,indexcolumn]`
+> For data frames, the convention is **row** first, then **column**. 
+That is:  `mydata[indexrow,indexcolumn]`
 
 ***Check it out by yourself***
 
@@ -354,13 +361,13 @@ mynewdata[1,3]
 ```
 
 
-The output of `mynewdata[1,3]' is “red”. The command allows us to access the single element in a data frame in position **row 1** and **column position 3**.
+The **third** element of the **first** row of **mynewdata** is  `mynewdata[1,3]`, that is “red”. The command allows us to access the single element in a data frame in position **row 1** and **column position 3**.
 
 >We'll see later on that there are many other ways to play with *data frames*, in particular using the `tidyverse`syntax
 
-***Easy Summary***
+***Data Frames Summaries***
 
-We can also have quick statistics using the  `summary()` function. As you can see in the output below, the `summary()`  function adapts the result to the **type** of variable, whether it is a character (no summary for  *name* or *flag_color*), a numeric variable (*area*), or a Boolean or logical variable (*english* takes `TRUE` or `FALSE` values).  
+We can quickly have some simple statistics using the  `summary()` function. As you can see in the output below, the `summary()`  function adapts the result to the **type** of each variable, whether it is a character (no summary for  *name* or *flag_color*), a numeric variable (*area*), or a Boolean or logical variable (*english* takes `TRUE` or `FALSE` values).  
 
 > This is an important feature of R functions and highlights the importance having the correct ***type*** for the variables in a data frame.  
 
@@ -827,14 +834,23 @@ SDG <- SDG %>%
   
 `mutate()` takes the original value of *population* from the input data frame and **transforms**^[Technically, `mutate()` takes the original value of *population* from the input data frame and creates a ***new*** *population* column with the updated value (divided by 1 million). The left-hand side (population = ...) defines the ***new*** column - and it can have the same name -while the right-hand side still has access to the original column values.]  the original *population* column with the updated value (divided by 1 million).
 
-#### This is however dangerous
-While R allows it, it's often considered **risky** or **confusing**  because:
+> This is however **dangerous**
+
+While R allows it, it's often considered **risky** or **confusing** practice because:
 
 - You lose the original data by overwriting *population* and changing units
 - It reduces clarity for someone reading your code  and not realize you've changed the units.
-- It can cause bugs and multiple divisions of the same variable (by $10^6$) if you're runing  multiple calls of your code reusing the same name across them
+- It can cause bugs and multiple divisions of the same variable (by $10^6$) if you're running  multiple calls of your code reusing the same name across them
 
 > We recommend to use new names and to never alter the original variables 
+
+```{r, eval = FALSE}
+# Use this instead, with a new and clear variable
+SDG <- SDG %>%
+  mutate(pop_millions = population / 10^6)
+```
+
+ 
  
 ***What will the following code return?*** 
   
