@@ -1,7 +1,7 @@
 ---
 title: "Use R!"
 author: " ---- \n *Christophe Bontemps*  \n  ![](www/SIAP_logo_2020_1800.png){width=30%}  "
-date: 'Version: 1.50 \n (May 2025)'
+date: 'Version: 1.52 \n (June 2025)'
 output:
   learnr::tutorial: 
     progressive: true
@@ -51,18 +51,29 @@ income_rural_value <- household_rural %>%
 
 ## -- For SDG 16.1.3
 
-## Code to create a subsample
-# envipe <- read.dbf("./www/TPer_Vic2.dbf")
+## >>>   Code to create a LIGHTER subsample  <<<<<
+# envipe <- read.dbf("./RawData/TPer_Vic2.dbf")
 # envipe_light <- envipe %>%
 #   sample_frac(0.1, replace = FALSE)
 
-# Light version used 
+###  Even lighter with less variables
+# envipe <- read_sav("./www/TPer_Vic2_light.sav")
+# 
+# envipe_superlight <- envipe %>%
+#    select(-matches("^AP(?!7_3_11)", perl = TRUE))  # removes all "AP" but "AP7_3_11"
+# write_sav(envipe_superlight,  "./www/TPer_Vic2_superlight.sav")
+
+# -----  Light version used  -----
 # with foreign
 # write.dbf(envipe_light, "./www/TPer_Vic2_light.dbf")
 # envipe <- read.dbf("./www/TPer_Vic2_light.dbf")
 
 ##  Alternative with haven 
 #write_sav(envipe_light,  "./www/TPer_Vic2_light.sav")
+
+# ----
+
+# loading the  created SPSS file
 envipe <- read_sav("./www/TPer_Vic2_light.sav")
 
 envipe2019 <- envipe %>%
@@ -281,7 +292,7 @@ income_rural <-
 
 ```{r PopNum1-hint-1}
 # You should use the data from household_rural and the %>% operator
-# Use a new line to compute the total of Income
+# Use a new line to compute the total of Income. You can use mutate()
 
 income_rural <- household_rural %>%
   
@@ -322,7 +333,7 @@ income_rural %>%
   head()
 ```
 
-We have a data frame with a variable (*total*) that has our result, but repeated for all observations!  That's the way mutate works. It creates a variable with the value assigned - here the sum over all observations. 
+We have a data frame with a variable (*total*) that has our result, but repeated for all observations!  That's the way `mutate` works. It creates a variable with the value assigned - here the sum over all observations. 
 
 > **A solution** to reduce the data frame to a single value is to summarize the variable *total* using the function `summarize ()` instead of `mutate()`.^[The function `summarize()` returns the *mean*  of a variable. Since the variable  *total*  has only one value repeated, this gives us that value with no effort.]
 
@@ -364,7 +375,8 @@ avg_income <-  ? / ?
 ```
 
 ```{r Avg1-solution}
-# Solution: Divide numerator by denominator
+# Solution: Divide numerator by denominator 
+# Be careful of the exact name of numerator and denominator
 
 avg_income <- income_rural_value/Nb_rural
 
@@ -433,17 +445,17 @@ quiz(
                         summarize(avg = sum(income) / n()) %>%
                         filter(location == 'Rural') \n  computing the same thing?" ,
 
-    answer("No, because the second code computes the average income over the whole population", correct = TRUE, message = "It is important to first `filter()` the observations- and the second code does not work"),
+    answer("No, because the second code computes the average income over the whole population", correct = TRUE, message = "It is important to first `filter()` the observations"),
     answer("Yes, with the pipe (`%>%`), order is not important", correct = FALSE, message = "The pipe defines a strict order on what is computed! "),
     answer("The first code does not work", correct = FALSE, message = " The first code is a correct way of writing the code"),
-    answer("The second code does not work", correct = TRUE, message = " It is not possible to filter  after the summarize, since the variable location does not exist any more"), 
+    answer("The second code does not work", correct = TRUE, message = " It is NOT possible to filter after summarize(), since the variable location does not exist any more"), 
    allow_retry = TRUE
     ), 
     
-   question_checkbox("IMPORTANT: Is there a problem in the way we compute that average?",
+   question("IMPORTANT: Is there a problem in the way we compute that average?",
     answer("Yes, because we have survey and thus *weights*", correct = TRUE, message = "Yes, We must take the weights into consideration for the computation."),
     answer("No, this is the correct way to go", correct = FALSE, message = "Alas! We have to redo the computation, because we have a survey with weights for each household."),
-    answer("I don't know !", correct = FALSE), 
+    answer("I don't know !", correct = FALSE,  message = "Alas! We have to redo the computation, because we have a survey with weights for each household."), 
    allow_retry = TRUE
   )
 )
@@ -476,7 +488,8 @@ income_rural
 
 ```
 
-What we have to do is to is to *tweak* a bit that code to include weights, as in the correct formula above.  
+What we have to do is to is to *tweak* a bit that code to include weights, as in the correct formula above.
+In the data set, the sampling weights are in the variable ***weight***
 
 #### Your turn 
 
@@ -504,7 +517,8 @@ income_rural <- household_rural %>%
 ```
 
 ```{r WPopNum1-hint-2}
-# You can use function summarize() 
+# As before, you can use function summarize() 
+# But this time we need to include some weights
 
 income_rural <- household_rural %>%
   summarize()
@@ -514,6 +528,7 @@ income_rural <- household_rural %>%
 
 ```{r WPopNum1-solution}
 # Solution: We use the function sum() to compute the total
+# But we multiply income by weight, while the denominator is a sum of weights
 
 income_weighted_rural <- household_rural %>%
   summarize(weighted_average = sum(income * weight)/ sum(weight))
@@ -526,9 +541,11 @@ income_weighted_rural
 
 - `income * weight` multiplies *income* with *weights*  row-by-row (for each observation).
 - As previously `sum()` then sums the result across all rows
-- since the variable created (weighted_average) is in a data frame, one must take only one value using `summarize()` as previously.
+- since the variable created (weighted_average) is computed in a data frame, one must take only one value using `summarize()` as previously.
 
 > The computation is done in 2 lines! If we start from the original data set (*household_survey*), it takes 3 lines, and the story is easy to read and tell! 
+
+We can even `round` the result (to two digits) for better readability!
 
 ```{r}
 income_weighted_rural <- household_survey %>%
@@ -600,30 +617,30 @@ str(envipe2019)
 
 ```{r quiz3, echo = FALSE}
 quiz(
-  question("In the *envipe2019*, are all variables encoded as **factors**? (look above,  after *@ format.spss*)",
+  question("In the *envipe2019*, are all variables encoded as **character**? (look above,  after *@ format.spss*)",
     answer("Yes, and this is a problem!", correct = TRUE,  message = " We need to change that since some variables are numerical "),
-    answer("Yes, but this is correct", correct = FALSE, message = " - Having variables that are numerical encoded as factors will cause a lot of problem, since some operations will not work correctly on factor variable"),
-    answer("No, they are all numbers", correct = FALSE, message = " - All variables, including *EDAD* (Age) and *FAC_ELE* (sampling weight)  are encoded as factors.")
-  ), 
-  
-  question_checkbox("Which operation can be done with the variable *EDAD* (Age) encoded as a `factor`? \n (*Check all correct answers*) ",
-    answer("`summary(envipe2019$EDAD)` will provide a summary of the variable *EDAD*" ,
-           correct = TRUE,  message = " -  `summary()` applies to factor variables. However it  will consider each unique value of EDAD as a specific factor and count the number of occurence. Not very useful here. "),
-     answer("`mean(envipe2019$EDAD)` will provide the mean of *EDAD* " ,
-            correct = FALSE,  message = "- It is not possible to take the mean of a factor variable"),
-    answer("The code \n
-    envipe2019 %>%  \n
-        filter(EDAD ==18) \n   extracts observations where EDAD is 18", 
-    correct = TRUE, message = "- Yes, the `filter()` function is equivalent to `subset()` and works with factors. It follows the logical condition `EDAD ==18`, keeping only obervations for which the outcome of the test is TRUE"), 
-    answer("The code \n
-    envipe2019 %>%  \n
-        group_by(EDAD) %>% \n 
-        count() \n   counts the number of observations for each unique value of EDAD",
-    correct = TRUE, message = "- The `group_by()` function is used mostly to compute things for each category of a factor variable. This is something useful when the factor variable has few categories such as *Gender*, or married (Yes/no). Here, since EDAD is not really a factor and has many different values,  we will have a long list."), 
-    try_again = " Please try again (check ALL correct answers) ", allow_retry = TRUE,
-    incorrect = "- There are many good answers, try again",
-    random_answer_order = TRUE 
+    answer("Yes, but this is correct", correct = FALSE, message = " - Having variables that are numerical encoded as characters will cause a lot of problem, since some operations will not work correctly on factor variable"),
+    answer("No, they are all numbers", correct = FALSE, message = " - All variables, including *EDAD* (Age) and *FAC_ELE* (sampling weight)  are encoded as characters."), allow_retry = TRUE
   )
+  
+  # question_checkbox("Which operation can be done with the variable *EDAD* (Age) encoded as a `character`? \n (*Check all correct answers*) ",
+  #   answer("`summary(envipe2019$EDAD)` will provide a summary of the variable *EDAD*" ,
+  #          correct = TRUE,  message = " -  `summary()` applies to factor variables. However it  will consider each unique value of EDAD as a specific factor and count the number of occurence. Not very useful here. "),
+  #    answer("`mean(envipe2019$EDAD)` will provide the mean of *EDAD* " ,
+  #           correct = FALSE,  message = "- It is not possible to take the mean of a factor variable"),
+  #   answer("The code \n
+  #   envipe2019 %>%  \n
+  #       filter(EDAD ==18) \n   extracts observations where EDAD is 18", 
+  #   correct = TRUE, message = "- Yes, the `filter()` function is equivalent to `subset()` and works with factors. It follows the logical condition `EDAD ==18`, keeping only obervations for which the outcome of the test is TRUE"), 
+  #   answer("The code \n
+  #   envipe2019 %>%  \n
+  #       group_by(EDAD) %>% \n 
+  #       count() \n   counts the number of observations for each unique value of EDAD",
+  #   correct = TRUE, message = "- The `group_by()` function is used mostly to compute things for each category of a factor variable. This is something useful when the factor variable has few categories such as *Gender*, or married (Yes/no). Here, since EDAD is not really a factor and has many different values,  we will have a long list."), 
+  #   try_again = " Please try again (check ALL correct answers) ", allow_retry = TRUE,
+  #   incorrect = "- There are many good answers, try again",
+  #   random_answer_order = TRUE 
+  # )
 )
 ```
 
