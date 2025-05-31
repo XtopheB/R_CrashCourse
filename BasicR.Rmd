@@ -1,7 +1,7 @@
 ---
 title: "Basic R!"
 author: " ---- \n *Christophe Bontemps*  \n ![](www/SIAP_logo_2020_1800.png){width=30%}  "
-date: 'Version: 1.46 \n (June 2025)'
+date: 'Version: 1.48 \n (June 2025)'
 output:
   learnr::tutorial: 
     progressive: true
@@ -850,7 +850,8 @@ SDG <- SDG %>%
   mutate(pop_millions = population / 10^6)
 ```
 
- 
+
+### Check your understanding
  
 ***What will the following code return?*** 
   
@@ -899,7 +900,7 @@ SDG %>%
   summarise(mean_gdp = mean(gross_domestic_product))
 ```
 
-Formally, the output is a single-row data frame with a summary - here the mean- of the variable *gross_domestic_product*. Just like `mutate()`, it creates a new variable but that variable is at the same time aggregated accross rows to create a single value. 
+Formally, the output is a single-row data frame with a summary - here the mean- of the variable *gross_domestic_product*. Just like `mutate()`, it creates **a new variable** but that variable is at the same time aggregated across rows to create a single value. 
 
 > Your turn!
 
@@ -908,13 +909,13 @@ Formally, the output is a single-row data frame with a summary - here the mean- 
 (*Use `summarise()` to compute *max_mortality**.)
 
 
-```{r sumex1, exercise = TRUE, exercise.eval = FALSE}
-#  Start with the data set SDG
+```{r sumex1, exercise = TRUE, exercise.eval = FALSE, exercise.cap = "Code with summarize"}
+#  Start with the data set SDG, and write code in a new line
 SDG %>%
 ```
     
 ```{r sumex1-hint-1}
-# Compute the maximum with summarise(). Fill the blank
+# Compute the maximum with summarise(). Fill the blank!
 SDG %>%
   summarise(max_mortality = )
   
@@ -944,7 +945,7 @@ There are many functions that can be used with  `summarize()` :
 
 The `group_by()` is a very powerful function is used to **group rows** of your data by one or more **categorical** variables (like *region*, here). It doesn’t change the data you see, but it changes how R thinks about the data.  It  organize the data into groups based on the values of one or more variables. Once grouped, any function you apply (like  `mutate()`, `summarise()`, `filter()`, etc.) will act **within each group**, instead of across the whole dataset.
 
-> Think of `group_by()` like computing one category at the time (independently).
+> Think of `group_by()` like computing one category at the time and independently!
 
 Look at the result of this code: 
 
@@ -967,13 +968,13 @@ The result is the number of country (using `n()`) in each region. Note that the 
 (use the variable *maternal_mortality_ratio* )
 
 
-```{r groupex1, exercise = TRUE, exercise.eval = FALSE}
+```{r groupex1, exercise = TRUE, exercise.eval = FALSE, exercise.cap = "Compute by groups"}
 # Compute the max population by area (using region_name)
 SDG %>%
 ```
     
 ```{r groupex1-hint-1}
-# We need to compute by region, then use the group_by() function
+# We need to compute by region, using group_by(). Fille the ()!
 SDG %>%
   group_by()
   
@@ -989,7 +990,8 @@ SDG %>%
 ```
 
 ```{r groupex1-hint-3}
-# We can use the function summarise() to do the computation! 
+# Use the function summarise() to do the computation. Fill the ()!
+# You may use the function median()
 SDG %>%
   group_by(region_name) %>%
   summarise() 
