@@ -1,7 +1,7 @@
 ---
 title: "Install R!"
 author: " ---- \n *Christophe Bontemps*  \n ![](www/SIAP_logo_2020_1800.png){width=30%}  "
-date: 'Version: 1.4 \n (May 2025)'
+date: 'Version: 1.42 \n (June 2025)'
 output:
   learnr::tutorial: 
     progressive: true
@@ -113,6 +113,7 @@ RStudio is the most common, beginner-friendly software for R users and the main 
  For that, follow the instructions in this video (*50 sec*)
 
 ![](https://vimeo.com/203516968)
+
 
 Link to install RStudio: <a href= "https://posit.co/download/rstudio-desktop/" target="_blank">https://posit.co/download/rstudio-desktop/</a>  
 
