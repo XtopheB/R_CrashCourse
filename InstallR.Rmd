@@ -1,7 +1,7 @@
 ---
 title: "Install R!"
 author: " ---- \n *Christophe Bontemps*  \n ![](www/SIAP_logo_2020_1800.png){width=30%}  "
-date: 'Version: 1.42 \n (June 2025)'
+date: 'Version: 1.50 \n (June 2025)'
 output:
   learnr::tutorial: 
     progressive: true
@@ -64,7 +64,7 @@ R is a statistical programming language and environment for statistical computin
 > If your computer was a plane, we may think of R as the engine and propeller
 
 ### How to install R
-The best way is to follow the instructions in this video (*2 min 45s*)
+The best way is to follow the instructions in this video (*3 min 25s*)
 
 
 ![](https://youtu.be/LMWiHl4KEXE)
@@ -154,7 +154,7 @@ R has several functions that are loaded and available in the basic installation 
 > If your computer was a plane, we may think of the packages as all the components needed to fly (landing gear, gyroscope, lights, GPS, ... )   
 
 ### How to install R packages
-The best way is to follow the instructions in this video (*1 min 02s*)
+The best way is to follow the instructions in this video (*5 min 20s*)
 
 
 ![](https://youtu.be/xG9ej5OjgZs)
