@@ -66,9 +66,10 @@ R is a statistical programming language and environment for statistical computin
 ### How to install R
 The best way is to follow the instructions in this video (*2 min 45s*)
 
-![](https://youtu.be/5W8w9F1dsRA?si=ox-_JmUHV-3X9lUt)
 
-Link to install R: <a href= "https://cran.r-project.org/" target="_blank">https://cran.r-project.org/</a>
+![](https://youtu.be/LMWiHl4KEXE)
+
+**Link to install R:** <a href= "https://cran.r-project.org/" target="_blank">https://cran.r-project.org/</a>
 
 ### Test your knowledge
 
@@ -155,7 +156,9 @@ R has several functions that are loaded and available in the basic installation 
 ### How to install R packages
 The best way is to follow the instructions in this video (*1 min 02s*)
 
-![](https://youtu.be/u1r5XTqrCTQ?si=JxTF-VWz14EqY44t)
+
+![](https://youtu.be/xG9ej5OjgZs)
+
 
 
 ### The “tidyverse” package
