@@ -67,7 +67,7 @@ R is a statistical programming language and environment for statistical computin
 The best way is to follow the instructions in this video (*3 min 25s*)
 
 
-![](https://youtu.be/LMWiHl4KEXE)
+![](https://www.unsiap.or.jp/on_line/2025/RCR/M0-RInstall.mp4)
 
 **Link to install R:** <a href= "https://cran.r-project.org/" target="_blank">https://cran.r-project.org/</a>
 
@@ -156,8 +156,7 @@ R has several functions that are loaded and available in the basic installation 
 ### How to install R packages
 The best way is to follow the instructions in this video (*5 min 20s*)
 
-
-![](https://youtu.be/xG9ej5OjgZs)
+![](https://www.unsiap.or.jp/on_line/2025/RCR/M0-Packages.mp4)
 
 
 
