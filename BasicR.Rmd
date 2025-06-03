@@ -464,8 +464,8 @@ question("Which operator is used to access a column by name in a data frame? ",
 
 ```{r Qaccess, echo = FALSE}
 question("How do you access the element in the **second row** and **first column** of a data frame *df*? ",
-          answer("Using `df[1, 2]` ", message = " - Well-done!", correct = TRUE),
-         answer("Using `df[2, 1]`  ", message = "- Read the instruction again, you're close!"),
+          answer("Using `df[2, 1]` ", message = " - Well-done!", correct = TRUE),
+         answer("Using `df[1, 2]`  ", message = "- Read the instruction again, you're close!"),
          answer("Using `df$1[2]` ", message = "- Try again"),
          answer("Using `df[1,]`", message = "- Try again"),
          random_answer_order = TRUE,
