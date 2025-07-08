@@ -180,9 +180,12 @@ R has several functions that are loaded and available in the basic installation 
 > If your computer was a plane, we may think of the packages as all the components needed to fly (landing gear, gyroscope, lights, GPS, ... )   
 
 ### How to install R packages
-The best way is to follow the instructions in this video (*1 min 02s*)
+The best way is to follow the instructions in this video (*5 min 20s*)
 
-![](https://youtu.be/u1r5XTqrCTQ?si=JxTF-VWz14EqY44t)
+<video width="600" controls>
+  <source src="https://www.unsiap.or.jp/on_line/2025/RCR/M0-Packages.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 
 ### The “tidyverse” package
@@ -265,25 +268,25 @@ quiz(caption = "Quiz - Working with Packages",
 ## A short tutorial on R
 
 ### R Assignment Operator:
-R uses ` <- ` as the assignment operator. This is a combination of the less than symbol (<) and hyphen (-). Essentially, the assignment operator tells R to assign values or data to a named object or variable.
+R uses ` <- ` as the *assignment operator*. This is an arrow, formed as a combination of the *less than* symbol (**<**) and *hyphen* (**-**). Essentially, the assignment operator tells R to assign values or data on the **right side**  to a named object on the **left side**.
 
 ```{r, eval =TRUE}
 a <- 3 + 4
 a
 ```
 
-In the block of code above, we performed a simple mathematical operation **3 + 4** and stored the sum in **a** variable called a. Variables are used to store values for later use. The code above allows R to evaluate the expression 3 + 4 (on the right of the assignment operator) and then assign the sum 7, to the variable a (on the left of the assignment operator), for later use.
+In the block of code above, we performed a simple mathematical operation **3 + 4** and stored the sum in an *object*  called **a**. Objects are used to store values for later use. The code above allows R to evaluate the expression 3 + 4 (on the right of the assignment operator) and then assign the sum 7, to the object a (on the left of the assignment operator), for later use.
 
-> Notice that the result is not immediately visible in the console. Instead, you can see the name of the variable in the R workspace, under the environment tab. To print out or view the content of the variable **a** in the console, simply type the name of the variable and run the command. You should now see the value (7) displayed in the console.
+> Notice that the result is not immediately visible in the console. Instead, you can see the name of the object in the R workspace, under the environment tab. To print out or view the content of the object **a** in the console, simply type the name of the object and run the command. You should now see the value (7) displayed in the console.
 
 ### Adding comments to your code:
-It is a good practice to annotate your code in the R script editor. This includes adding short explanations on what the code or commands that you have written do as well as the meaning of variables or any objects that are created during an R Session. These explanations are written as comments.
+It is a good practice to annotate your code in the R script editor. This includes adding short explanations on what the code or commands that you have written do as well as the meaning of any objects that are created during an R Session. These explanations are written as comments.
 
 In R, comments are preceded by the symbol `# ` (pound or hash). This helps R distinguish between comments and actual lines or blocks of code that the R programme must execute.
 
 
 ```{r, eval =TRUE}
-# Create variable a that stores the sum of 3 and 4
+# Create object a that stores the sum of 3 and 4
 a <- 3 + 4
 a
 ```
@@ -294,7 +297,7 @@ a
 Let us define some elements to play with: 
 
 ```{r}
-# Here I define a numerical variable 
+# Here I define a numerical object 
 myage <- 25
 
 # And I can show it
@@ -409,7 +412,7 @@ head(mydata)
 ```
 
 
-The **structure** of the data frame is given by `str()` function. It is very important to identify which variable is numerical (*num*) or an integer (*int*), a factor (*factor*) or even a string (*chr*, for character) or a Boolean (*logi* with values TRUE/FALSE) as some operations will only apply for some *type* of variables.
+The **structure** of the data frame is given by `str()` function. It is very important to identify which column or variable is numerical (*num*) or an integer (*int*), a factor (*factor*) or even a string (*chr*, for character) or a Boolean (*logi* with values TRUE/FALSE) as some operations will only apply for some *type* of variables.
 
 ```{r}
 str(mydata)
@@ -451,9 +454,9 @@ mydata[1,]
 
 ```
 
-We can also have quick statistics using the  `summary()` function. As you see in the output, the `summary()`  function adapts the result to the **type** of variable, whether it is a character (no summary for  *name*), a numeric variable (*age*), or a Boolean or logical variable (*student* takes TRUE or FALSE values).  
+We can also have quick statistics using the  `summary()` function. As you see in the output, the `summary()`  function adapts the result to the **type** of the variable, whether it is a character (no summary for  *name*), a numeric variable (*age*), or a Boolean or logical variable (*student* takes TRUE or FALSE values).  
 
-> This is an important feature of R functions and highlights the importance having **the corect *type*** for the variables in a data frame.  
+> This is an important feature of R functions and highlights the importance having **the correct *type*** for each variable in a data frame.  
 
 
 ```{r, eval=TRUE}

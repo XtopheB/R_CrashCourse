@@ -74,7 +74,6 @@ The best way is to follow the instructions in this video (*3 min 55s*).
 </video>
 
 
-
 ### Test your knowledge
 
 ```{r quiz2, echo=FALSE}
@@ -160,8 +159,11 @@ R has several functions that are loaded and available in the basic installation 
 ### How to install R packages
 The best way is to follow the instructions in this video (*5 min 20s*)
 
-![](https://www.unsiap.or.jp/on_line/2025/RCR/M0-Packages.mp4)
 
+<video width="600" controls>
+  <source src="https://www.unsiap.or.jp/on_line/2025/RCR/M0-Packages.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 
 ### The “tidyverse” package
