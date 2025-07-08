@@ -1,7 +1,7 @@
 ---
 title: "Install R!"
 author: " ---- \n *Christophe Bontemps*  \n ![](www/SIAP_logo_2020_1800.png){width=30%}  "
-date: 'Version: 1.50 \n (June 2025)'
+date: 'Version: 1.6 \n (July 2025)'
 output:
   learnr::tutorial: 
     progressive: true
@@ -64,12 +64,16 @@ R is a statistical programming language and environment for statistical computin
 > If your computer was a plane, we may think of R as the engine and propeller
 
 ### How to install R
-The best way is to follow the instructions in this video (*3 min 25s*)
+The best way is to follow the instructions in this video (*3 min 55s*).
+
+*You can download R from the <a href= "https://cran.r-project.org/" target="_blank">CRAN website </a>*
+
+<video width="600" controls>
+  <source src="https://unsiap.or.jp/on_line/2025/RCR/M0-RInstall.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 
-![](https://www.unsiap.or.jp/on_line/2025/RCR/M0-RInstall.mp4)
-
-**Link to install R:** <a href= "https://cran.r-project.org/" target="_blank">https://cran.r-project.org/</a>
 
 ### Test your knowledge
 
