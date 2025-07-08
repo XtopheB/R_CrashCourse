@@ -1,7 +1,7 @@
 ---
 title: "Basic R!"
 author: " ---- \n *Christophe Bontemps*  \n ![](www/SIAP_logo_2020_1800.png){width=30%}  "
-date: 'Version: 1.48 \n (June 2025)'
+date: 'Version: 1.49 \n (June 2025)'
 output:
   learnr::tutorial: 
     progressive: true
@@ -69,26 +69,26 @@ question("Check all that is TRUE:",
 ## A short tutorial on R
 
 ### R Assignment Operator:
-R uses ` <- ` as the assignment operator. This is a combination of the less than symbol (<) and hyphen (-). Essentially, the assignment operator tells R to assign values or data to a named object or variable.
+R uses ` <- ` as the *assignment operator*. This is an arrow, formed as a combination of the *less than* symbol (**<**) and *hyphen* (**-**). Essentially, the assignment operator tells R to assign values or data on the **right side**  to a named object on the **left side**.
 
 ```{r, eval =TRUE}
 a <- 3 + 4
 a
 ```
 
-In the block of code above, we performed a simple mathematical operation **3 + 4** and stored the result (here the sum) in a variable called ***a***. Variables are used to store values for later use. The code above allows R to evaluate the expression 3 + 4 (on the right of the assignment operator) and then assign the sum; here 7, to the variable a (on the left of the assignment operator), for later use.
+In the block of code above, we performed a simple mathematical operation **3 + 4** and stored the result (here the sum) in an object called ***a***. Objects are used to store values for later use. The code above allows R to evaluate the expression 3 + 4 (on the right of the assignment operator) and then assign the sum -  here 7 -  to the object ***a*** (on the left of the assignment operator), for later use.
 
-> The assignment done in the first line is "silent" - nothing will be displayed. One must request the value of the variable to be displayed, hence the second line.  
+> The assignment done in the first line is "silent" - nothing will be displayed. One must request the value of the object to be displayed, hence the second line.  
 
 ### Adding comments to your code:
 
-It is a good practice to annotate your code in the R script editor. This includes adding short explanations on what the code or commands that you have written do as well as the meaning of variables or any objects that are created during an R Session. These explanations are written as comments.
+It is a good practice to annotate your code in the R script editor. This includes adding short explanations on what the code or commands that you have written do as well as the meaning of any objects that are created during an R Session. These explanations are written as comments.
 
 In R, comments are preceded by the symbol `# ` (pound or hash). This helps R distinguish between comments and actual lines or blocks of code that the R programme must execute.
 
 
 ```{r, eval =TRUE}
-# Create variable, named a, that stores the sum of 3 and 4
+# Create object, named a, that stores the sum of 3 and 4
 a <- 3 + 4
 a
 ```
@@ -99,14 +99,14 @@ a
 Let us define some elements to play with: 
 
 ```{r}
-# Here I define a numerical variable 
+# Here I define a numerical object 
 myage <- 25
 
 # And I can show it
 myage
 ```
 
-The first line does the assignment to the variable ** myage** (silently).  Now if I want to see the value, and  make it pretty, I can use the `paste()` function.  This function is quite useful for presenting results, titles, etc.,  as it *paste* text ( within quotes "  ") and other R objects (here a number). 
+The first line does the assignment to the object ** myage** (silently).  Now if I want to see the value, and  make it pretty, I can use the `paste()` function.  This function is quite useful for presenting results, titles, etc.,  as it *paste* text ( within quotes "  ") and other R objects (here a number). 
 
 ```{r, prepare}
 paste("My age is", myage)
@@ -247,7 +247,7 @@ head(mydata)
 ```
 
 
-The **structure** of the data frame is given by `str()` function. It is very important to identify which variable is numerical (*num*) or an integer (*int*), a factor (*factor*) or even a string (*chr*, for character) or a Boolean (*logi* with values TRUE/FALSE) as some operations will only apply for some *type* of variables.
+The **structure** of the data frame is given by `str()` function. It is very important to identify which *variable* (column) is numerical (*num*) or an integer (*int*), a factor (*factor*) or even a string (*chr*, for character) or a Boolean (*logi* with values TRUE/FALSE) as some operations will only apply for some *type* of variables.
 
 > Look at the output below and identify the *type* of each variable
 
