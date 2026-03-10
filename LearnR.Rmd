@@ -1,7 +1,7 @@
 ---
 title: "Learn R: \n A tutorial"
 author: " ---- \n *Christophe Bontemps*  \n ![](www/SIAP_logo_2020_1800.png){width=30%}  "
-date: "*Version: 1.6 \n (July 2025)*"
+date: "*Version: 1.7 \n (March 2026)*"
 output:
   learnr::tutorial: 
     progressive: true
@@ -95,9 +95,6 @@ The best way is to follow the instructions in this video (*3 min 55s*).
 </video>
 
 
-
-
-
 ### Test your knowledge
 
 ```{r quiz2, echo=FALSE}
@@ -144,7 +141,6 @@ RStudio is the most common, beginner-friendly software for R users and the main 
 
 Link to install RStudio: <a href= "https://www.rstudio.com/products/rstudio/download/" target="_blank">https://www.rstudio.com/products/rstudio/download/</a>  
 
-
 ### Test your knowledge
 
 ```{r quiz3, echo=FALSE}
@@ -178,7 +174,6 @@ quiz(caption = "Quiz - Install RStudio",
 R has several functions that are loaded and available in the basic installation of the programme. However, there are a range of other convenient functions and codes written by R users that can be used freely during your R session. These functions are distributed as R packages, which are basically a collection of R code, data sets, documentation, and tests that can be easily shared with others.
 
 > If your computer was a plane, we may think of the packages as all the components needed to fly (landing gear, gyroscope, lights, GPS, ... )   
-
 ### How to install R packages
 The best way is to follow the instructions in this video (*5 min 20s*)
 
@@ -186,7 +181,6 @@ The best way is to follow the instructions in this video (*5 min 20s*)
   <source src="https://www.unsiap.or.jp/on_line/2025/RCR/M0-Packages.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
-
 
 ### The “tidyverse” package
 To use an R package that did not come with the installation of RStudio, you must first install it, using the command `install.packages()`. 
@@ -197,7 +191,6 @@ For example, to install the package *tidyverse*, type and execute the following 
 install.packages("tidyverse")
 ```
 
-
 This command will install the package *tidyverse* and store it in a directory in the R environment referred to as the “library”. 
 The *tidyverse* package contains 8 packages namely *ggplot2, dplyr, tidyr, readr, purrr, tibble, stringr, and forcats* that are loaded automatically once with the `install.packages(“tidyverse”)` command.
 
@@ -206,7 +199,6 @@ The *tidyverse* package contains 8 packages namely *ggplot2, dplyr, tidyr, readr
 One very commonly used R package is called “*haven*”. This package is necessary to read and write data files from other statistical software such as SPSS, Stata, SAS and Minitab into R. It is also needed for reading and writing “dBase” files that carry the .dbf extension.
 
 > To search for the “haven” package, go to the “*Files/ Plots/ Packages and Help*” pane and select the tab Packages. Type “*haven*” in the search bar. You should see a result like the image below.  The unchecked box means that the package is available in the library but has not been loaded for the library for use in the current R session.  ![](www/packages.png){width=60%}
-
 
 
 ### How to access packages after they have been installed
@@ -219,11 +211,9 @@ library("haven")
 
 To access the manual for packages that have been loaded in the library, use the *help* argument with the function `library( )`
 
-
 ```{r, eval= FALSE}
 library(help="haven")
 ```
-
 
 Alternatively, you can simply use `help( )` function and specify the name of the package:
 
@@ -233,7 +223,6 @@ help("haven")
 
 
 > Note: You need to install R packages only once. However, you must load the relevant packages needed to perform the desired functions in R (using the `library( )` function), each time you start any R session.
-
 
 
 ### Test your knowledge
@@ -509,13 +498,10 @@ mynewdata[ , ]
 
 ```
 
-
 ```{r extract2-solution}
 # Solution : 1 for the row and 3 for column in that order
 mynewdata[1,3]
 ```
-
-
 
 > We'll see later on that there are many other ways to play with `data.frames`
 
@@ -565,7 +551,6 @@ Mytest <- read.dta("testdata.dta")
 
 The lines of code above first load the package *haven* using the `library()` function.  The second line, creates a data frame called *Mytest* that stores the data from the data file called “*testdata.dta*”. 
 
-
 ### Importing SPSS data into R
 
 We will now see how to import a data set in SPSS file format that carries the file extension *.sav*.  To import or read files of that format into R, we need the R package called **haven**. Like the **haven** package, the **haven** package contains a range of functions that will allow you to import data files from some of the other statistical software packages aside from SPSS such as Stata and SAS into R. If you have not yet installed the **haven** package, use the command `install.packages(“haven” )`.  
@@ -583,15 +568,15 @@ MyTest2 <- read_sav(file ="testdata.sav")
 The lines of code above first load the package *haven* using the `library()` function. 
 The second line creates a new data frame called *MyTest2* that stores the data from the SPSS data file called "*testdata.sav*".  
 
-
 ### Importing any file with RStudio
 
 It is also possible to use the RStudio *environment* interface to load any data set. 
-![](https://uedufy.com/wp-content/uploads/2023/05/image-30-768x377.png)
+
+![](https://uedufy.com/images/blog/en/how-to-import-a-csv-file-in-r-0.png){width=300px}
 
 Then select the format of your file using the drop down menu. 
 
-![](https://uedufy.com/wp-content/uploads/2023/05/Screenshot-2023-05-28-at-11.36.48-768x219.png)
+![](https://uedufy.com/images/blog/en/how-to-import-a-csv-file-in-r-1.png){width=300px}
 
 
 You can also configure options such as the sheet to open in excel, as shown [in this tutorial](https://uedufy.com/how-to-import-an-excel-file-into-r-6-easy-steps/) (from Leonard at Uedufy.com). 
