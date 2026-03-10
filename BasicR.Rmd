@@ -1,7 +1,7 @@
 ---
 title: "Basic R!"
 author: " ---- \n *Christophe Bontemps*  \n ![](www/SIAP_logo_2020_1800.png){width=30%}  "
-date: 'Version: 1.50 \n (July 2025)'
+date: 'Version: 1.61 \n (March 2026)'
 output:
   learnr::tutorial: 
     progressive: true
@@ -500,11 +500,15 @@ question("What is the correct function to import Stata files into R? ",
 ### Importing any file with RStudio
 
 It is also possible to use the RStudio *environment* interface to load any data set. 
-![](https://uedufy.com/wp-content/uploads/2023/05/image-30-768x377.png)
+
+![](www/how-to-import-a-csv-file-in-r-0.png){width=300px}
+
+
+
 
 Then select the format of your file using the drop down menu. 
 
-![](https://uedufy.com/wp-content/uploads/2023/05/Screenshot-2023-05-28-at-11.36.48-768x219.png)
+![](www/how-to-import-a-csv-file-in-r-1.png){width=300px}
 
  
  > **NB**: The code resulting form this operation will be copied in your document after the importation for reproducibility. 

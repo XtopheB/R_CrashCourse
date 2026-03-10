@@ -572,11 +572,11 @@ The second line creates a new data frame called *MyTest2* that stores the data f
 
 It is also possible to use the RStudio *environment* interface to load any data set. 
 
-![](https://uedufy.com/images/blog/en/how-to-import-a-csv-file-in-r-0.png){width=300px}
+![](www/how-to-import-a-csv-file-in-r-0.png){width=300px}
 
 Then select the format of your file using the drop down menu. 
 
-![](https://uedufy.com/images/blog/en/how-to-import-a-csv-file-in-r-1.png){width=300px}
+![](www/how-to-import-a-csv-file-in-r-1.png){width=300px}
 
 
 You can also configure options such as the sheet to open in excel, as shown [in this tutorial](https://uedufy.com/how-to-import-an-excel-file-into-r-6-easy-steps/) (from Leonard at Uedufy.com). 
