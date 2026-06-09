@@ -1,0 +1,302 @@
+/* ============================================================
+   UseR-Trade.Rmd  — lightweight learnr stylesheet
+   Goal: stay close to learnr/Bootstrap 3 defaults,
+         only enhance code readability and a few UI details.
+   ============================================================ */
+
+/* ----- Tokens (tweak here to retheme everything) ---------- */
+:root {
+  --blue:        #2c7bb6;   /* slightly deeper than Bootstrap #337ab7 */
+  --blue-light:  #eaf4fb;
+  --blue-border: #b8d9f0;
+
+  --grey-text:   #555555;
+  --grey-muted:  #888888;
+  --grey-bg:     #f7f7f7;
+  --grey-border: #dddddd;
+
+  --code-bg:     #f5f5f5;   /* same as learnr default — white-ish */
+  --code-border: #cccccc;
+
+  /* R syntax highlight — used only for inline code and pre blocks */
+  --r-keyword:   #2c7bb6;   /* blue  — operators, control flow      */
+  --r-function:  #c7500a;   /* burnt orange — function names        */
+  --r-string:    #2e8b57;   /* sea green — quoted strings           */
+  --r-comment:   #999999;   /* grey italic — comments               */
+  --r-number:    #7b5ea7;   /* muted purple — numeric literals      */
+}
+
+
+/* ============================================================
+   1. BODY & TYPOGRAPHY  — minimal changes from default
+   ============================================================ */
+
+body {
+  font-size: 14px;          /* learnr default */
+  line-height: 1.7;         /* slightly more breathing room */
+  color: #333333;
+}
+
+/* Section headings: add a subtle left accent, keep default colour */
+h2 {
+  border-left: 4px solid var(--blue);
+  padding-left: 0.6rem;
+  margin-top: 1.4rem;
+}
+
+h3 {
+  color: var(--blue);
+  font-size: 1.05em;
+}
+
+/* Links — same hue as Bootstrap but slightly richer */
+a, a:visited {
+  color: var(--blue);
+}
+a:hover {
+  color: #1a5a8a;
+  text-decoration: underline;
+}
+
+
+/* ============================================================
+   2. BLOCKQUOTE  — used for "Your goal:" callouts
+      Smaller, italic, with a blue left border instead of grey
+   ============================================================ */
+
+blockquote {
+  border-left: 4px solid var(--blue);
+  background: var(--blue-light);
+  color: var(--grey-text);
+  font-size: 0.88em;        /* smaller than body */
+  font-style: italic;
+  padding: 0.5rem 0.9rem;
+  margin: 1rem 0;
+  border-radius: 0 4px 4px 0;
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* Inline code inside blockquotes — keep readable */
+blockquote code {
+  font-style: normal;
+  background: white;
+  border: 1px solid var(--blue-border);
+  color: var(--r-function);
+}
+
+
+/* ============================================================
+   3. INLINE CODE  — white bg, colour the R bits
+   ============================================================ */
+
+/* Base inline code: white background, subtle border */
+code {
+  font-family: "Consolas", "Monaco", "Lucida Console", monospace;
+  font-size: 0.88em;
+  background: #ffffff;
+  border: 1px solid var(--code-border);
+  border-radius: 3px;
+  padding: 1px 5px;
+  color: #333333;
+}
+
+/* R keywords inside inline code — span.r-kw injected by knitr/highlight */
+code .kw, code .keyword  { color: var(--r-keyword);   font-weight: 600; }
+code .fu, code .function { color: var(--r-function);  }
+code .st, code .string   { color: var(--r-string);    }
+code .co, code .comment  { color: var(--r-comment);   font-style: italic; }
+code .dv, code .number   { color: var(--r-number);    }
+code .op, code .operator { color: var(--r-keyword);   font-weight: 600; }
+
+
+/* ============================================================
+   4. CODE BLOCKS (pre)  — white background, R syntax colours
+   ============================================================ */
+
+pre {
+  font-family: "Consolas", "Monaco", "Lucida Console", monospace;
+  font-size: 0.86em;
+  line-height: 1.65;
+  background: #ffffff !important;   /* white, not grey */
+  border: 1px solid var(--code-border);
+  border-left: 4px solid var(--blue);
+  border-radius: 0 4px 4px 0;
+  padding: 0.75rem 1rem;
+  overflow-x: auto;
+  color: #333333;
+}
+
+/* Syntax token colours inside pre blocks */
+pre .kw, pre .keyword,
+pre .hljs-keyword          { color: var(--r-keyword);  font-weight: 600; }
+pre .fu, pre .function,
+pre .hljs-built_in         { color: var(--r-function); }
+pre .st, pre .string,
+pre .hljs-string           { color: var(--r-string);   }
+pre .co, pre .comment,
+pre .hljs-comment          { color: var(--r-comment);  font-style: italic; }
+pre .dv, pre .number,
+pre .hljs-number           { color: var(--r-number);   }
+pre .op, pre .operator     { color: var(--r-keyword);  font-weight: 600; }
+
+/* knitr output — slightly greyed to distinguish from source */
+pre.knitr-output,
+div.knitr-output pre {
+  background: var(--grey-bg) !important;
+  border-left: 4px solid var(--grey-border);
+  color: var(--grey-text);
+  font-size: 0.84em;
+}
+
+
+/* ============================================================
+   5. ACE EDITOR (learnr exercise boxes)
+      White background, same R colours as above
+   ============================================================ */
+
+.ace_editor {
+  font-family: "Consolas", "Monaco", "Lucida Console", monospace !important;
+  font-size: 13px !important;
+  line-height: 1.6 !important;
+  background: #ffffff !important;
+  color: #333333 !important;
+}
+
+.ace_gutter {
+  background: var(--grey-bg) !important;
+  color: var(--grey-muted) !important;
+  border-right: 1px solid var(--grey-border) !important;
+}
+
+.ace_cursor {
+  border-left-color: var(--blue) !important;
+}
+
+.ace_marker-layer .ace_active-line {
+  background: var(--blue-light) !important;
+}
+
+/* Ace token colours */
+.ace_keyword, .ace_operator          { color: var(--r-keyword) !important;  font-weight: 600 !important; }
+.ace_support.ace_function            { color: var(--r-function) !important; }
+.ace_string                          { color: var(--r-string) !important;   }
+.ace_comment                         { color: var(--r-comment) !important;  font-style: italic !important; }
+.ace_constant.ace_numeric            { color: var(--r-number) !important;   }
+.ace_variable                        { color: #333333 !important;           }
+
+
+/* ============================================================
+   6. EXERCISE PANEL  — keep learnr defaults, small polish
+   ============================================================ */
+
+/* Thin blue top border on the exercise container */
+.tutorial-exercise {
+  border-top: 3px solid var(--blue);
+  border-radius: 4px;
+  margin-bottom: 1.2rem;
+}
+
+/* Run button — matches the blue token */
+.btn-tutorial-run,
+.btn-tutorial-run-solution {
+  background-color: var(--blue) !important;
+  border-color: #245f91 !important;
+  color: white !important;
+}
+
+.btn-tutorial-run:hover,
+.btn-tutorial-run-solution:hover {
+  background-color: #245f91 !important;
+}
+
+/* Hint button — outlined style */
+.btn-tutorial-hint {
+  background-color: white !important;
+  border-color: var(--blue) !important;
+  color: var(--blue) !important;
+}
+
+.btn-tutorial-hint:hover {
+  background-color: var(--blue-light) !important;
+}
+
+/* Hint box */
+.tutorial-hint {
+  background: var(--blue-light);
+  border-left: 4px solid var(--blue);
+  border-radius: 0 4px 4px 0;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.88em;
+  font-style: italic;
+  color: var(--grey-text);
+}
+
+.tutorial-hint pre {
+  font-style: normal;
+  border-left: 3px solid var(--blue-border);
+}
+
+
+/* ============================================================
+   7. QUIZ BLOCKS
+   ============================================================ */
+
+/* Correct answer feedback */
+.alert-success {
+  background-color: #dff0d8 !important;   /* Bootstrap default green */
+  border-color:     #d6e9c6 !important;
+  color:            #3c763d !important;
+}
+
+/* Wrong answer feedback */
+.alert-danger {
+  background-color: #f2dede !important;
+  border-color:     #ebccd1 !important;
+  color:            #a94442 !important;
+}
+
+
+/* ============================================================
+   8. TABLES
+   ============================================================ */
+
+table {
+  font-size: 0.9em;
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+thead th {
+  background: var(--blue);
+  color: white;
+  padding: 0.45rem 0.7rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+tbody tr:nth-child(even) { background: var(--grey-bg); }
+tbody tr:nth-child(odd)  { background: white; }
+
+tbody td {
+  padding: 0.35rem 0.7rem;
+  border-bottom: 1px solid var(--grey-border);
+}
+
+
+/* ============================================================
+   9. NAVIGATION — subtle active-state polish only
+   ============================================================ */
+
+.tutorial-nav-list-item.active > a {
+  border-left: 3px solid var(--blue);
+  color: var(--blue);
+  font-weight: 600;
+}
+
+.tutorial-progress-bar .progress-bar {
+  background-color: var(--blue) !important;
+}
