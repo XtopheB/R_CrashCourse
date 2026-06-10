@@ -1,12 +1,12 @@
 ---
 title: "Use R for Trade Statistics!"
-author: " ---- \n *Christophe Bontemps & Chesca Rosales*  \n  ![](www/SIAP_logo_2020_1800.png){width=30%}  "
+author: " ---- \n *Christophe Bontemps &\n Chesca Rosales*  \n  ![](www/SIAP_logo_2020_1800.png){width=30%}  "
 date: 'Version: 1.0 \n (June 2026)'
 output:
   learnr::tutorial:
     progressive: true
     allow_skip: true
-#    css: www/Mycustom.css
+    css: www/Mycustom.css
 runtime: shiny_prerendered
 description: >
   Learn how to use R for International Merchandise Trade Statistics.
@@ -22,9 +22,6 @@ library(stringr)
 library(scales)
 
 # ----- Load the pre-merged trade data -----
-# The file tradedata_ready.csv must be placed in the www/ folder.
-# It is already cleaned and merged: country names, product labels, and
-# flowCode2 ("Export" / "Import") are all included. No left_join needed!
 #
 # Expected columns:
 #   reporterCode, flowCode, flowCode2, partnerCode, geoAreaDescription,
@@ -69,7 +66,7 @@ table3 <- tradedata %>%
 
 In this tutorial, we apply tidyverse tools to **International Merchandise Trade Statistics** from the UN Comtrade database.
 
-The data has already been prepared for you: country names, product labels, and a readable trade-flow indicator (`flowCode2`) are all merged into a single file. You can focus entirely on the analysis!
+The data has already been prepared for you with  country name, product labels, and a readable trade-flow indicator (`flowCode2`) are all merged into a single file. 
 
 ### Learning Objectives
 
@@ -87,7 +84,7 @@ At the end of this module you should be able to:
 ### Have you completed the basic R tutorial?
 
 ```{r quiz0, echo = FALSE}
-question("Have you completed the basic Use R! tutorial?  (*Check all that is TRUE*):",
+question("Have you completed the Basic R! tutorial?  (*Check all that is TRUE*):",
   answer("Yes", correct = TRUE, message = "Perfect — the tidyverse tools you learned there apply directly here."),
   answer("No, I'm just starting here", message = "Please start with the basic Use R! course first, then come back.")
 )
@@ -96,7 +93,7 @@ question("Have you completed the basic Use R! tutorial?  (*Check all that is TRU
 
 ## The Trade Dataset
 
-We have a dataset of international merchandise trade transactions for **your country** (you will replace it with your own Comtrade file later).
+We have a dataset of international merchandise trade transactions (you will replace it with your own Comtrade file later).
 
 Let's start by exploring it. Run the code below to see the first few rows:
 
@@ -150,6 +147,13 @@ quiz(
 The dataset has many columns. Often you only need a few.
 The `select()` function lets you keep only the variables you want.
 
+### Example
+Use `select()` to keep only the `a` and `c` variables in a given `data.frame`: 
+
+![](https://carpentry.library.ucsb.edu/2023-01-23-ucsb-r/fig/13-dplyr-fig1.png){width=40%}
+
+
+
 > **Your goal:** create a smaller data frame called `tradedata_light` that keeps only five columns:  
 > `flowCode2`, `geoAreaDescription`, `cmd2CodeDescription`, `primaryValue`, and `cmdCode`.
 
@@ -162,6 +166,7 @@ The `select()` function lets you keep only the variables you want.
 
 tradedata_light <-
 
+  
 ```
 
 ```{r sel1-hint-1}
@@ -544,8 +549,7 @@ table2_long_top10 <- table2 %>%
   arrange(desc(total_trade_value))
 ```
 
-```{r chart1, exercise = TRUE, exercise.eval = FALSE, exercise.setup = "chart-setup",
-    exercise.cap = "Bar chart of trade flows by partner country"}
+```{r chart1, exercise = TRUE, exercise.eval = FALSE, exercise.setup = "chart-setup", exercise.cap = "Bar chart of trade flows by partner country"}
 # table2_long_top10 is ready to use.
 # Complete the ggplot call below:
 
@@ -659,7 +663,7 @@ These are the building blocks for the full analysis in the *L4 hands-on exercise
 
 * **Apply this to your own country** — replace `tradedata_ready.csv` with your Comtrade export and run through the same steps.
 * **Explore further** — try disaggregating by 6-digit HS code, or computing the **trade balance** (Export − Import) per partner.
-* **Refer to the full L4 exercise** for the complete workflow including data loading and `left_join()`.
+
 
 ---
 

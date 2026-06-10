@@ -96,8 +96,8 @@ blockquote code {
 code {
   font-family: "Consolas", "Monaco", "Lucida Console", monospace;
   font-size: 0.88em;
-  background: #ffffff;
-  border: 1px solid var(--code-border);
+  background: #dddddd;
+/*  border: 1px solid var(--code-border); */
   border-radius: 3px;
   padding: 1px 5px;
   color: #333333;
