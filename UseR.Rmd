@@ -1323,7 +1323,7 @@ These tools are not just programming tricks, they are foundations for **modern, 
 ###  Where to go from here?
 
 * **Practice** on real datasets from your institution. Start simple and with a clear goal.
-* **Collaborate** by sharing scripts, or with coding sessions of *pair programming*^[In **pair programming** two persons work together on just one computer, meaning they work simultaneously (one typing , one reading) on a code. this is a very efficeint way of learning ([more here](https://en.wikipedia.org/wiki/Pair_programming)).]
+* **Collaborate** by sharing scripts, or with coding sessions of *pair programming*^[In **pair programming** two persons work together on just one computer, meaning they work simultaneously (one typing , one reading) on a code. this is a very efficient way of learning ([more here](https://en.wikipedia.org/wiki/Pair_programming)).]
 * **Explore** the web to find examples and code similar to what you want to do. Then reuse and tweak the code to your needs. 
 * **Continue learning** through platforms like [R for Data Science](https://r4ds.had.co.nz/), [Posit recipes](https://posit.cloud/learn/recipes), and  [A ModernDive into R and the Tidyverse](https://moderndive.com/) among many useful references. You can also use *ChatGPT* to help you with some simple requests and code debugging. Be careful though of mistakes,  fake packages and confidential information. 
 

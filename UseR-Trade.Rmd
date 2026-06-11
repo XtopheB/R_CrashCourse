@@ -148,9 +148,9 @@ The dataset has many columns. Often you only need a few.
 The `select()` function lets you keep only the variables you want.
 
 ### Example
-Use `select()` to keep only the `a` and `c` variables in a given `data.frame`: 
+Use `select()` to keep only the `a` and `c` variables in a given data frame `df`: 
 
-![](https://carpentry.library.ucsb.edu/2023-01-23-ucsb-r/fig/13-dplyr-fig1.png){width=40%}
+![](www/tidy-select.png){width=40%}
 
 
 
@@ -163,7 +163,6 @@ Use `select()` to keep only the `a` and `c` variables in a given `data.frame`:
 
 ```{r sel1, exercise = TRUE, exercise.eval = FALSE, exercise.setup = "sel1-setup", exercise.cap = "Select 5 variables"}
 # Enter your solution below
-
 tradedata_light <-
 
   
@@ -200,6 +199,12 @@ This is much easier to work with when exploring trade patterns.
 ## Exercise 2 — Filter exports with `filter()`
 
 We often want to focus on just one direction of trade. The `filter()` function keeps only the rows that satisfy a condition.
+
+### Example
+Use `filter()` to subset a data frame `df`  based on a logical condition: 
+
+![](www/tidy-filter.png){width=50%}
+
 
 > **Your goal:** starting from `tradedata`, create a new data frame called `exports` that contains **only export transactions**.  
 > Recall that exports are identified by `flowCode2 == "Export"`.
@@ -288,9 +293,18 @@ quiz(
 
 ## Exercise 3 — Aggregate with `group_by()` and `summarise()`
 
-A key task in trade analysis is computing **total trade values** by group — for example, total exports vs. total imports.
+A key task in trade analysis is computing **total trade values** by group — for example, total  exports and total imports.
 
-The combination of `group_by()` + `summarise()` is the tidyverse workhorse for this.
+
+### Example
+`group_by()` splits data into groups so each group is handled separately by later steps. 
+
+![](www/tidy-group_by.png){width=50%}
+
+
+The combination of `group_by()` + `summarise()` is very powerful for constructing a new data frame with a computed value per category (e.g. the mean):
+
+![](www/tidy-group_by_summarize.png){width=60%}
 
 > **Your goal:** compute the total trade value (in **million USD**) for each trade flow (`flowCode2`).  
 > Call the result `table1` and the new column `total_trade_value`.
@@ -339,7 +353,6 @@ You should see two rows — one for Exports and one for Imports — with their t
 - `na.rm = TRUE` makes sure missing values in `primaryValue` are ignored rather than making the whole sum `NA`.
 - `.groups = "drop"` removes the grouping after summarising, which keeps the result clean.
 
-> **Trade balance:** is your country a net exporter or net importer overall?
 
 
 ## Exercise 4 — Trade by partner country
@@ -394,6 +407,16 @@ This gives a **long-format** table: each country appears twice (once for Export,
 The long format is great for `ggplot2`, but for a readable summary **table** it is more convenient to have Exports and Imports as **separate columns** — one row per country.
 
 This is called **wide format**, and `pivot_wider()` does the reshaping.
+
+### Example
+Use `pivot_wider()` to transform a ***long*** data frame `df_l`  into a ***wide***  `df_w` : 
+
+![](www/tidy-pivot_wider1.png){width=40%}
+And finally get all 6 values in  `df_w` 
+
+![](www/tidy-pivot_wider2.png){width=40%}
+
+
 
 > **Your goal:** starting from `table2_long` (created above), create `table2` in wide format:  
 > - Columns: `Area`, `Export`, `Import`  
@@ -649,7 +672,7 @@ ggplot(table3_long,
 
 > This tutorial is just the beginning!
 
-You have applied core `tidyverse` tools to **real trade statistics** from UN Comtrade:
+You have applied core `tidyverse` tools to **trade statistics**  with the following functions:
 
 - `select()` to focus on relevant variables
 - `filter()` to subset by trade flow or value threshold
@@ -657,12 +680,22 @@ You have applied core `tidyverse` tools to **real trade statistics** from UN Com
 - `pivot_wider()` to reshape from long to wide format
 - `ggplot2` to visualise trade patterns by partner and product
 
-These are the building blocks for the full analysis in the *L4 hands-on exercise*, where you will also handle raw data import, deduplication, and country/product label merging.
+These are the building blocks for a full analysis.
 
-### Next steps
+###  Where to go from here?
 
-* **Apply this to your own country** — replace `tradedata_ready.csv` with your Comtrade export and run through the same steps.
-* **Explore further** — try disaggregating by 6-digit HS code, or computing the **trade balance** (Export − Import) per partner.
+* **Practice** on real datasets from your institution. Start simple and with a clear goal.
+* **Collaborate** by sharing scripts, or with coding sessions of *pair programming*^[In **pair programming** two persons work together on just one computer, meaning they work simultaneously (one typing , one reading) on a code. this is a very efficient way of learning ([more here](https://en.wikipedia.org/wiki/Pair_programming)).]
+* **Explore** the web to find examples and code similar to what you want to do. Then reuse and tweak the code to your needs. 
+* **Continue learning** through platforms like [R for Data Science](https://r4ds.had.co.nz/), [Posit recipes](https://posit.cloud/learn/recipes), and  [A ModernDive into R and the Tidyverse](https://moderndive.com/) among many useful references. You can also use *ChatGPT* to help you with some simple requests and code debugging. Be careful though of mistakes, fake packages and confidential information. 
+
+### Another **R** is possible
+
+In this tutorial, we focused on the **tidyverse** approach to R,  not because base R isn’t powerful, but because **tidyverse** offers a clearer, more consistent, and beginner-friendly grammar for working with data. This modern toolkit helps you think in terms of data pipelines (with `%>%` or `|>`), making your code easier to read, share, and scale across projects. 
+
+With time, you'll learn how to code with R core functions and language. Don't be afraid, what you have learned here with the **tidyverse** will still help you!   
+
+> Good luck! 
 
 
 ---
