@@ -28,7 +28,17 @@ library(scales)
 #   cmdCode, cmd2Code, cmdCodeDescription, cmd2CodeDescription,
 #   motCode, CIFValue, FOBValue, primaryValue
 
-tradedata <- read.csv("./www/tradedata_ready.csv")
+
+## We may work with a smaller data set
+
+# tradedata <- read.csv("./www/tradedata_ready.csv")
+# trade_Asia <- tradedata %>%
+#  filter(regional.grouping =="Asia") %>%
+#   select( -c(X, motCode))
+# 
+# write.csv(trade_Asia, "www/tradeAsia.csv")
+
+tradedata <- read.csv("./www/tradeAsia.csv")
 
 # ----- Pre-computed objects used across multiple exercises -----
 
@@ -105,7 +115,7 @@ The dataset has **`r nrow(tradedata)`** observations and **`r ncol(tradedata)`**
 
 > Use the black arrow at the top right of the table to navigate across columns if they don't all fit on screen.
 
-### Key variables
+### Key variables:
 
 Here are the most important columns you will work with:
 
@@ -142,12 +152,12 @@ quiz(
 ```
 
 
-## Exercise 1 — Explore with `select()`
+## Step 1 — Explore with `select()`
 
 The dataset has many columns. Often you only need a few.
 The `select()` function lets you keep only the variables you want.
 
-### Example
+### Example:
 Use `select()` to keep only the `a` and `c` variables in a given data frame `df`: 
 
 ![](www/tidy-select.png){width=40%}
@@ -196,11 +206,11 @@ This is much easier to work with when exploring trade patterns.
 - You can also use `select(-column_name)` to *drop* a column instead.
 
 
-## Exercise 2 — Filter exports with `filter()`
+## Step 2 — Filter exports with `filter()`
 
 We often want to focus on just one direction of trade. The `filter()` function keeps only the rows that satisfy a condition.
 
-### Example
+### Example:
 Use `filter()` to subset a data frame `df`  based on a logical condition: 
 
 ![](www/tidy-filter.png){width=50%}
@@ -291,12 +301,12 @@ quiz(
 ```
 
 
-## Exercise 3 — Aggregate with `group_by()` and `summarise()`
+# Step 3 — Aggregate with `group_by()` and `summarise()`
 
 A key task in trade analysis is computing **total trade values** by group — for example, total  exports and total imports.
 
 
-### Example
+### Example:
 `group_by()` splits data into groups so each group is handled separately by later steps. 
 
 ![](www/tidy-group_by.png){width=50%}
@@ -355,7 +365,7 @@ You should see two rows — one for Exports and one for Imports — with their t
 
 
 
-## Exercise 4 — Trade by partner country
+## Step 4 — Trade by partner country
 
 Now let's go deeper and compute total trade values **broken down by partner country**.
 
@@ -402,13 +412,13 @@ head(table2_long)
 This gives a **long-format** table: each country appears twice (once for Export, once for Import).
 
 
-## Exercise 5 — Reshape with `pivot_wider()`
+## Step 5 — Reshape with `pivot_wider()`
 
 The long format is great for `ggplot2`, but for a readable summary **table** it is more convenient to have Exports and Imports as **separate columns** — one row per country.
 
 This is called **wide format**, and `pivot_wider()` does the reshaping.
 
-### Example
+### Example:
 Use `pivot_wider()` to transform a ***long*** data frame `df_l`  into a ***wide***  `df_w` : 
 
 ![](www/tidy-pivot_wider1.png){width=40%}
@@ -491,7 +501,7 @@ quiz(
 ```
 
 
-## Exercise 6 — Trade by product (2-digit HS)
+## Step 6 — Trade by product (2-digit HS)
 
 Let's now aggregate by **product category** using the 2-digit HS code description.
 
@@ -552,7 +562,7 @@ head(table3, 10)
 > **What are your country's top export products?**
 
 
-## Exercise 7 — Visualise with `ggplot2`
+## Step 7 — Visualise with `ggplot2`
 
 Tables are informative, but a chart communicates patterns much faster. Let's build a **horizontal bar chart** showing exports and imports for the **top 10 partner countries**.
 
