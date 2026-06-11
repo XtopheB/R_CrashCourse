@@ -68,7 +68,7 @@ blockquote {
   border-left: 4px solid var(--blue);
   background: var(--blue-light);
   color: var(--grey-text);
-  font-size: 0.95em;        /* smaller than body */
+  font-size: 1.1em;        /* smaller than body */
   font-style: italic;
   padding: 0.5rem 0.9rem;
   margin: 1rem 0;
@@ -81,10 +81,10 @@ blockquote p:last-child {
 
 /* Inline code inside blockquotes — keep readable */
 blockquote code {
-  font-style: normal;
+  font-style: solid;
   background: white;
   border: 0px solid var(--blue-border);
-  color: var(--r-function);
+  color:  #333333;;
 }
 
 
