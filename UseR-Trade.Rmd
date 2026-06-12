@@ -193,7 +193,6 @@ tradedata_light <- tradedata %>%
 ```{r sel1-solution}
 tradedata_light <- tradedata %>%
   select(flowCode2, geoAreaDescription, cmd2CodeDescription, primaryValue, cmdCode)
-
 head(tradedata_light)
 ```
 
@@ -259,7 +258,6 @@ You can combine multiple conditions inside `filter()` using `&` (AND) or `|` (OR
 
 ```{r filt2, exercise = TRUE, exercise.eval = FALSE, exercise.cap = "Filter large exports"}
 # Enter your solution below — combine two conditions with &
-
 large_exports <-
 
 ```
@@ -350,7 +348,6 @@ table1 <- tradedata %>%
   group_by(flowCode2) %>%
   summarise(total_trade_value = sum(primaryValue / 1000000, na.rm = TRUE),
             .groups = "drop")
-
 table1
 ```
 
@@ -378,7 +375,6 @@ Now let's go deeper and compute total trade values **broken down by partner coun
 
 ```{r grp2, exercise = TRUE, exercise.eval = FALSE, exercise.setup = "grp2-setup", exercise.cap = "Trade values by partner country (long format)"}
 # Enter your solution below
-
 table2_long <-
 
 ```
@@ -405,7 +401,6 @@ table2_long <- tradedata %>%
   summarise(Value = sum(primaryValue / 1000000, na.rm = TRUE),
             .groups = "drop") %>%
   rename(Area = geoAreaDescription)
-
 head(table2_long)
 ```
 
@@ -444,7 +439,6 @@ table2_long <- tradedata %>%
 
 ```{r pivot1, exercise = TRUE, exercise.eval = FALSE, exercise.setup = "pivot-setup", exercise.cap = "Pivot to wide format and filter top partners"}
 # Enter your solution below
-
 table2 <-
 
 ```
@@ -550,7 +544,6 @@ table3 <- tradedata %>%
               values_fill = 0) %>%
   slice_max(n = 20, order_by = Export) %>%
   arrange(desc(Export))
-
 head(table3, 10)
 ```
 
