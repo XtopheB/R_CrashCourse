@@ -31,14 +31,15 @@ library(scales)
 
 ## We may work with a smaller data set
 
-# tradedata <- read.csv("./www/tradedata_ready.csv")
-# trade_Asia <- tradedata %>%
-#  filter(regional.grouping =="Asia") %>%
-#   select( -c(X, motCode))
-# 
-# write.csv(trade_Asia, "www/tradeAsia.csv")
+# tradedata_raw <- read.csv("./www/tradedata_ready.csv")
+# trade_Asia <- tradedata_raw %>%
+#   select(-c("X", "motCode")) %>%
+#   filter(regional.grouping =="Asia")
+# write.csv(trade_Asia, "www/tradeAsia.csv",row.names = FALSE)
 
 tradedata <- read.csv("./www/tradeAsia.csv")
+tradedata <- tradedata %>%
+  relocate(flowCode2, geoAreaDescription, primaryValue, cmdCode, cmd2Code, cmd2CodeDescription)
 
 # ----- Pre-computed objects used across multiple exercises -----
 
@@ -91,7 +92,7 @@ At the end of this module you should be able to:
 
 > *We highly recommend that you follow the order of the topics proposed in this tutorial!*
 
-### Have you completed the basic R tutorial?
+### Have you completed the R tutorials?
 
 ```{r quiz0, echo = FALSE}
 question("Have you completed the Basic R! tutorial?  (*Check all that is TRUE*):",
@@ -111,9 +112,9 @@ Let's start by exploring it. Run the code below to see the first few rows:
 head(tradedata)
 ```
 
-The dataset has **`r nrow(tradedata)`** observations and **`r ncol(tradedata)`** variables.
+The dataset has **`r nrow(tradedata)`** observations and **`r ncol(tradedata)`** variables. It may happen that some variables have missing values for some observations (*e.g.* in  FOBValue)
 
-> Use the black arrow at the top right of the table to navigate across columns if they don't all fit on screen.
+> Use the arrow at the top right of the table to navigate across columns if they don't all fit on screen.
 
 ### Key variables:
 
@@ -299,7 +300,7 @@ quiz(
 ```
 
 
-# Step 3 — Aggregate with `group_by()` and `summarise()`
+## Step 3 — Aggregate with `group_by()` and `summarise()`
 
 A key task in trade analysis is computing **total trade values** by group — for example, total  exports and total imports.
 
