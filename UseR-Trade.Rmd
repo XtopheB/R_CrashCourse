@@ -308,12 +308,12 @@ A key task in trade analysis is computing **total trade values** by group — fo
 ### Example:
 `group_by()` splits data into groups so each group is handled separately by later steps. 
 
-![](www/tidy-group_by.png){width=50%}
+![](www/tidy-group_by.png){width=60%}
 
 
 The combination of `group_by()` + `summarise()` is very powerful for constructing a new data frame with a computed value per category (e.g. the mean):
 
-![](www/tidy-group_by_summarize.png){width=60%}
+![](www/tidy-group_by_summarize.png){width=70%}
 
 > **Your goal:** compute the total trade value (in **million USD**) for each trade flow (`flowCode2`).  
 > Call the result `table1` and the new column `total_trade_value`.
@@ -417,11 +417,15 @@ This is called **wide format**, and `pivot_wider()` does the reshaping.
 ### Example:
 Use `pivot_wider()` to transform a ***long*** data frame `df_l`  into a ***wide***  `df_w` : 
 
-![](www/tidy-pivot_wider1.png){width=40%}
-And finally get all 6 values in  `df_w` 
+- Step1: Create the structure of the wide data frame with columns `year` `S1` and `S2`. The columns `period` and `Exports` will disappear.
 
-![](www/tidy-pivot_wider2.png){width=40%}
+![](www/tidy-pivot_wider1.png){width=60%}
 
+- Step2: Collect the corresponding values from `df` 
+
+![](www/tidy-pivot_wider2.png){width=60%}
+
+We can observe that all 6 values from `Exports` in the long `df` are correctly reported in the wide  `df_w`.
 
 
 > **Your goal:** starting from `table2_long` (created above), create `table2` in wide format:  
@@ -429,7 +433,9 @@ And finally get all 6 values in  `df_w`
 > - Filter to keep only countries with `Export >= 1000` (million USD)  
 > - Arrange in descending order of `Export`
 
+
 ```{r pivot-setup}
+
 # table2_long is available (pre-computed version)
 table2_long <- tradedata %>%
   group_by(geoAreaDescription, flowCode2) %>%
@@ -479,7 +485,7 @@ quiz(
     answer("It adds more rows to the data frame", correct = FALSE),
     answer("It turns unique values of one column into new column names",
            correct = TRUE,
-           message = "Exactly! Each unique value of `names_from` becomes a column."),
+           message = "Exactly! Each unique value of the column identified in  `names_from = `  becomes a column."),
     answer("It filters rows by a condition", correct = FALSE),
     allow_retry = TRUE
   ),
