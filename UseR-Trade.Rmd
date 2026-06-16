@@ -1,7 +1,7 @@
 ---
 title: "Use R for Trade Statistics!"
 author: " ---- \n *Christophe Bontemps &\n Chesca Rosales*  \n  ![](www/SIAP_logo_2020_1800.png){width=30%}  "
-date: 'Version: 1.0 \n (June 2026)'
+date: 'Version: 1.1 \n (June 2026)'
 output:
   learnr::tutorial:
     progressive: true
@@ -50,7 +50,7 @@ table1 <- tradedata %>%
             .groups = "drop")
 
 # Trade by partner country, wide format (used in Section 6)
-table2 <- tradedata %>%
+table2_wide <- tradedata %>%
   group_by(geoAreaDescription, flowCode2) %>%
   summarise(Value = sum(primaryValue / 1000000, na.rm = TRUE),
             .groups = "drop") %>%
@@ -428,13 +428,13 @@ Use `pivot_wider()` to transform a ***long*** data frame `df_l`  into a ***wide*
 We can observe that all 6 values from `Exports` in the long `df` are correctly reported in the wide  `df_w`.
 
 
-> **Your goal:** starting from `table2_long` (created above), create `table2` in wide format:  
+> **Your goal:** starting from `table2_long` (created above), create `table2_wide` in wide format:  
 > - Columns: `Area`, `Export`, `Import`  
 > - Filter to keep only countries with `Export >= 1000` (million USD)  
 > - Arrange in descending order of `Export`
 
 
-```{r pivot-setup}
+```{r pivot-setup, include=FALSE}
 
 # table2_long is available (pre-computed version)
 table2_long <- tradedata %>%
@@ -446,36 +446,36 @@ table2_long <- tradedata %>%
 
 ```{r pivot1, exercise = TRUE, exercise.eval = FALSE, exercise.setup = "pivot-setup", exercise.cap = "Pivot to wide format and filter top partners"}
 # Enter your solution below
-table2 <-
+table2_wide <-
 
 ```
 
 ```{r pivot1-hint-1}
 # pivot_wider() needs to know which column gives the new column names,
 # and which column gives the values
-table2 <- table2_long %>%
+table2_wide <- table2_long %>%
   pivot_wider(names_from = flowCode2, values_from = Value)
 ```
 
 ```{r pivot1-hint-2}
 # Then add filter() and arrange() in the pipeline
-table2 <- table2_long %>%
+table2_wide <- table2_long %>%
   pivot_wider(names_from = flowCode2, values_from = Value) %>%
   filter(Export >= 1000) %>%
   arrange(desc(Export))
 ```
 
 ```{r pivot1-solution}
-table2 <- table2_long %>%
+table2_wide <- table2_long %>%
   pivot_wider(names_from = flowCode2, values_from = Value) %>%
   filter(Export >= 1000) %>%
   arrange(desc(Export)) %>%
   as.data.frame()
 
-head(table2)
+head(table2_wide)
 ```
 
-**This is `table2`** — the main partner-country summary table. You can see at a glance which countries are the largest export destinations.
+**This is `table2_wide`** — the main partner-country summary table. You can see at a glance which countries are the largest export destinations.
 
 ### Check your understanding
 
@@ -568,13 +568,13 @@ Tables are informative, but a chart communicates patterns much faster. Let's bui
 
 We first need to convert `table2` back to **long format** for `ggplot2` (which works best with long data), keeping only the top 10 countries by export value.
 
-The reshaping is done for you below — your task is to complete the `ggplot2` call.
+The reshaping and the ggplot code is done for you below — your task is just to run the code and see the output ;-)
 
-```{r chart-setup}
+```{r chart-setup, include=FALSE}
 # table2 is pre-computed and available here
 
 # Reshape top 10 to long format
-table2_long_top10 <- table2 %>%
+table2_long_top10 <- table2_wide %>%
   slice_max(order_by = Export, n = 10) %>%
   pivot_longer(cols = c(Export, Import),
                names_to = "trade_flow",
@@ -607,6 +607,8 @@ ggplot(table2_long_top10,
 ```
 
 ```{r chart1-solution}
+# This is a copy of the code prepared to be executed- just start over and execute!
+
 ggplot(table2_long_top10,
        aes(x = fct_reorder(Area, total_trade_value, sum),
            y = total_trade_value,
