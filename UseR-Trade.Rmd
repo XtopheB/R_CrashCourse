@@ -1,7 +1,7 @@
 ---
 title: "Use R for Trade Statistics!"
 author: " ---- \n *Christophe Bontemps &\n Chesca Rosales*  \n  ![](www/SIAP_logo_2020_1800.png){width=30%}  "
-date: 'Version: 1.1 \n (June 2026)'
+date: 'Version: 1.2 \n (June 2026)'
 output:
   learnr::tutorial:
     progressive: true
@@ -581,11 +581,17 @@ head(table3, 10)
 
 ## Step 7 — Visualise with `ggplot2`
 
-Tables are informative, but a chart communicates patterns much faster. Let's build a **horizontal bar chart** showing exports and imports for the **top 10 partner countries**.
+Tables are informative, but a chart communicates patterns much faster. 
 
-We first need to convert `table2` back to **long format** for `ggplot2` (which works best with long data), keeping only the top 10 countries by export value.
+> > **Your goal: Build a **horizontal bar chart** showing exports and imports for the **top 10 partner countries**.
 
-The reshaping and the ggplot code is done for you below — your task is just to run the code and see the output ;-)
+**Hints:**
+
+- First,`table2` keep only the top 10 countries by export value (use `slice()` after a wise ordering)
+- Then, convert `table2`  to **long format** for `ggplot2` (use `pivot_longer()`) 
+- Finally,  plot the result using `ggplot()` with a  `geom_col()` for a bar chart with counts 
+
+**Wait!** We've done that for you below — your task is just to run the code and see the output ;-)
 
 ```{r chart-setup, include=FALSE}
 # table2 is pre-computed and available here
@@ -600,8 +606,8 @@ table2_long_top10 <- table2_wide %>%
 ```
 
 ```{r chart1, exercise = TRUE, exercise.eval = FALSE, exercise.setup = "chart-setup", exercise.cap = "Bar chart of trade flows by partner country"}
-# table2_long_top10 is ready to use.
-# Complete the ggplot call below:
+# table2_long_top10 is ready to use ;-)
+# Run the call below:
 
 ggplot(table2_long_top10,
        aes(x = fct_reorder(Area, total_trade_value, sum),
@@ -649,6 +655,12 @@ ggplot(table2_long_top10,
 
 > **Now try it for products:** can you adapt this code to plot the top 10 products from `table3`?
 
+**Hints:**
+- Start by keeping the 10 largest exports from table3
+- Reshape the data frame  table3 to long format (created `table3_long`) for ggplot (use `pivot_longer()`) 
+- Adapt the previous ggplot code to products using `table3_long`
+
+
 ```{r chart2, exercise = TRUE, exercise.eval = FALSE, exercise.cap = "Your turn: bar chart by product"}
 # Adapt the chart above to show the top 10 product categories
 # Hint: start from table3, pivot_longer(), then ggplot()
@@ -690,7 +702,7 @@ ggplot(table3_long,
            fill = trade_flow)) +
   geom_col(position = position_dodge(width = 0.9)) +
   coord_flip() +
-  labs(title = "Trade flows by top 10 product categories (million USD)",
+  labs(title = "Trade flows by top 10 exported commodities  (million USD)",
        x = "Product", y = "Value (million USD)", fill = "Trade flow") +
   scale_x_discrete(labels = function(x) str_wrap(str_trunc(x, 40), width = 30)) +
   theme_minimal()
