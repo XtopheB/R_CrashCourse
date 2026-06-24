@@ -583,13 +583,13 @@ head(table3, 10)
 
 Tables are informative, but a chart communicates patterns much faster. 
 
-> > **Your goal: Build a **horizontal bar chart** showing exports and imports for the **top 10 partner countries**.
+> > **Your goal**: Build a *horizontal bar chart* showing exports and imports for the **top 10 partner countries**.
 
 **Hints:**
 
-- First,`table2` keep only the top 10 countries by export value (use `slice()` after a wise ordering)
+- First, in `table2`,  keep only the top 10 countries by export value (use `slice()` after a wise ordering)
 - Then, convert `table2`  to **long format** for `ggplot2` (use `pivot_longer()`) 
-- Finally,  plot the result using `ggplot()` with a  `geom_col()` for a bar chart with counts 
+- Finally,  plot the result using `ggplot()` with a  `geom_col()` for a bar chart with counts and `coord_flip()` to flip the graphic horizontally
 
 **Wait!** We've done that for you below — your task is just to run the code and see the output ;-)
 
@@ -656,6 +656,7 @@ ggplot(table2_long_top10,
 > **Now try it for products:** can you adapt this code to plot the top 10 products from `table3`?
 
 **Hints:**
+
 - Start by keeping the 10 largest exports from table3
 - Reshape the data frame  table3 to long format (created `table3_long`) for ggplot (use `pivot_longer()`) 
 - Adapt the previous ggplot code to products using `table3_long`
@@ -665,6 +666,7 @@ ggplot(table2_long_top10,
 # Adapt the chart above to show the top 10 product categories
 # Hint: start from table3, pivot_longer(), then ggplot()
 
+table3_long <-
 ```
 
 ```{r chart2-hint-1}
