@@ -108,9 +108,20 @@ We have a dataset of international merchandise trade transactions (you will repl
 
 Let's start by exploring it. Run the code below to see the first few rows:
 
-```{r}
+
+```{r tradeset, exercise = TRUE, exercise.eval = FALSE}
+#  run the code below
+head(tradedata)
+
+  
+```
+
+```{r tradeset-hint-1}
+# Click on the top right button "> Run Code"  
 head(tradedata)
 ```
+
+
 
 The dataset has **`r nrow(tradedata)`** observations and **`r ncol(tradedata)`** variables. It may happen that some variables have missing values for some observations (*e.g.* in  FOBValue)
 
@@ -508,7 +519,13 @@ Let's now aggregate by **product category** using the 2-digit HS code descriptio
 
 > **Your goal:** create `table3` — total export and import values by `cmd2CodeDescription`, in **wide format**, keeping the **top 20 product categories** by export value.
 
-```{r prod-setup}
+**Hints:**
+
+- Start by grouping the data by product (`cmd2CodeDescription`)  and trade flow (`flowCode2` ), then compute the total trade value for each group.
+- Reshape the result so flows become columns (use `pivot_wider()`)
+
+
+```{r prod-setup, include=FALSE}
 # tradedata is available
 ```
 
@@ -559,7 +576,7 @@ head(table3, 10)
 - `values_fill = 0` fills in `0` when a product category has no recorded exports or imports (instead of `NA`).
 - `slice_max(n = 20, order_by = Export)` keeps only the top 20 rows by export value — a handy alternative to `arrange() %>% head(20)`.
 
-> **What are your country's top export products?**
+> **What are the country's top export products?**
 
 
 ## Step 7 — Visualise with `ggplot2`
