@@ -20,6 +20,7 @@ library(learnr)
 library(tidyverse)
 library(stringr)
 library(scales)
+library(readxl)
 
 # ----- Load the pre-merged trade data -----
 #
@@ -70,6 +71,14 @@ table3 <- tradedata %>%
               values_fill = 0) %>%
   slice_max(n = 20, order_by = Export) %>%
   arrange(desc(Export))
+
+# From Bimlesh for new section with SITC classification
+
+HS_SITC_concordance     <- read_excel("./www/IMTS Correspondence.xlsx", sheet = "HS SITC BEC") %>% 
+  rename(HS_Code = `HS22`, SITC_Code = SITC4) %>%
+  mutate(HS_Code = as.character(HS_Code), SITC_Code = as.character(SITC_Code))
+
+
 ```
 
 
@@ -579,11 +588,11 @@ head(table3, 10)
 > **What are the country's top export products?**
 
 
-## Step 7 — Visualise with `ggplot2`
+## Step 8 — Visualise with `ggplot2`
 
 Tables are informative, but a chart communicates patterns much faster. 
 
-> > **Your goal**: Build a *horizontal bar chart* showing exports and imports for the **top 10 partner countries**.
+>  **Your goal**: Build a *horizontal bar chart* showing exports and imports for the **top 10 partner countries**.
 
 **Hints:**
 
@@ -709,6 +718,76 @@ ggplot(table3_long,
   scale_x_discrete(labels = function(x) str_wrap(str_trunc(x, 40), width = 30)) +
   theme_minimal()
 ```
+
+
+
+ 
+```{r}
+# ---- New section on alternative STIC classifications
+
+```
+## Bonus — Trade by other classifications (SITC)
+
+Trade data usually starts out coded in the **Harmonized System (HS)**, but other classifications — like **SITC** (Standard International Trade Classification) — are often used for economic analysis, since they group products by degree of processing rather than by physical/technical characteristics.
+
+> **Your goal:** create `table4` — total export and import values by **SITC section**, in **wide format**, using the HS-to-SITC concordance table to convert `cmdCode` into `SITC_Code`.
+
+**Hints:**
+- First add a new column with the SITC code, using `lookup()` to match `cmdCode` against the concordance table.
+- Then group by the SITC classification and trade flow (`flowCode2`), and compute total trade value for each group.
+- Reshape the result so flows become columns (use `pivot_wider()`).
+
+```{r classif-setup, include=FALSE}
+# tradedata and HS_SITC_concordance are available
+```
+
+```{r classif1, exercise = TRUE, exercise.eval = FALSE, exercise.setup = "classif-setup", exercise.cap = "Trade by SITC classification (wide format)"}
+# Enter your solution below
+table4 <-
+```
+
+```{r classif1-hint-1}
+# Start by adding the SITC code with lookup(), then group_by and summarise
+table4 <- tradedata %>%
+  mutate(SITC_Code = lookup(cmdCode, HS_SITC_concordance$HS17, HS_SITC_concordance$SITC_Code)) %>%
+  group_by(SITC_Code, flowCode2) %>%
+  summarise(total_trade_value = sum(primaryValue / 1000000, na.rm = TRUE),
+            .groups = "drop")
+```
+
+```{r classif1-hint-2}
+# Then pivot to wide format, filling missing combinations with 0
+table4 <- tradedata %>%
+  mutate(SITC_Code = lookup(cmdCode, HS_SITC_concordance$HS17, HS_SITC_concordance$SITC_Code)) %>%
+  group_by(SITC_Code, flowCode2) %>%
+  summarise(total_trade_value = sum(primaryValue / 1000000, na.rm = TRUE),
+            .groups = "drop") %>%
+  pivot_wider(names_from = flowCode2,
+              values_from = total_trade_value,
+              values_fill = 0) %>%
+  arrange(SITC_Code)
+```
+
+```{r classif1-solution}
+table4 <- tradedata %>%
+  mutate(SITC_Code = lookup(cmdCode, HS_SITC_concordance$HS17, HS_SITC_concordance$SITC_Code)) %>%
+  group_by(SITC_Code, flowCode2) %>%
+  summarise(total_trade_value = sum(primaryValue / 1000000, na.rm = TRUE),
+            .groups = "drop") %>%
+  pivot_wider(names_from = flowCode2,
+              values_from = total_trade_value,
+              values_fill = 0) %>%
+  arrange(SITC_Code)
+head(table4, 10)
+```
+
+#### A bit of explanation:
+- `lookup()` matches each `cmdCode` against the concordance table's `HS17` column and returns the corresponding `SITC_Code` — this is how you move data from one classification system to another.
+- Grouping by `SITC_Code` instead of `cmd2CodeDescription` gives the same trade totals, just organized by a different logic (economic function rather than product type).
+- As in Step 6, `values_fill = 0` avoids `NA`s for SITC sections with no recorded exports or imports.
+
+> **Does the picture change when you look at trade through SITC instead of HS product categories?**
+
 
 
 ## Conclusion
