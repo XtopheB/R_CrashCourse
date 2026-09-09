@@ -1,7 +1,7 @@
 ---
 title: "Use R for Trade Statistics!"
 author: " ---- \n *Christophe Bontemps &\n Chesca Rosales*  \n  ![](www/SIAP_logo_2020_1800.png){width=30%}  "
-date: 'Version: 1.2 \n (June 2026)'
+date: 'Version: 1.3 \n (September 2026)'
 output:
   learnr::tutorial:
     progressive: true
