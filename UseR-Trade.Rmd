@@ -52,21 +52,21 @@ tradedata <- tradedata %>%
 # ----- Pre-computed objects used across multiple exercises -----
 
 # Total trade by flow (used in Section 5 and the chart section)
-table1 <- tradedata %>%
-  group_by(flowCode2) %>%
-  summarise(total_trade_value = sum(primaryValue / 1000000, na.rm = TRUE),
-            .groups = "drop")
+# table1 <- tradedata %>%
+#   group_by(flowCode2) %>%
+#   summarise(total_trade_value = sum(primaryValue / 1000000, na.rm = TRUE),
+#             .groups = "drop")
 
 # Trade by partner country, wide format (used in Section 6)
-table2_wide <- tradedata %>%
-  group_by(geoAreaDescription, flowCode2) %>%
-  summarise(Value = sum(primaryValue / 1000000, na.rm = TRUE),
-            .groups = "drop") %>%
-  rename(Area = geoAreaDescription) %>%
-  pivot_wider(names_from = flowCode2, values_from = Value) %>%
-  filter(Export >= 1000) %>%
-  arrange(desc(Export)) %>%
-  as.data.frame()
+# table2_wide <- tradedata %>%
+#   group_by(geoAreaDescription, flowCode2) %>%
+#   summarise(Value = sum(primaryValue / 1000000, na.rm = TRUE),
+#             .groups = "drop") %>%
+#   rename(Area = geoAreaDescription) %>%
+#   pivot_wider(names_from = flowCode2, values_from = Value) %>%
+#   filter(Export >= 1000) %>%
+#   arrange(desc(Export)) %>%
+#   as.data.frame()
 
 # Trade by 2-digit product, wide format (used in Section 7)
 table3 <- tradedata %>%
@@ -619,6 +619,17 @@ Tables are informative, but a chart communicates patterns much faster.
 
 ```{r chart-setup, include=FALSE}
 # table2 is pre-computed and available here
+
+table2_wide <- tradedata %>%
+  group_by(geoAreaDescription, flowCode2) %>%
+  summarise(Value = sum(primaryValue / 1000000, na.rm = TRUE),
+            .groups = "drop") %>%
+  rename(Area = geoAreaDescription) %>%
+  pivot_wider(names_from = flowCode2, values_from = Value) %>%
+  filter(Export >= 1000) %>%
+  arrange(desc(Export)) %>%
+  as.data.frame()
+
 
 # Reshape top 5 to long format
 table2_long_top5 <- table2_wide %>%
