@@ -385,7 +385,7 @@ table1 <- tradedata %>%
 table1
 ```
 
-You should see two rows — one for Exports and one for Imports — with their total values in million USD.
+You should see **two rows** — one for Exports and one for Imports — with their total values in million USD.
 
 #### A bit of explanation:
 
@@ -436,6 +436,7 @@ table2_long <- tradedata %>%
   summarise(Value = sum(primaryValue / 1000000, na.rm = TRUE),
             .groups = "drop") %>%
   rename(Area = geoAreaDescription)
+
 head(table2_long)
 ```
 
@@ -606,11 +607,11 @@ head(table3, 10)
 
 Tables are informative, but a chart communicates patterns much faster. 
 
->  **Your goal**: Build a *horizontal bar chart* showing exports and imports for the **top 10 partner countries**.
+>  **Your goal**: Build a *horizontal bar chart* showing exports and imports for the **top 5 partner countries**.
 
 **Hints:**
 
-- First, in `table2`,  keep only the top 10 countries by export value (use `slice()` after a wise ordering)
+- First, in `table2`,  keep only the top 5 countries by export value (use `slice()` after a wise ordering)
 - Then, convert `table2`  to **long format** for `ggplot2` (use `pivot_longer()`) 
 - Finally,  plot the result using `ggplot()` with a  `geom_col()` for a bar chart with counts and `coord_flip()` to flip the graphic horizontally
 
@@ -619,9 +620,9 @@ Tables are informative, but a chart communicates patterns much faster.
 ```{r chart-setup, include=FALSE}
 # table2 is pre-computed and available here
 
-# Reshape top 10 to long format
-table2_long_top10 <- table2_wide %>%
-  slice_max(order_by = Export, n = 10) %>%
+# Reshape top 5 to long format
+table2_long_top5 <- table2_wide %>%
+  slice_max(order_by = Export, n = 5) %>%
   pivot_longer(cols = c(Export, Import),
                names_to = "trade_flow",
                values_to = "total_trade_value") %>%
@@ -629,17 +630,17 @@ table2_long_top10 <- table2_wide %>%
 ```
 
 ```{r chart1, exercise = TRUE, exercise.eval = FALSE, exercise.setup = "chart-setup", exercise.cap = "Bar chart of trade flows by partner country"}
-# table2_long_top10 is ready to use ;-)
+# table2_long_top5 is ready to use ;-)
 # Run the call below:
 
-ggplot(table2_long_top10,
+ggplot(table2_long_top5,
        aes(x = fct_reorder(Area, total_trade_value, sum),
            y = total_trade_value,
            fill = trade_flow)) +
   geom_col(position = position_dodge(width = 0.9)) +
   coord_flip() +
   labs(
-    title = "Trade flows by top 10 partner countries (million USD)",
+    title = "Trade flows by top 5 partner countries (million USD)",
     x = "Partner country",
     y = "Value (million USD)",
     fill = "Trade flow"
@@ -655,14 +656,14 @@ ggplot(table2_long_top10,
 ```{r chart1-solution}
 # This is a copy of the code prepared to be executed- just start over and execute!
 
-ggplot(table2_long_top10,
+ggplot(table2_long_top5,
        aes(x = fct_reorder(Area, total_trade_value, sum),
            y = total_trade_value,
            fill = trade_flow)) +
   geom_col(position = position_dodge(width = 0.9)) +
   coord_flip() +
   labs(
-    title = "Trade flows by top 10 partner countries (million USD)",
+    title = "Trade flows by top 5 partner countries (million USD)",
     x = "Partner country",
     y = "Value (million USD)",
     fill = "Trade flow"
@@ -676,17 +677,17 @@ ggplot(table2_long_top10,
 - `position_dodge(width = 0.9)` places Export and Import bars **side by side** rather than stacked.
 - `coord_flip()` rotates the chart so country names appear on the y-axis — much easier to read than angled x-axis labels!
 
-> **Now try it for products:** can you adapt this code to plot the top 10 products from `table3`?
+> **Now try it for products:** can you adapt this code to plot the top 5 products from `table3`?
 
 **Hints:**
 
-- Start by keeping the 10 largest exports from table3
+- Start by keeping the 5 largest exports from table3
 - Reshape the data frame  table3 to long format (created `table3_long`) for ggplot (use `pivot_longer()`) 
 - Adapt the previous ggplot code to products using `table3_long`
 
 
 ```{r chart2, exercise = TRUE, exercise.eval = FALSE, exercise.cap = "Your turn: bar chart by product"}
-# Adapt the chart above to show the top 10 product categories
+# Adapt the chart above to show the top 5 product categories
 # Hint: start from table3, pivot_longer(), then ggplot()
 
 table3_long <-
@@ -695,7 +696,7 @@ table3_long <-
 ```{r chart2-hint-1}
 # Step 1: reshape table3 to long format
 table3_long <- table3 %>%
-  slice_max(order_by = Export, n = 10) %>%
+  slice_max(order_by = Export, n = 5) %>%
   pivot_longer(cols = c(Export, Import),
                names_to = "trade_flow",
                values_to = "total_trade_value")
@@ -709,14 +710,14 @@ ggplot(table3_long,
            fill = trade_flow)) +
   geom_col(position = position_dodge(width = 0.9)) +
   coord_flip() +
-  labs(title = "Trade flows by top 10 product categories (million USD)",
+  labs(title = "Trade flows by top 5 product categories (million USD)",
        x = "Product", y = "Value (million USD)", fill = "Trade flow") +
   theme_minimal()
 ```
 
 ```{r chart2-solution}
 table3_long <- table3 %>%
-  slice_max(order_by = Export, n = 10) %>%
+  slice_max(order_by = Export, n = 5) %>%
   pivot_longer(cols = c(Export, Import),
                names_to = "trade_flow",
                values_to = "total_trade_value")
@@ -727,7 +728,7 @@ ggplot(table3_long,
            fill = trade_flow)) +
   geom_col(position = position_dodge(width = 0.9)) +
   coord_flip() +
-  labs(title = "Trade flows by top 10 exported commodities  (million USD)",
+  labs(title = "Trade flows by top 5 exported commodities  (million USD)",
        x = "Product", y = "Value (million USD)", fill = "Trade flow") +
   scale_x_discrete(labels = function(x) str_wrap(str_trunc(x, 40), width = 30)) +
   theme_minimal()
@@ -782,7 +783,7 @@ table4 <- tradedata %>%
               values_from = total_trade_value,
               values_fill = 0) 
 
-head(table4, 10)
+head(table4, 5)
 ```
 
 ```{r classif1-solution}
@@ -797,7 +798,7 @@ table4 <- tradedata %>%
               values_fill = 0) %>%
   arrange(SITC_Code)
 
-head(table4, 10)
+head(table4, 5)
 ```
 
 #### A bit of explanation:
