@@ -40,7 +40,8 @@ library(lookup)
 # trade_Asia <- tradedata_raw %>%
 #   select(-c("X", "motCode")) %>%
 #   filter(regional.grouping =="Asia") %>%
-#     filter( geoAreaDescription %in% c("China", "Mongolia", "Indonesia",  "Japan" ))
+#     filter( geoAreaDescription %in% c("China", "Mongolia", "Indonesia",  "Japan", "Singapore" ,
+#                                       "India", "Philippines", "Guam", "Australia" , "New Zealand", "Thailand" ))
 # 
 # write.csv(trade_Asia, "www/tradeAsiaNew.csv",row.names = FALSE)
 
@@ -218,7 +219,7 @@ tradedata_light <- tradedata %>%
 ```{r sel1-hint-2}
 # List each column name separated by a comma
 tradedata_light <- tradedata %>%
-  select(flowCode2, geoAreaDescription,       )
+  select(flowCode2, geoAreaDescription,  ____ , ____,    )
 ```
 
 ```{r sel1-solution}
@@ -247,7 +248,7 @@ Use `filter()` to subset a data frame `df`  based on a **logical condition**:
 
 
 > **Your goal:** starting from `tradedata`, create a new data frame called `exports` that contains **only export transactions**.  
-> Recall that exports are identified by `flowCode2 == "Export"`.
+> **Hint**: Recall that exports are identified by `flowCode2 == "Export"`.
 
 ```{r filt1-setup}
 # tradedata is available
@@ -286,7 +287,7 @@ nrow(exports)
 You can combine multiple conditions inside `filter()` using `&` (AND) or `|` (OR).
 
 > **Try it:** filter the data to keep only export transactions **with a primary value above 1 000 000 USD** (i.e. at least one million dollars). 
-**Hint**: You should use an additionnal condition involving the variable  `primaryvalue`.
+>**Hint**: You should use an additionnal condition involving the variable  `primaryvalue`.
 
 ```{r filt2, exercise = TRUE, exercise.eval = FALSE, exercise.cap = "Filter large exports"}
 # Enter your solution below — combine two conditions with &
@@ -297,7 +298,7 @@ large_exports <-
 ```{r filt2-hint-1}
 # Combine both conditions inside filter()
 large_exports <- tradedata %>%
-  filter(flowCode2 == "Export" & primaryValue > 1000000)
+  filter(flowCode2 == "Export" & primaryValue > ___)
 ```
 
 ```{r filt2-solution}
@@ -321,7 +322,8 @@ quiz(
     allow_retry = TRUE
   ),
   question("Does the order of filter() and select() matter in a pipeline?",
-    answer("No, the result is always the same", correct = FALSE),
+    answer("No, the result is always the same", correct = FALSE, 
+           message = " If you select() first and drop a column you later need in filter(), the pipeline will fail."),
     answer("Yes — filter() first, then select() is the usual safe order",
            correct = TRUE,
            message = "Correct! If you select() first and drop a column you later need in filter(), the pipeline will fail."),
@@ -363,7 +365,7 @@ table1 <-
 ```{r grp1-hint-1}
 # Start with group_by() to define the grouping variable
 table1 <- tradedata %>%
-  group_by(flowCode2) %>%
+  group_by(____) %>%
 
 ```
 
@@ -371,11 +373,11 @@ table1 <- tradedata %>%
 # Use summarise() to compute the sum. Don't forget to divide by 1 000 000!
 table1 <- tradedata %>%
   group_by(flowCode2) %>%
-  summarise(total_trade_value = sum(primaryValue / 1000000, na.rm = TRUE),
-            .groups = "drop")
+  summarise(total_trade_value = sum( ______ / 1000000) )
 ```
 
 ```{r grp1-solution}
+# Think that you may have missing values (NA)
 table1 <- tradedata %>%
   group_by(flowCode2) %>%
   summarise(total_trade_value = sum(primaryValue / 1000000, na.rm = TRUE),
@@ -399,7 +401,7 @@ You should see two rows — one for Exports and one for Imports — with their t
 Now let's go deeper and compute total trade values **broken down by partner country**.
 
 > **Your goal:** create `table2_long` — a summary of total export and import values (in million USD) for **each partner country** (`geoAreaDescription`), grouped also by `flowCode2`.  
-> Name the value column `Value` and the country column `Area`.
+> Name the value column `Value` and remane the country column `Area`.
 
 ```{r grp2-setup}
 # tradedata is available
@@ -414,7 +416,8 @@ table2_long <-
 ```{r grp2-hint-1}
 # You need TWO grouping variables this time
 table2_long <- tradedata %>%
-  group_by(geoAreaDescription, flowCode2) %>%
+  group_by(____ , ______) %>%
+  summarise( Value = sum(_____ / _______ , na.rm = TRUE)  )
 
 ```
 
@@ -424,7 +427,7 @@ table2_long <- tradedata %>%
   group_by(geoAreaDescription, flowCode2) %>%
   summarise(Value = sum(primaryValue / 1000000, na.rm = TRUE),
             .groups = "drop") %>%
-  rename(Area = geoAreaDescription)
+  rename(___ = _____ )
 ```
 
 ```{r grp2-solution}
