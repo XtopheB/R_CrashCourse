@@ -751,6 +751,11 @@ Trade data usually starts out coded in the **Harmonized System (HS)**, but other
 
 ```{r classif-setup, include=FALSE}
 # tradedata and HS_SITC_concordance are available
+
+
+
+
+
 ```
 
 ```{r classif1, exercise = TRUE, exercise.eval = FALSE, exercise.setup = "classif-setup", exercise.cap = "Trade by SITC classification (wide format)"}
