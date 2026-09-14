@@ -1,6 +1,7 @@
 ---
 title: "Use R for Trade Statistics!"
-author: " ---- \n *Christophe Bontemps &\n Chesca Rosales*  \n  ![](www/SIAP_logo_2020_1800.png){width=30%}  "
+author: " ---- \n *Christophe Bontemps &\n Chesca Rosales*  \n  ![](www/SIAP_logo_2020_1800.png){width=30%}
+  \ "
 date: 'Version: 1.3 \n (September 2026)'
 output:
   learnr::tutorial:
@@ -8,10 +9,11 @@ output:
     allow_skip: true
     css: www/Mycustom.css
 runtime: shiny_prerendered
-description: >
-  Learn how to use R for International Merchandise Trade Statistics.
-  Focus is on tidyverse tools: select, filter, group_by, summarise, pivot_wider,
-  and ggplot2 for visualisation. Data from UN Comtrade.
+description: |
+  Learn how to use R for International Merchandise Trade Statistics. Focus is on tidyverse tools: select, filter, group_by, summarise, pivot_wider, and ggplot2 for visualisation. Data from UN Comtrade.
+resource_files:
+- www/SITCCodeandDescription.xlsx
+- www/IMTS Correspondence.xlsx
 ---
 
 ```{r setup, include=FALSE}
@@ -34,13 +36,15 @@ library(lookup)
 
 ## We may work with a smaller data set
 
-# tradedata_raw <- read.csv("./www/tradedata_ready.csv")
+# tradedata_raw <- read.csv("./RawData/tradedata_ready.csv")
 # trade_Asia <- tradedata_raw %>%
 #   select(-c("X", "motCode")) %>%
-#   filter(regional.grouping =="Asia")
-# write.csv(trade_Asia, "www/tradeAsia.csv",row.names = FALSE)
+#   filter(regional.grouping =="Asia") %>%
+#     filter( geoAreaDescription %in% c("China", "Mongolia", "Indonesia",  "Japan" ))
+# 
+# write.csv(trade_Asia, "www/tradeAsiaNew.csv",row.names = FALSE)
 
-tradedata <- read.csv("./www/tradeAsia.csv")
+tradedata <- read.csv("./www/tradeAsiaNew.csv")
 tradedata <- tradedata %>%
   relocate(flowCode2, geoAreaDescription, primaryValue, cmdCode, cmd2Code, cmd2CodeDescription)
 
@@ -84,8 +88,6 @@ SITC_description        <- read_excel("./www/SITCCodeandDescription.xlsx", sheet
   rename(SITC_Code = Code, SITC_Description = Description) %>%
   mutate(SITC_Code = as.character(SITC_Code))
 
-##We need to have table 4 available
-
 
 ```
 
@@ -123,7 +125,7 @@ question("Have you completed the Basic R! tutorial?  (*Check all that is TRUE*):
 
 We have a dataset of international merchandise trade transactions (you will replace it with your own Comtrade file later).
 
-Let's start by exploring it. Run the code below to see the first few rows:
+Let's start by exploring it. **Run the code** below to see the first few rows:
 
 
 ```{r tradeset, exercise = TRUE, exercise.eval = FALSE}
@@ -140,7 +142,7 @@ head(tradedata)
 
 
 
-The dataset has **`r nrow(tradedata)`** observations and **`r ncol(tradedata)`** variables. It may happen that some variables have missing values for some observations (*e.g.* in  FOBValue)
+The dataset has **`r nrow(tradedata)`** observations and **`r ncol(tradedata)`** variables. As this is an extract from a real data set, it may happen that some variables have missing values for some observations and some variables (as *FOBValue*)
 
 > Use the arrow at the top right of the table to navigate across columns if they don't all fit on screen.
 
@@ -173,7 +175,7 @@ quiz(
     answer('"X" and "M"', correct = FALSE,
            message = 'Those are the raw Comtrade codes. In our prepared file, they have been recoded.'),
     answer('"Export" and "Import"', correct = TRUE,
-           message = "Yes — the `ifelse()` in the data preparation step recoded them for readability."),
+           message = "Yes. `flowCode2` records the trade direction: `Export` or `Import`"),
     answer('"TRUE" and "FALSE"', correct = FALSE),
     allow_retry = TRUE
   )
@@ -181,10 +183,10 @@ quiz(
 ```
 
 
-## Step 1 — Explore with `select()`
+## Step 1 — Select variables
 
 The dataset has many columns. Often you only need a few.
-The `select()` function lets you keep only the variables you want.
+The `select()` function lets you keep only the **variables** (columns) you want.
 
 ### Example:
 Use `select()` to keep only the `a` and `c` variables in a given data frame `df`: 
@@ -216,7 +218,7 @@ tradedata_light <- tradedata %>%
 ```{r sel1-hint-2}
 # List each column name separated by a comma
 tradedata_light <- tradedata %>%
-  select(flowCode2, geoAreaDescription, )
+  select(flowCode2, geoAreaDescription,       )
 ```
 
 ```{r sel1-solution}
@@ -234,12 +236,12 @@ This is much easier to work with when exploring trade patterns.
 - You can also use `select(-column_name)` to *drop* a column instead.
 
 
-## Step 2 — Filter exports with `filter()`
+## Step 2 — Filter rows
 
-We often want to focus on just one direction of trade. The `filter()` function keeps only the rows that satisfy a condition.
+We often want to filter some observations, based on some conditions. The `filter()` function keeps only the **rows** (observations) that satisfy a condition.
 
 ### Example:
-Use `filter()` to subset a data frame `df`  based on a logical condition: 
+Use `filter()` to subset a data frame `df`  based on a **logical condition**: 
 
 ![](www/tidy-filter.png){width=50%}
 
@@ -283,7 +285,8 @@ nrow(exports)
 
 You can combine multiple conditions inside `filter()` using `&` (AND) or `|` (OR).
 
-> **Try it:** filter the data to keep only export transactions **with a primary value above 1 000 000 USD** (i.e. at least one million dollars).
+> **Try it:** filter the data to keep only export transactions **with a primary value above 1 000 000 USD** (i.e. at least one million dollars). 
+**Hint**: You should use an additionnal condition involving the variable  `primaryvalue`.
 
 ```{r filt2, exercise = TRUE, exercise.eval = FALSE, exercise.cap = "Filter large exports"}
 # Enter your solution below — combine two conditions with &
@@ -328,7 +331,7 @@ quiz(
 ```
 
 
-## Step 3 — Aggregate with `group_by()` and `summarise()`
+## Step 3 — Aggregate values
 
 A key task in trade analysis is computing **total trade values** by group — for example, total  exports and total imports.
 
@@ -436,7 +439,7 @@ head(table2_long)
 This gives a **long-format** table: each country appears twice (once for Export, once for Import).
 
 
-## Step 5 — Reshape with `pivot_wider()`
+## Step 5 — Reshape your tables
 
 The long format is great for `ggplot2`, but for a readable summary **table** it is more convenient to have Exports and Imports as **separate columns** — one row per country.
 
