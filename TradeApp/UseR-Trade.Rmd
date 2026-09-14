@@ -2,7 +2,7 @@
 title: "Use R for Trade Statistics!"
 author: " ---- \n *Christophe Bontemps &\n Chesca Rosales*  \n  ![](www/SIAP_logo_2020_1800.png){width=30%}
   \ "
-date: 'Version: 1.3 \n (September 2026)'
+date: 'Version: 2.0 \n (September 2026)'
 output:
   learnr::tutorial:
     progressive: true
@@ -12,8 +12,8 @@ runtime: shiny_prerendered
 description: |
   Learn how to use R for International Merchandise Trade Statistics. Focus is on tidyverse tools: select, filter, group_by, summarise, pivot_wider, and ggplot2 for visualisation. Data from UN Comtrade.
 resource_files:
-- www/SITCCodeandDescription.xlsx
-- www/IMTS Correspondence.xlsx
+- www/SITCCodeandDescription_light.xlsx
+- www/IMTS_Correspondence_light.xlsx
 ---
 
 ```{r setup, include=FALSE}
@@ -81,11 +81,11 @@ tradedata <- tradedata %>%
 
 # From Bimlesh for new section with SITC classification
 
-HS_SITC_concordance     <- read_excel("./www/IMTS Correspondence.xlsx", sheet = "HS SITC BEC") %>%
+HS_SITC_concordance     <- read_excel("./www/IMTSCorrespondence_light.xlsx", sheet = "HS SITC BEC") %>%
   rename(HS_Code = `HS22`, SITC_Code = SITC4) %>%
   mutate(HS_Code = as.character(HS_Code), SITC_Code = as.character(SITC_Code))
 
-SITC_description        <- read_excel("./www/SITCCodeandDescription.xlsx", sheet = "SITC4") %>%
+SITC_description        <- read_excel("./www/SITCCodeandDescription_light.xlsx", sheet = "SITC4") %>%
   rename(SITC_Code = Code, SITC_Description = Description) %>%
   mutate(SITC_Code = as.character(SITC_Code))
 
@@ -264,7 +264,7 @@ exports <-
 ```{r filt1-hint-1}
 # Use filter() with a logical condition on flowCode2
 exports <- tradedata %>%
-  filter( )
+  filter(___)
 ```
 
 ```{r filt1-hint-2}
