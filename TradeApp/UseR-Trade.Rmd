@@ -81,13 +81,13 @@ tradedata <- tradedata %>%
 
 # From Bimlesh for new section with SITC classification
 
-HS_SITC_concordance     <- read_excel("./www/IMTSCorrespondence_light.xlsx", sheet = "HS SITC BEC") %>%
-  rename(HS_Code = `HS22`, SITC_Code = SITC4) %>%
-  mutate(HS_Code = as.character(HS_Code), SITC_Code = as.character(SITC_Code))
-
-SITC_description        <- read_excel("./www/SITCCodeandDescription_light.xlsx", sheet = "SITC4") %>%
-  rename(SITC_Code = Code, SITC_Description = Description) %>%
-  mutate(SITC_Code = as.character(SITC_Code))
+# HS_SITC_concordance     <- read_excel("./www/IMTSCorrespondence_light.xlsx", sheet = "HS SITC BEC") %>%
+#   rename(HS_Code = `HS22`, SITC_Code = SITC4) %>%
+#   mutate(HS_Code = as.character(HS_Code), SITC_Code = as.character(SITC_Code))
+# 
+# SITC_description        <- read_excel("./www/SITCCodeandDescription_light.xlsx", sheet = "SITC4") %>%
+#   rename(SITC_Code = Code, SITC_Description = Description) %>%
+#   mutate(SITC_Code = as.character(SITC_Code))
 
 
 ```
