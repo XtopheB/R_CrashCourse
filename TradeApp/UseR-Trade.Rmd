@@ -287,7 +287,8 @@ nrow(exports)
 You can combine multiple conditions inside `filter()` using `&` (AND) or `|` (OR).
 
 > **Try it:** filter the data to keep only export transactions **with a primary value above 1 000 000 USD** (i.e. at least one million dollars). 
->**Hint**: You should use an additionnal condition involving the variable  `primaryvalue`.
+
+>**Hint**: You should filter using an additionnal condition involving the variable  `primaryValue`.
 
 ```{r filt2, exercise = TRUE, exercise.eval = FALSE, exercise.cap = "Filter large exports"}
 # Enter your solution below — combine two conditions with &
@@ -603,7 +604,7 @@ head(table3, 10)
 > **What are the country's top export products?**
 
 
-## Step 8 — Visualise with `ggplot2`
+## Step 7 — Visualise with `ggplot2`
 
 Tables are informative, but a chart communicates patterns much faster. 
 
